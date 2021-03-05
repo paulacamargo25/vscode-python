@@ -124,6 +124,11 @@ export class JediExtensionActivator implements ILanguageServerActivator {
                     this.objectDefinitionProvider!.goToObjectDefinition(),
                 ),
             );
+            this.registrations.push(
+                commands.registerCommand('python.reportIssue', () =>
+                    this.objectDefinitionProvider!.goToObjectDefinition(),
+                ),
+            );
             this.registrations.push(languages.registerRenameProvider(this.documentSelector, this.renameProvider));
             this.registrations.push(
                 languages.registerDefinitionProvider(this.documentSelector, this.definitionProvider),
