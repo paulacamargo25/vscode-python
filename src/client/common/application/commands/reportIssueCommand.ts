@@ -21,7 +21,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
 
     public openReportIssue(): void {
         vscode.commands.executeCommand('workbench.action.openIssueReporter', {
-            extensionId: 'vscode.vscode-python',
+            extensionId: 'ms-python.python',
             issueBody: this.issueTemplate,
         });
     }
