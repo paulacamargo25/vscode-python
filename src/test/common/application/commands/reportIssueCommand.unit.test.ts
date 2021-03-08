@@ -8,8 +8,7 @@ import { CommandManager } from '../../../../client/common/application/commandMan
 import { ReportIssueCommandHandler } from '../../../../client/common/application/commands/reportIssueCommand';
 import { ICommandManager } from '../../../../client/common/application/types';
 
-// Defines a Mocha test suite to group tests of similar kind together
-suite('Common Commands ReloadCommand', () => {
+suite('Report Issue Command', () => {
     let reportIssueCommandHandler: ReportIssueCommandHandler;
     let cmdManager: ICommandManager;
     setup(async () => {
