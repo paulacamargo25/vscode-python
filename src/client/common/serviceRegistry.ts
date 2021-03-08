@@ -20,7 +20,7 @@ import { ClipboardService } from './application/clipboard';
 import { CommandManager } from './application/commandManager';
 import { IPythonCommandManager } from './application/commands';
 import { ReloadVSCodeCommandHandler } from './application/commands/reloadCommand';
-import { ReportIssueCommandHandler } from './application/commands/reportIssue';
+import { ReportIssueCommandHandler } from './application/commands/reportIssueCommand';
 import { CustomEditorService } from './application/customEditorService';
 import { DebugService } from './application/debugService';
 import { DebugSessionTelemetry } from './application/debugSessionTelemetry';
