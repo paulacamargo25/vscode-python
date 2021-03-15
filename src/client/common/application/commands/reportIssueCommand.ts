@@ -13,7 +13,7 @@ import { ICommandManager } from '../types';
 import { EXTENSION_ROOT_DIR } from '../../../constants';
 
 /**
- * Prompts user to reload VS Code with a custom message, and reloads if necessary.
+ * Allows the user to report an issue related to the Python extension using our template.
  */
 @injectable()
 export class ReportIssueCommandHandler implements IExtensionSingleActivationService {
