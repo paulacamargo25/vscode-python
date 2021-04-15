@@ -28,9 +28,9 @@ You can attach such things **after** you create your issue on GitHub.
 
 # Diagnostic data
 
--   Python version (& distribution if applicable, e.g. Anaconda): XXX
--   Type of virtual environment used (e.g. conda, venv, virtualenv, etc.): XXX
--   Value of the `python.languageServer` setting: XXX
+-   Python version (& distribution if applicable, e.g. Anaconda): {0}
+-   Type of virtual environment used (e.g. conda, venv, virtualenv, etc.): {1}
+-   Value of the `python.languageServer` setting: {2}
 
 <details>
 
