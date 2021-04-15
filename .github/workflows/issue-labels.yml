@@ -20,3 +20,30 @@ jobs:
               repo: context.repo.repo,
               labels: ['classify']
             })
+
+  add-info-needed-label:
+    name: "Add 'info needed'"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            conts opts = github.issues.list.endpoint.merge({
+                ...context.repo,
+                issue_number: context.issue.number
+            });
+            const comments = await github.paginate(opts);
+
+             for (const comment of comments) {
+                if (comment.body.contains('/info-needed')) {
+                    github.issues.addLabels({
+                        issue_number: context.issue.number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        labels: ['info needed']
+                        })
+                    return;
+                }
+            }
+
