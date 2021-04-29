@@ -34,20 +34,17 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
     private templatePath = path.join(EXTENSION_ROOT_DIR, 'resources', 'report_issue_template.md');
 
     public async openReportIssue(): Promise<void> {
+        const template = await fs.readFile(this.templatePath, 'utf8');
+
         const pythonVersion = await this.interpreterVersionService.getVersion(PYTHON_PATH, '');
-        const languageServer = this.workspaceService.getConfiguration('python').get<string>('languageServer');
-        const interpretherPath = this.interpreterPathService.get(RESOURCE);
-        const virtualEnv = await identifyEnvironment(interpretherPath);
-        const templ = this.getIssueTemplate();
+        const languageServer =
+            this.workspaceService.getConfiguration('python').get<string>('languageServer') || 'Not Found';
+        const interpreterPath = this.interpreterPathService.get(RESOURCE);
+        const virtualEnv = await identifyEnvironment(interpreterPath);
 
         this.commandManager.executeCommand('workbench.action.openIssueReporter', {
             extensionId: 'ms-python.python',
-            issueBody: templ.format(pythonVersion, virtualEnv, languageServer.globalValue),
+            issueBody: template.format(pythonVersion, virtualEnv, languageServer),
         });
-    }
-
-    public getIssueTemplate(): string {
-        const templ = fs.readFileSync(this.templatePath, 'utf8');
-        return templ;
     }
 }

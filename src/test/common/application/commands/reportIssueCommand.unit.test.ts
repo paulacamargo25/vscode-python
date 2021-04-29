@@ -6,7 +6,7 @@
 import * as sinon from 'sinon';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { anything, capture, instance, mock, verify, when } from 'ts-mockito';
+import { anyString, anything, capture, instance, mock, verify, when } from 'ts-mockito';
 import { expect } from 'chai';
 import { LanguageServerType } from '../../../../client/activation/types';
 import { CommandManager } from '../../../../client/common/application/commandManager';
@@ -39,7 +39,7 @@ suite('Report Issue Command', () => {
         when(interpreterVersionService.getVersion(anything(), anything())).thenResolve('3.9.0');
         when(workspaceService.getConfiguration('python')).thenReturn(
             new MockWorkspaceConfiguration({
-                languageServer: { globalValue: LanguageServerType.Node },
+                languageServer: LanguageServerType.Node,
             }),
         );
         when(interpreterPathService.get(anything())).thenReturn('python');
@@ -54,7 +54,7 @@ suite('Report Issue Command', () => {
             instance(interpreterVersionService),
         );
 
-        when(cmdManager.executeCommand(anything())).thenResolve();
+        when(cmdManager.executeCommand(anyString(), anything())).thenResolve();
         await reportIssueCommandHandler.activate();
     });
 
@@ -62,8 +62,9 @@ suite('Report Issue Command', () => {
         identifyEnvironmentStub.restore();
     });
 
-    test('Confirm command handler is added', async () => {
+    test('Test if issue body is filled', async () => {
         await reportIssueCommandHandler.openReportIssue();
+
         const templatePath = path.join(
             EXTENSION_ROOT_DIR_FOR_TESTS,
             'src',
@@ -73,10 +74,15 @@ suite('Report Issue Command', () => {
             'commands',
             'issueTemplateVenv1.md',
         );
-        const templ = fs.readFileSync(templatePath, 'utf8');
-        const args = capture(cmdManager.executeCommand).last();
+        const expectedIssueBody = fs.readFileSync(templatePath, 'utf8');
+
+        const args: [string, { extensionId: string; issueBody: string }] = capture<
+            string,
+            { extensionId: string; issueBody: string }
+        >(cmdManager.executeCommand).last();
+
         verify(cmdManager.registerCommand('python.reportIssue', anything(), anything())).once();
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
-        expect(args[1].issueBody).to.be.equal(templ);
+        expect(args[1].issueBody).to.be.equal(expectedIssueBody);
     });
 });
