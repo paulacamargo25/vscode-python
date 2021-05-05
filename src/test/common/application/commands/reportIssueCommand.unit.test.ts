@@ -11,7 +11,11 @@ import { expect } from 'chai';
 import { LanguageServerType } from '../../../../client/activation/types';
 import { CommandManager } from '../../../../client/common/application/commandManager';
 import { ReportIssueCommandHandler } from '../../../../client/common/application/commands/reportIssueCommand';
-import { ICommandManager, IWorkspaceService } from '../../../../client/common/application/types';
+import {
+    IActiveResourceService,
+    ICommandManager,
+    IWorkspaceService,
+} from '../../../../client/common/application/types';
 import { WorkspaceService } from '../../../../client/common/application/workspace';
 import { InterpreterPathService } from '../../../../client/common/interpreterPathService';
 import { IInterpreterPathService } from '../../../../client/common/types';
@@ -21,6 +25,8 @@ import { PythonEnvKind } from '../../../../client/pythonEnvironments/base/info';
 import * as EnvIdentifier from '../../../../client/pythonEnvironments/common/environmentIdentifier';
 import { MockWorkspaceConfiguration } from '../../../startPage/mockWorkspaceConfig';
 import { EXTENSION_ROOT_DIR_FOR_TESTS } from '../../../constants';
+import { ActiveResourceService } from '../../../../client/common/application/activeResource';
+import { RESOURCE } from '../../../testing/helper';
 
 suite('Report Issue Command', () => {
     let reportIssueCommandHandler: ReportIssueCommandHandler;
@@ -29,14 +35,17 @@ suite('Report Issue Command', () => {
     let interpreterVersionService: IInterpreterVersionService;
     let interpreterPathService: IInterpreterPathService;
     let identifyEnvironmentStub: sinon.SinonStub;
+    let activeResourceService: IActiveResourceService;
 
     setup(async () => {
         interpreterVersionService = mock(InterpreterVersionService);
         workspaceService = mock(WorkspaceService);
         cmdManager = mock(CommandManager);
         interpreterPathService = mock(InterpreterPathService);
+        activeResourceService = mock(ActiveResourceService);
 
         when(interpreterVersionService.getVersion(anything(), anything())).thenResolve('3.9.0');
+        when(activeResourceService.getActiveResource()).thenReturn(RESOURCE);
         when(workspaceService.getConfiguration('python')).thenReturn(
             new MockWorkspaceConfiguration({
                 languageServer: LanguageServerType.Node,
@@ -52,6 +61,7 @@ suite('Report Issue Command', () => {
             instance(workspaceService),
             instance(interpreterPathService),
             instance(interpreterVersionService),
+            instance(activeResourceService),
         );
 
         when(cmdManager.executeCommand(anyString(), anything())).thenResolve();

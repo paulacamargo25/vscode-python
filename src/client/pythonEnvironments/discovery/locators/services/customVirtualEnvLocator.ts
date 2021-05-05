@@ -61,7 +61,7 @@ async function getCustomVirtualEnvDirs(): Promise<string[]> {
  * and virtualenvwrapper based environments.
  * @param interpreterPath: Absolute path to the interpreter paths.
  */
-export async function getVirtualEnvKind(interpreterPath: string): Promise<PythonEnvKind> {
+async function getVirtualEnvKind(interpreterPath: string): Promise<PythonEnvKind> {
     if (await isPipenvEnvironment(interpreterPath)) {
         return PythonEnvKind.Pipenv;
     }

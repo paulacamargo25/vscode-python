@@ -7,12 +7,10 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import { inject, injectable } from 'inversify';
 import { IExtensionSingleActivationService } from '../../../activation/types';
-import { ICommandManager, IWorkspaceService } from '../types';
+import { IActiveResourceService, ICommandManager, IWorkspaceService } from '../types';
 import { EXTENSION_ROOT_DIR } from '../../../constants';
 import { IInterpreterVersionService } from '../../../interpreter/contracts';
-import { PYTHON_PATH } from '../../../../test/common';
 import { IInterpreterPathService } from '../../types';
-import { RESOURCE } from '../../../../test/testing/helper';
 import { identifyEnvironment } from '../../../pythonEnvironments/common/environmentIdentifier';
 
 /**
@@ -25,6 +23,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
         @inject(IWorkspaceService) private readonly workspaceService: IWorkspaceService,
         @inject(IInterpreterPathService) private readonly interpreterPathService: IInterpreterPathService,
         @inject(IInterpreterVersionService) private readonly interpreterVersionService: IInterpreterVersionService,
+        @inject(IActiveResourceService) private readonly activeResourceService: IActiveResourceService,
     ) {}
 
     public async activate(): Promise<void> {
@@ -35,11 +34,10 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
 
     public async openReportIssue(): Promise<void> {
         const template = await fs.readFile(this.templatePath, 'utf8');
-
-        const pythonVersion = await this.interpreterVersionService.getVersion(PYTHON_PATH, '');
+        const interpreterPath = this.interpreterPathService.get(this.activeResourceService.getActiveResource());
+        const pythonVersion = await this.interpreterVersionService.getVersion(interpreterPath, '');
         const languageServer =
             this.workspaceService.getConfiguration('python').get<string>('languageServer') || 'Not Found';
-        const interpreterPath = this.interpreterPathService.get(RESOURCE);
         const virtualEnv = await identifyEnvironment(interpreterPath);
 
         this.commandManager.executeCommand('workbench.action.openIssueReporter', {
