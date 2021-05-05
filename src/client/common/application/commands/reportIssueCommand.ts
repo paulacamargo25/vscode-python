@@ -7,10 +7,9 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import { inject, injectable } from 'inversify';
 import { IExtensionSingleActivationService } from '../../../activation/types';
-import { IActiveResourceService, ICommandManager, IWorkspaceService } from '../types';
+import { ICommandManager, IWorkspaceService } from '../types';
 import { EXTENSION_ROOT_DIR } from '../../../constants';
-import { IInterpreterVersionService } from '../../../interpreter/contracts';
-import { IInterpreterPathService } from '../../types';
+import { IInterpreterService, IInterpreterVersionService } from '../../../interpreter/contracts';
 import { identifyEnvironment } from '../../../pythonEnvironments/common/environmentIdentifier';
 
 /**
@@ -21,9 +20,8 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
     constructor(
         @inject(ICommandManager) private readonly commandManager: ICommandManager,
         @inject(IWorkspaceService) private readonly workspaceService: IWorkspaceService,
-        @inject(IInterpreterPathService) private readonly interpreterPathService: IInterpreterPathService,
+        @inject(IInterpreterService) private readonly interpreterService: IInterpreterService,
         @inject(IInterpreterVersionService) private readonly interpreterVersionService: IInterpreterVersionService,
-        @inject(IActiveResourceService) private readonly activeResourceService: IActiveResourceService,
     ) {}
 
     public async activate(): Promise<void> {
@@ -34,7 +32,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
 
     public async openReportIssue(): Promise<void> {
         const template = await fs.readFile(this.templatePath, 'utf8');
-        const interpreterPath = this.interpreterPathService.get(this.activeResourceService.getActiveResource());
+        const interpreterPath = (await this.interpreterService.getActiveInterpreter())?.path || 'python';
         const pythonVersion = await this.interpreterVersionService.getVersion(interpreterPath, '');
         const languageServer =
             this.workspaceService.getConfiguration('python').get<string>('languageServer') || 'Not Found';
