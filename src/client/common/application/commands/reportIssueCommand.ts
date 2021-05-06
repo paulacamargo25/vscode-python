@@ -32,7 +32,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
 
     public async openReportIssue(): Promise<void> {
         const template = await fs.readFile(this.templatePath, 'utf8');
-        const interpreterPath = (await this.interpreterService.getActiveInterpreter())?.path || 'python';
+        const interpreterPath = (await this.interpreterService.getActiveInterpreter())?.path || 'not-selected';
         const pythonVersion = await this.interpreterVersionService.getVersion(interpreterPath, '');
         const languageServer =
             this.workspaceService.getConfiguration('python').get<string>('languageServer') || 'Not Found';
