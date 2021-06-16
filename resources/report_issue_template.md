@@ -45,3 +45,17 @@ You can attach such things **after** you create your issue on GitHub.
 
 </p>
 </details>
+
+
+<details>
+
+<summary>User Settings</summary>
+
+<p>
+
+```
+{4}
+```
+
+</p>
+</details>

@@ -23,6 +23,8 @@ import { InterpreterService } from '../../../../client/interpreter/interpreterSe
 import * as Logging from '../../../../client/logging/_global';
 import { Commands } from '../../../../client/common/constants';
 import { AllCommands } from '../../../../client/common/application/commands';
+import { ConfigurationService } from '../../../../client/common/configuration/service';
+import { IConfigurationService } from '../../../../client/common/types';
 
 suite('Report Issue Command', () => {
     let reportIssueCommandHandler: ReportIssueCommandHandler;
@@ -30,6 +32,7 @@ suite('Report Issue Command', () => {
     let workspaceService: IWorkspaceService;
     let interpreterVersionService: IInterpreterVersionService;
     let interpreterService: IInterpreterService;
+    let configurationService: IConfigurationService;
     let identifyEnvironmentStub: sinon.SinonStub;
     let getPythonOutputContentStub: sinon.SinonStub;
 
@@ -38,6 +41,7 @@ suite('Report Issue Command', () => {
         workspaceService = mock(WorkspaceService);
         cmdManager = mock(CommandManager);
         interpreterService = mock(InterpreterService);
+        configurationService = mock(ConfigurationService);
 
         when(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).thenResolve();
         when(interpreterVersionService.getVersion(anything(), anything())).thenResolve('3.9.0');
@@ -47,6 +51,15 @@ suite('Report Issue Command', () => {
             }),
         );
         when(interpreterService.getActiveInterpreter(anything())).thenResolve(undefined);
+        when(configurationService.getSettings()).thenReturn({
+            experiments: {
+                enabled: true,
+                optInto: [],
+                optOutFrom: [],
+            },
+            insidersChannel: 'off',
+            initialize: true,
+        } as any);
         identifyEnvironmentStub = sinon.stub(EnvIdentifier, 'identifyEnvironment');
         identifyEnvironmentStub.resolves(PythonEnvKind.Venv);
 
@@ -59,6 +72,7 @@ suite('Report Issue Command', () => {
             instance(workspaceService),
             instance(interpreterService),
             instance(interpreterVersionService),
+            instance(configurationService),
         );
         await reportIssueCommandHandler.activate();
     });

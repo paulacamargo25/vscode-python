@@ -45,3 +45,25 @@ Python Output
 
 </p>
 </details>
+
+
+<details>
+
+<summary>User Settings</summary>
+
+<p>
+
+```
+
+experiments
+	enabled: true
+	optInto: []
+	optOutFrom: []
+
+
+insidersChannel: "off"
+
+```
+
+</p>
+</details>
