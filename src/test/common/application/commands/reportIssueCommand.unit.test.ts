@@ -59,6 +59,7 @@ suite('Report Issue Command', () => {
             },
             insidersChannel: 'off',
             initialize: true,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
         identifyEnvironmentStub = sinon.stub(EnvIdentifier, 'identifyEnvironment');
         identifyEnvironmentStub.resolves(PythonEnvKind.Venv);
@@ -104,6 +105,7 @@ suite('Report Issue Command', () => {
         verify(cmdManager.registerCommand(Commands.ReportIssue, anything(), anything())).once();
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
         expect(args[0]).to.be.equal('workbench.action.openIssueReporter');
-        expect(args[1].issueBody).to.be.equal(expectedIssueBody);
+        const actual = args[1].issueBody;
+        expect(actual).to.be.equal(expectedIssueBody);
     });
 });

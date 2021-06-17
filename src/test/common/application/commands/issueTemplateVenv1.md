@@ -6,7 +6,6 @@
 
 [**NOTE**: If you suspect that your issue is related to the Microsoft Python Language Server (`python.languageServer: 'Microsoft'`), please download our new language server [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) from the VS Code marketplace to see if that fixes your issue]
 
-
 ## Expected
 
 XXX
@@ -39,13 +38,13 @@ You can attach such things **after** you create your issue on GitHub.
 <p>
 
 <!-- Run the "Python: Show Output" command to see the requested output. --->
+
 ```
 Python Output
 ```
 
 </p>
 </details>
-
 
 <details>
 
@@ -59,7 +58,6 @@ experiments
 	enabled: true
 	optInto: []
 	optOutFrom: []
-
 
 insidersChannel: "off"
 

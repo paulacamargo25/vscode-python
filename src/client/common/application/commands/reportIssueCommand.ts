@@ -4,6 +4,7 @@
 'use strict';
 
 import * as fs from 'fs-extra';
+import * as os from 'os';
 import * as path from 'path';
 import { inject, injectable } from 'inversify';
 import { IExtensionSingleActivationService } from '../../../activation/types';
@@ -45,10 +46,16 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
             const argSetting = argSettings[property];
             if (argSetting) {
                 if (typeof argSetting === 'boolean') {
-                    userSettings = userSettings.concat('\n', property, ': ', JSON.stringify(settings[property]), '\n');
+                    userSettings = userSettings.concat(
+                        os.EOL,
+                        property,
+                        ': ',
+                        JSON.stringify(settings[property]),
+                        os.EOL,
+                    );
                 } else if (typeof argSetting === 'object') {
-                    userSettings = userSettings.concat('\n', property, '\n');
-                    const argSettingsDict = settings[property];
+                    userSettings = userSettings.concat(os.EOL, property, os.EOL);
+                    const argSettingsDict = (settings[property] as unknown) as Record<string, unknown>;
                     if (typeof argSettingsDict === 'object') {
                         Object.keys(argSetting).forEach((item) => {
                             const prop = argSetting[item];
@@ -58,7 +65,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
                                     item,
                                     ': ',
                                     JSON.stringify(argSettingsDict[item]),
-                                    '\n',
+                                    os.EOL,
                                 );
                             }
                         });
@@ -73,7 +80,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
         const languageServer =
             this.workspaceService.getConfiguration('python').get<string>('languageServer') || 'Not Found';
         const virtualEnv = await identifyEnvironment(interpreterPath);
-        console.log(template.format(pythonVersion, virtualEnv, languageServer, pythonLogs, userSettings));
+
         this.commandManager.executeCommand('workbench.action.openIssueReporter', {
             extensionId: 'ms-python.python',
             issueBody: template.format(pythonVersion, virtualEnv, languageServer, pythonLogs, userSettings),
