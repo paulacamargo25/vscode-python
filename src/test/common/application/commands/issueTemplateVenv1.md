@@ -61,6 +61,8 @@ experiments
 
 insidersChannel: "off"
 
+venvPath: "<placeholder>"
+
 ```
 
 </p>

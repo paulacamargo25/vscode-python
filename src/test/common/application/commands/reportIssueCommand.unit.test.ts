@@ -59,6 +59,7 @@ suite('Report Issue Command', () => {
             },
             insidersChannel: 'off',
             initialize: true,
+            venvPath: 'path',
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
         identifyEnvironmentStub = sinon.stub(EnvIdentifier, 'identifyEnvironment');

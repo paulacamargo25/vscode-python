@@ -45,31 +45,21 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
         keys.forEach((property) => {
             const argSetting = argSettings[property];
             if (argSetting) {
-                if (typeof argSetting === 'boolean') {
-                    userSettings = userSettings.concat(
-                        os.EOL,
-                        property,
-                        ': ',
-                        JSON.stringify(settings[property]),
-                        os.EOL,
-                    );
-                } else if (typeof argSetting === 'object') {
+                if (typeof argSetting === 'object') {
                     userSettings = userSettings.concat(os.EOL, property, os.EOL);
                     const argSettingsDict = (settings[property] as unknown) as Record<string, unknown>;
                     if (typeof argSettingsDict === 'object') {
                         Object.keys(argSetting).forEach((item) => {
                             const prop = argSetting[item];
                             if (prop) {
-                                userSettings = userSettings.concat(
-                                    '\t',
-                                    item,
-                                    ': ',
-                                    JSON.stringify(argSettingsDict[item]),
-                                    os.EOL,
-                                );
+                                const value = prop === true ? JSON.stringify(argSettingsDict[item]) : '"<placeholder>"';
+                                userSettings = userSettings.concat('\t', item, ': ', value, os.EOL);
                             }
                         });
                     }
+                } else {
+                    const value = argSetting === true ? JSON.stringify(settings[property]) : '"<placeholder>"';
+                    userSettings = userSettings.concat(os.EOL, property, ': ', value, os.EOL);
                 }
             }
         });
