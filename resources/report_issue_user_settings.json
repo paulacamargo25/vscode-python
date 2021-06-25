@@ -97,8 +97,20 @@
         "yapfArgs": "placeholder",
         "yapfPath": "placeholder"
     },
-    "autoComplete": true,
-    "workspaceSymbols": true,
+    "autoComplete": {
+        "addBrackets": true,
+        "extraPaths": "placeholder",
+        "showAdvancedMembers": true,
+        "typeshedPaths": "placeholder"
+    },
+    "workspaceSymbols": {
+        "ctagsPath":"placeholder",
+        "enabled": true,
+        "exclusionPatterns": true,
+        "rebuildOnFileSave": true,
+        "rebuildOnStart": true,
+        "tagFilePath": "placeholder"
+    },
     "testing": {
         "cwd": "placeholder",
         "debugPort": true,

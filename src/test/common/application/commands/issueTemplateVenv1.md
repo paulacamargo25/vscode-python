@@ -55,9 +55,9 @@ Python Output
 ```
 
 experiments
-	enabled: true
-	optInto: []
-	optOutFrom: []
+• enabled: true
+• optInto: []
+• optOutFrom: []
 
 insidersChannel: "off"
 

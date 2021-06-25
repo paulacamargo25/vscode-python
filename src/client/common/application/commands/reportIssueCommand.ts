@@ -53,7 +53,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
                             const prop = argSetting[item];
                             if (prop) {
                                 const value = prop === true ? JSON.stringify(argSettingsDict[item]) : '"<placeholder>"';
-                                userSettings = userSettings.concat('\t', item, ': ', value, os.EOL);
+                                userSettings = userSettings.concat('• ', item, ': ', value, os.EOL);
                             }
                         });
                     }
