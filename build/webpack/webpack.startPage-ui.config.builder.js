@@ -8,7 +8,6 @@
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FixDefaultImportPlugin = require('webpack-fix-default-import-plugin');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -104,7 +103,7 @@ function buildConfiguration(bundle) {
             minimizer: isProdBuild ? [new TerserPlugin({ sourceMap: true })] : [],
             // (doesn't re-generate bundles unnecessarily)
             // https://webpack.js.org/configuration/optimization/#optimizationmoduleids.
-            moduleIds: 'hashed',
+            moduleIds: 'deterministic',
             splitChunks: {
                 chunks: 'all',
                 cacheGroups: {
@@ -178,25 +177,20 @@ function buildConfiguration(bundle) {
             },
             chunkIds: 'named',
         },
-        node: {
-            fs: 'empty',
-        },
         plugins: [
-            new FixDefaultImportPlugin(),
-            new CopyWebpackPlugin(
-                [
-                    { from: './**/*.png', to: '.' },
-                    { from: './**/*.svg', to: '.' },
-                    { from: './**/*.css', to: '.' },
-                    { from: './**/*theme*.json', to: '.' },
+            new CopyWebpackPlugin({
+                patterns: [
+                    { from: './**/*.png', to: '.', context: 'src', noErrorOnMissing: true },
+                    { from: './**/*.svg', to: '.', context: 'src', noErrorOnMissing: true },
+                    { from: './**/*.css', to: '.', context: 'src', noErrorOnMissing: true },
+                    { from: './**/*theme*.json', to: '.', context: 'src', noErrorOnMissing: true },
                     {
                         from: path.join(constants.ExtensionRootDir, 'node_modules/requirejs/require.js'),
                         to: path.join(constants.ExtensionRootDir, 'out', 'startPage-ui', bundleFolder),
                     },
                     ...filesToCopy,
                 ],
-                { context: 'src' },
-            ),
+            }),
             new webpack.optimize.LimitChunkCountPlugin({
                 maxChunks: 100,
             }),
@@ -206,6 +200,7 @@ function buildConfiguration(bundle) {
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
             extensions: ['.ts', '.tsx', '.js', '.json', '.svg'],
+            fallback: { path: require.resolve('path-browserify') },
         },
 
         module: {
