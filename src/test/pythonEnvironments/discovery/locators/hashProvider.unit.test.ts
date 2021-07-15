@@ -6,7 +6,7 @@
 import { expect, use } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import * as sinon from 'sinon';
-import * as fsapi from 'fs-extra';
+import fsapi from 'fs-extra';
 import * as hashApi from '../../../../client/common/platform/fileSystem';
 import { getInterpreterHash } from '../../../../client/pythonEnvironments/discovery/locators/services/hashProvider';
 

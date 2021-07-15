@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import assert from 'assert';
-import * as fsapi from 'fs-extra';
+import fsapi from 'fs-extra';
 import * as path from 'path';
 import * as sinon from 'sinon';
 import { ImportMock } from 'ts-mock-imports';
