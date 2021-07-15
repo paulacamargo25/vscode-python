@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import * as fs from 'fs';
-import * as fsapi from 'fs-extra';
+import fsapi from 'fs-extra';
 import * as path from 'path';
 import { uniq } from 'lodash';
 import { getSearchPathEntries } from '../../common/utils/exec';

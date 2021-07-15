@@ -1,4 +1,4 @@
-import * as fsapi from 'fs-extra';
+import fsapi from 'fs-extra';
 import { inject, injectable } from 'inversify';
 import * as path from 'path';
 import { traceError } from '../../../common/logger';

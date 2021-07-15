@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as fsapi from 'fs-extra';
+import fsapi from 'fs-extra';
 import * as path from 'path';
 import { traceVerbose } from '../../../../common/logger';
 import { getHashString } from '../../../../common/platform/fileSystem';
