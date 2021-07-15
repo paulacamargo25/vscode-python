@@ -5,7 +5,7 @@
 
 import { inject, injectable } from 'inversify';
 import { parse, ParseError } from 'jsonc-parser';
-import requestTypes from 'request';
+import request from 'request';
 import { IHttpClient } from '../../common/types';
 import { IServiceContainer } from '../../ioc/types';
 import { IWorkspaceService } from '../application/types';
@@ -13,14 +13,13 @@ import { traceError } from '../logger';
 
 @injectable()
 export class HttpClient implements IHttpClient {
-    public readonly requestOptions: requestTypes.CoreOptions;
+    public readonly requestOptions: request.CoreOptions;
     constructor(@inject(IServiceContainer) serviceContainer: IServiceContainer) {
         const workspaceService = serviceContainer.get<IWorkspaceService>(IWorkspaceService);
         this.requestOptions = { proxy: workspaceService.getConfiguration('http').get('proxy', '') };
     }
 
-    public async downloadFile(uri: string): Promise<requestTypes.Request> {
-        const request = ((await import('request')) as any) as typeof requestTypes;
+    public async downloadFile(uri: string): Promise<request.Request> {
         return request(uri, this.requestOptions);
     }
 
@@ -43,7 +42,6 @@ export class HttpClient implements IHttpClient {
     }
 
     public async exists(uri: string): Promise<boolean> {
-        const request = require('request') as typeof requestTypes;
         return new Promise<boolean>((resolve) => {
             try {
                 request
@@ -56,7 +54,6 @@ export class HttpClient implements IHttpClient {
         });
     }
     private async getContents(uri: string): Promise<string> {
-        const request = require('request') as typeof requestTypes;
         return new Promise<string>((resolve, reject) => {
             request(uri, this.requestOptions, (ex, response, body) => {
                 if (ex) {
