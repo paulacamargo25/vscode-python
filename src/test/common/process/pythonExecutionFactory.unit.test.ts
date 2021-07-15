@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { expect } from 'chai';
 import { SemVer } from 'semver';
 import * as sinon from 'sinon';

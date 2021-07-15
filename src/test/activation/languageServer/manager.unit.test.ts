@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 import { expect, use } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised from 'chai-as-promised';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { Disposable, Uri } from 'vscode';
 import { LanguageClientOptions } from 'vscode-languageclient/node';

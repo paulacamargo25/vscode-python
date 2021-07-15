@@ -4,7 +4,7 @@
 'use strict';
 
 import { expect, use } from 'chai';
-import * as chaisAsPromised from 'chai-as-promised';
+import chaisAsPromised from 'chai-as-promised';
 import { anything, capture, instance, mock, verify, when } from 'ts-mockito';
 import { Uri } from 'vscode';
 import { TestFileCodeNavigator } from '../../../client/testing/navigation/fileNavigator';

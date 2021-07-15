@@ -4,7 +4,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as path from 'path';
 import * as sinon from 'sinon';
 import { anything, deepEqual, instance, mock, verify, when } from 'ts-mockito';

@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { EXTENSION_ROOT_DIR } from '../../../../client/common/constants';

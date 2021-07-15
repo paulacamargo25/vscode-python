@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as minimatch from 'minimatch';
+import minimatch from 'minimatch';
 import * as path from 'path';
 import { FileChangeType, watchLocationForPattern } from '../../common/platform/fileSystemWatcher';
 import { getOSType, OSType } from '../../common/utils/platform';

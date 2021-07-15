@@ -5,7 +5,7 @@
 
 import { expect } from 'chai';
 import * as fs from 'fs';
-import * as glob from 'glob';
+import glob from 'glob';
 import * as path from 'path';
 import { ApplicationEnvironment } from '../client/common/application/applicationEnvironment';
 import { IApplicationEnvironment } from '../client/common/application/types';

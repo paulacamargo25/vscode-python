@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { sep } from 'path';
 import { Uri } from 'vscode';
 import { IS_WINDOWS } from '../../client/common/platform/constants';

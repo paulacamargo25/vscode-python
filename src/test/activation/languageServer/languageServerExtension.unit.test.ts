@@ -4,7 +4,7 @@
 'use strict';
 
 import { use } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised from 'chai-as-promised';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 import * as typemoq from 'typemoq';
 import { LanguageServerExtension } from '../../../client/activation/languageServer/languageServerExtension';

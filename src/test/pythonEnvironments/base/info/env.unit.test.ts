@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { Architecture } from '../../../../client/common/utils/platform';
 import { parseVersionInfo } from '../../../../client/common/utils/version';
 import { PythonEnvInfo, PythonDistroInfo, PythonEnvKind } from '../../../../client/pythonEnvironments/base/info';

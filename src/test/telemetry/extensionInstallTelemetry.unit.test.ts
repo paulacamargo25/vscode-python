@@ -1,4 +1,4 @@
-import * as assert from 'assert';
+import assert from 'assert';
 import * as sinon from 'sinon';
 import { anyString, instance, mock, when } from 'ts-mockito';
 import { FileSystem } from '../../client/common/platform/fileSystem';

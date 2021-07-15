@@ -1,4 +1,4 @@
-import * as assert from 'assert';
+import assert from 'assert';
 import * as fsextra from 'fs-extra';
 import * as path from 'path';
 import * as sinon from 'sinon';

@@ -4,7 +4,7 @@
 'use strict';
 
 import { expect, use } from 'chai';
-import * as chaiPromise from 'chai-as-promised';
+import chaiPromise from 'chai-as-promised';
 import * as typeMoq from 'typemoq';
 import { Uri, WorkspaceConfiguration, WorkspaceFolder } from 'vscode';
 import { IWorkspaceService } from '../../../../client/common/application/types';

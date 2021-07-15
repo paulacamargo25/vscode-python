@@ -7,7 +7,7 @@
 import * as child_process from 'child_process';
 import { ReactWrapper } from 'enzyme';
 import * as fs from 'fs-extra';
-import * as glob from 'glob';
+import glob from 'glob';
 import { interfaces } from 'inversify';
 import * as os from 'os';
 import * as path from 'path';

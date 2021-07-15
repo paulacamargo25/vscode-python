@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { inject, injectable } from 'inversify';
 import * as path from 'path';
 import { SemVer } from 'semver';

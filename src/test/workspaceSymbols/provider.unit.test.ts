@@ -3,9 +3,9 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { expect, use } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised from 'chai-as-promised';
 import * as path from 'path';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { CancellationTokenSource, Uri } from 'vscode';

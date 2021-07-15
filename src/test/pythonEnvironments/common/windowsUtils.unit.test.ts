@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { matchPythonBinFilename } from '../../../client/pythonEnvironments/common/windowsUtils';
 
 suite('Windows Utils tests', () => {

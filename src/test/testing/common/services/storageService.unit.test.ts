@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { copyDesiredTestResults } from '../../../../client/testing/common/testUtils';
 import {
     FlattenedTestFunction,

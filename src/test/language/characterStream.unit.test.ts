@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 
 import Char from 'typescript-char';
 import { CharacterStream } from '../../client/language/characterStream';

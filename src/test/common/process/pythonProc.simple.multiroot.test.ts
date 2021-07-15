@@ -4,7 +4,7 @@
 'use strict';
 
 import { expect, use } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised from 'chai-as-promised';
 import { execFile } from 'child_process';
 import * as fs from 'fs-extra';
 import { EOL } from 'os';

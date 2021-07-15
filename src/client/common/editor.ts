@@ -1,6 +1,6 @@
 import { Diff, diff_match_patch } from 'diff-match-patch';
 import { injectable } from 'inversify';
-import * as md5 from 'md5';
+import md5 from 'md5';
 import { EOL } from 'os';
 import * as path from 'path';
 import { Position, Range, TextDocument, TextEdit, Uri, WorkspaceEdit } from 'vscode';

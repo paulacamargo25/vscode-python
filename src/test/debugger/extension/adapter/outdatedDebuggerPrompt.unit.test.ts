@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
 import { DebugSession, WorkspaceFolder } from 'vscode';
 import { DebugProtocol } from 'vscode-debugprotocol';

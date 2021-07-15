@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 // eslint-disable-next-line max-classes-per-file
-import * as assert from 'assert';
+import assert from 'assert';
 import * as path from 'path';
 import { SemVer } from 'semver';
 import * as TypeMoq from 'typemoq';

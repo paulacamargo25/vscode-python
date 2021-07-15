@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { instance, mock, when } from 'ts-mockito';
 import * as TypeMoq from 'typemoq';
 import { Uri } from 'vscode';

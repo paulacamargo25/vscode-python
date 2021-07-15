@@ -16,10 +16,10 @@ and spawning the tests (mimic user starting tests from command line), this way w
 process.env.VSC_PYTHON_PERF_TEST = '1';
 
 import { spawn } from 'child_process';
-import * as download from 'download';
+import download from 'download';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import * as request from 'request';
+import request from 'request';
 import { LanguageServerType } from '../client/activation/types';
 import { EXTENSION_ROOT_DIR, PVSC_EXTENSION_ID } from '../client/common/constants';
 import { unzip } from './common';

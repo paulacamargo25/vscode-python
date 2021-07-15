@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as path from 'path';
 import { deepEqual, instance, mock, when } from 'ts-mockito';
 import * as typemoq from 'typemoq';

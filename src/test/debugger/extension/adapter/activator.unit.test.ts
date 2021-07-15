@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { IExtensionSingleActivationService } from '../../../../client/activation/types';
 import { DebugService } from '../../../../client/common/application/debugService';

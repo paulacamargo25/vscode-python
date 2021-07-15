@@ -5,7 +5,7 @@
 
 import { fail } from 'assert';
 import { expect, use } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised from 'chai-as-promised';
 import * as TypeMoq from 'typemoq';
 import { OutputChannel, Uri } from 'vscode';
 import '../../../client/common/extensions';

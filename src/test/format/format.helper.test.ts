@@ -1,4 +1,4 @@
-import * as assert from 'assert';
+import assert from 'assert';
 import * as TypeMoq from 'typemoq';
 import { IConfigurationService, IFormattingSettings, Product } from '../../client/common/types';
 import * as EnumEx from '../../client/common/utils/enum';

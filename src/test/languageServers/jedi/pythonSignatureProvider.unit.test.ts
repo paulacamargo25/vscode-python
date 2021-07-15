@@ -4,7 +4,7 @@
 'use strict';
 
 import { assert, expect, use } from 'chai';
-import * as chaipromise from 'chai-as-promised';
+import chaipromise from 'chai-as-promised';
 import * as TypeMoq from 'typemoq';
 import { CancellationToken, Position, SignatureHelp, TextDocument, TextLine, Uri } from 'vscode';
 import { JediFactory } from '../../../client/languageServices/jediProxyFactory';

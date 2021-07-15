@@ -4,8 +4,8 @@
 // Most of the source is in node_modules/vscode/lib/testrunner.js
 
 'use strict';
-import * as glob from 'glob';
-import * as Mocha from 'mocha';
+import glob from 'glob';
+import Mocha from 'mocha';
 import * as path from 'path';
 import { MAX_EXTENSION_ACTIVATION_TIME } from './constants';
 import { initialize } from './initialize';

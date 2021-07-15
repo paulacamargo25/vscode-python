@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { DiagnosticSeverity } from 'vscode';
 import * as localize from '../../../client/common/utils/localize';
 import { UnitTestDiagnosticService } from '../../../client/testing/common/services/unitTestDiagnosticService';

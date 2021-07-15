@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as TypeMoq from 'typemoq';
 import { PlatformData, PlatformLSExecutables } from '../../../client/activation/languageServer/platformData';
 import { IPlatformService } from '../../../client/common/platform/types';
