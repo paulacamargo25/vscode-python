@@ -3,9 +3,9 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as fs from 'fs-extra';
-import * as glob from 'glob';
+import glob from 'glob';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { JUPYTER_EXTENSION_ID } from '../../client/common/constants';

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { Uri } from 'vscode';
 import { PythonEnvKind } from '../../../client/pythonEnvironments/base/info';
 import { PythonEnvsChangedEvent, PythonEnvsWatcher } from '../../../client/pythonEnvironments/base/watcher';

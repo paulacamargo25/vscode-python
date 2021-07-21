@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { TextRangeCollection } from '../../client/language/textRangeCollection';
 import { TextRange } from '../../client/language/types';
 

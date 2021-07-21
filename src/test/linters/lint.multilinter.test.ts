@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as path from 'path';
 import { ConfigurationTarget, DiagnosticCollection, Uri, window, workspace } from 'vscode';
 import { LanguageServerType } from '../../client/activation/types';

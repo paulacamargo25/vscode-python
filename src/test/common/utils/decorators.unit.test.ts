@@ -4,7 +4,7 @@
 'use strict';
 
 import { expect, use } from 'chai';
-import * as chaiPromise from 'chai-as-promised';
+import chaiPromise from 'chai-as-promised';
 import { clearCache } from '../../../client/common/utils/cacheUtils';
 import { cache, makeDebounceAsyncDecorator, makeDebounceDecorator } from '../../../client/common/utils/decorators';
 import { sleep } from '../../core';

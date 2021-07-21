@@ -6,7 +6,7 @@
 import { assert, expect, use } from 'chai';
 import * as TypeMoq from 'typemoq';
 import { Extension, Uri } from 'vscode';
-import * as chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised from 'chai-as-promised';
 import {
     ILanguageServerFolder,
     ILSExtensionApi,

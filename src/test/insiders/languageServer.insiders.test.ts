@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { expect } from 'chai';
 import * as path from 'path';
 import * as vscode from 'vscode';

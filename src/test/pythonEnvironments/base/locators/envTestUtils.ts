@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { exec } from 'child_process';
 import { zip } from 'lodash';
 import { promisify } from 'util';

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as sinon from 'sinon';
 import { ImportMock } from 'ts-mock-imports';
 import { anything, instance, mock, verify, when } from 'ts-mockito';

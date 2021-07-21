@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as path from 'path';
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import * as platformApis from '../../../../client/common/utils/platform';
 import * as externalDependencies from '../../../../client/pythonEnvironments/common/externalDependencies';
 import { isPipenvEnvironmentRelatedToFolder } from '../../../../client/pythonEnvironments/common/environmentManagers/pipenv';
