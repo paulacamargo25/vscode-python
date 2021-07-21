@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as fs from 'fs-extra';
-import * as glob from 'glob';
+import glob from 'glob';
 import * as path from 'path';
 import { coerce, SemVer } from 'semver';
 import { ConfigurationTarget, Event, TextDocument, Uri } from 'vscode';

@@ -5,7 +5,7 @@
 
 import { inject, injectable } from 'inversify';
 import { parse, ParseError } from 'jsonc-parser';
-import type * as requestTypes from 'request';
+import requestTypes from 'request';
 import { IHttpClient } from '../../common/types';
 import { IServiceContainer } from '../../ioc/types';
 import { IWorkspaceService } from '../application/types';

@@ -3,7 +3,7 @@
 
 // eslint-disable-next-line max-classes-per-file
 import { injectable, unmanaged } from 'inversify';
-import * as md5 from 'md5';
+import md5 from 'md5';
 import { Disposable, Event, EventEmitter, Uri } from 'vscode';
 import { IWorkspaceService } from '../../../../common/application/types';
 import '../../../../common/extensions';

@@ -1,4 +1,4 @@
-import * as assert from 'assert';
+import assert from 'assert';
 import { expect } from 'chai';
 import * as fs from 'fs';
 import { EOL } from 'os';

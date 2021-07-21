@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as pathModule from 'path';
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import * as platformApis from '../../../../client/common/utils/platform';
 import * as externalDependencies from '../../../../client/pythonEnvironments/common/externalDependencies';
 import {

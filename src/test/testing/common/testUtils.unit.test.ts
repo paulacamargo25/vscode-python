@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as path from 'path';
 import { Uri } from 'vscode';
 import { getNamesAndValues } from '../../../client/common/utils/enum';

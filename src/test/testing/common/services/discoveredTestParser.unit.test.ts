@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import * as sinon from 'sinon';
 import * as typemoq from 'typemoq';
 import { Uri } from 'vscode';

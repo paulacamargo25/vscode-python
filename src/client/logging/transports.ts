@@ -10,7 +10,7 @@ import { EOL } from 'os';
 import * as path from 'path';
 import { OutputChannel } from 'vscode';
 import * as winston from 'winston';
-import * as Transport from 'winston-transport';
+import Transport from 'winston-transport';
 import { LogLevel, resolveLevel } from './levels';
 import { Arguments } from './util';
 

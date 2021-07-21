@@ -4,7 +4,7 @@
 'use strict';
 
 import { use } from 'chai';
-import * as chaisAsPromised from 'chai-as-promised';
+import chaisAsPromised from 'chai-as-promised';
 import { anything, instance, mock, verify } from 'ts-mockito';
 import { IDocumentSymbolProvider } from '../../../client/common/types';
 import { ServiceManager } from '../../../client/ioc/serviceManager';

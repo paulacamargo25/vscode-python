@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 'use strict';
-import * as cors from 'cors';
-import * as express from 'express';
+import cors from 'cors';
+import express from 'express';
 import * as http from 'http';
 import { IDisposable } from 'monaco-editor';
 import * as path from 'path';
-import * as socketIO from 'socket.io';
+import socketIO from 'socket.io';
 import { env, Event, EventEmitter, Uri, WebviewOptions, WebviewPanel, window } from 'vscode';
 import { IWebviewPanel, IWebviewPanelOptions } from '../../client/common/application/types';
 import { IDisposableRegistry } from '../../client/common/types';

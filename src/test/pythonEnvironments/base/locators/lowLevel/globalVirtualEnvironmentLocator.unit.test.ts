@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import * as path from 'path';
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import * as fsWatcher from '../../../../../client/common/platform/fileSystemWatcher';
 import * as platformUtils from '../../../../../client/common/utils/platform';
 import { PythonEnvKind } from '../../../../../client/pythonEnvironments/base/info';

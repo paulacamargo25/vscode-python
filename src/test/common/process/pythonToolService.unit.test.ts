@@ -3,9 +3,9 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { expect, use } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised from 'chai-as-promised';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { Uri } from 'vscode';
 import { ProcessService } from '../../../client/common/process/proc';

@@ -4,7 +4,7 @@
 'use strict';
 
 import { expect, use } from 'chai';
-import * as chaipromise from 'chai-as-promised';
+import chaipromise from 'chai-as-promised';
 import * as path from 'path';
 import * as typeMoq from 'typemoq';
 import { CancellationToken, Uri } from 'vscode';

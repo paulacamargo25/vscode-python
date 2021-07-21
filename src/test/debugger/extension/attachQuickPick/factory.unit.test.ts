@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { anything, instance, mock, verify } from 'ts-mockito';
 import { Disposable } from 'vscode';
 import { ApplicationShell } from '../../../../client/common/application/applicationShell';

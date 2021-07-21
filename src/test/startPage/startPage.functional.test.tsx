@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { ComponentClass, mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 import { IStartPage } from '../../client/common/startPage/types';

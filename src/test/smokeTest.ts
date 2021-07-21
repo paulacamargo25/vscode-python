@@ -8,7 +8,7 @@ process.env.VSC_PYTHON_SMOKE_TEST = '1';
 
 import { spawn } from 'child_process';
 import * as fs from 'fs-extra';
-import * as glob from 'glob';
+import glob from 'glob';
 import * as path from 'path';
 import { unzip } from './common';
 import { EXTENSION_ROOT_DIR_FOR_TESTS, SMOKE_TEST_EXTENSIONS_DIR } from './constants';

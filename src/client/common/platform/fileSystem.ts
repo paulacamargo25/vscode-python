@@ -6,7 +6,7 @@
 
 import { createHash } from 'crypto';
 import * as fs from 'fs-extra';
-import * as glob from 'glob';
+import glob from 'glob';
 import { injectable } from 'inversify';
 import { promisify } from 'util';
 import * as vscode from 'vscode';

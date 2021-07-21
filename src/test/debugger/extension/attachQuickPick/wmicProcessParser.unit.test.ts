@@ -3,7 +3,7 @@
 
 'use strict';
 
-import * as assert from 'assert';
+import assert from 'assert';
 import { IAttachItem } from '../../../../client/debugger/extension/attachQuickPick/types';
 import { WmicProcessParser } from '../../../../client/debugger/extension/attachQuickPick/wmicProcessParser';
 
