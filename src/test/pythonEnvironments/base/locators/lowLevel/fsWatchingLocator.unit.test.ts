@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import assert from 'assert';
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import { getOSType, OSType } from '../../../../../client/common/utils/platform';
 import { Disposables } from '../../../../../client/common/utils/resourceLifecycle';
 import { PythonEnvInfo, PythonEnvKind } from '../../../../../client/pythonEnvironments/base/info';
