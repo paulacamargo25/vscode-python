@@ -1,4 +1,4 @@
-import fsapi from 'fs-extra';
+import * as fsapi from 'fs-extra';
 import * as path from 'path';
 import { traceVerbose } from '../../../common/logger';
 import { getEnvironmentVariable, getOSType, getUserHomeDir, OSType } from '../../../common/utils/platform';
