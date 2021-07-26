@@ -3,12 +3,15 @@
 
 'use strict';
 
-import minimatch from 'minimatch';
+import minimatchTypes from 'minimatch';
 import * as path from 'path';
 import { traceVerbose } from '../../common/logger';
 import { FileChangeType, watchLocationForPattern } from '../../common/platform/fileSystemWatcher';
 import { getOSType, OSType } from '../../common/utils/platform';
 import { IDisposable } from '../../common/utils/resourceLifecycle';
+
+// eslint-disable-next-line global-require
+const minimatch = require('minimatch') as typeof minimatchTypes;
 
 const [executable, binName] = getOSType() === OSType.Windows ? ['python.exe', 'Scripts'] : ['python', 'bin'];
 

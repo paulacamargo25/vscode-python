@@ -2,13 +2,15 @@
 // Licensed under the MIT License.
 
 import * as fsapi from 'fs-extra';
-import minimatch from 'minimatch';
+import minimatchTypes from 'minimatch';
 import * as path from 'path';
 import { PythonEnvKind } from '../../info';
 import { IPythonEnvsIterator, BasicEnvInfo } from '../../locator';
 import { FSWatchingLocator } from './fsWatchingLocator';
 import { PythonEnvStructure } from '../../../common/pythonBinariesWatcher';
 import { isStorePythonInstalled, getWindowsStoreAppsRoot } from '../../../common/environmentManagers/windowsStoreEnv';
+// eslint-disable-next-line global-require
+const minimatch = require('minimatch') as typeof minimatchTypes;
 
 /**
  * This is a glob pattern which matches following file names:
