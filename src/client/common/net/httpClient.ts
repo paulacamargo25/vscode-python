@@ -5,7 +5,7 @@
 
 import { inject, injectable } from 'inversify';
 import { parse, ParseError } from 'jsonc-parser';
-import request from 'request';
+import type * as requestTypes from 'request';
 import { IHttpClient } from '../../common/types';
 import { IServiceContainer } from '../../ioc/types';
 import { IWorkspaceService } from '../application/types';
@@ -13,13 +13,14 @@ import { traceError } from '../logger';
 
 @injectable()
 export class HttpClient implements IHttpClient {
-    public readonly requestOptions: request.CoreOptions;
+    public readonly requestOptions: requestTypes.CoreOptions;
     constructor(@inject(IServiceContainer) serviceContainer: IServiceContainer) {
         const workspaceService = serviceContainer.get<IWorkspaceService>(IWorkspaceService);
         this.requestOptions = { proxy: workspaceService.getConfiguration('http').get('proxy', '') };
     }
 
-    public async downloadFile(uri: string): Promise<request.Request> {
+    public async downloadFile(uri: string): Promise<requestTypes.Request> {
+        const request = require('request');
         return request(uri, this.requestOptions);
     }
 
@@ -42,11 +43,12 @@ export class HttpClient implements IHttpClient {
     }
 
     public async exists(uri: string): Promise<boolean> {
+        const request = require('request');
         return new Promise<boolean>((resolve) => {
             try {
                 request
                     .get(uri, this.requestOptions)
-                    .on('response', (response) => resolve(response.statusCode === 200))
+                    .on('response', (response: { statusCode: number }) => resolve(response.statusCode === 200))
                     .on('error', () => resolve(false));
             } catch {
                 resolve(false);
@@ -54,18 +56,26 @@ export class HttpClient implements IHttpClient {
         });
     }
     private async getContents(uri: string): Promise<string> {
+        const request = require('request');
+
         return new Promise<string>((resolve, reject) => {
-            request(uri, this.requestOptions, (ex, response, body) => {
-                if (ex) {
-                    return reject(ex);
-                }
-                if (response.statusCode !== 200) {
-                    return reject(
-                        new Error(`Failed with status ${response.statusCode}, ${response.statusMessage}, Uri ${uri}`),
-                    );
-                }
-                resolve(body);
-            });
+            request(
+                uri,
+                this.requestOptions,
+                (ex: any, response: { statusCode: number; statusMessage: any }, body: string | PromiseLike<string>) => {
+                    if (ex) {
+                        return reject(ex);
+                    }
+                    if (response.statusCode !== 200) {
+                        return reject(
+                            new Error(
+                                `Failed with status ${response.statusCode}, ${response.statusMessage}, Uri ${uri}`,
+                            ),
+                        );
+                    }
+                    resolve(body);
+                },
+            );
         });
     }
 }
