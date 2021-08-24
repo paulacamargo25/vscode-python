@@ -2014,6 +2014,7 @@
         "string-argv": "^0.3.1",
         "strip-ansi": "^5.2.0",
         "sudo-prompt": "^8.2.0",
+        "tar": "^6.1.10",
         "tmp": "^0.0.29",
         "tree-kill": "^1.2.2",
         "typescript-char": "^0.0.0",
