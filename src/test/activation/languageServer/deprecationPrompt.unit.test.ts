@@ -4,7 +4,7 @@
 'use strict';
 
 import assert from 'assert';
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { ConfigurationTarget, WorkspaceConfiguration } from 'vscode';
 import { MPLSDeprecationPrompt } from '../../../client/activation/languageServer/deprecationPrompt';
@@ -31,7 +31,7 @@ suite('MPLS deprecation prompt', () => {
     let configService: IConfigurationService;
     let defaultLanguageServer: IDefaultLanguageServer;
     let sendTelemetryEventStub: sinon.SinonStub;
-    let telemetryEvents: { eventName: string; properties: Record<string, unknown> }[] = [];
+    let telemetryEvents: { eventName: string; properties: unknown }[] = [];
 
     setup(() => {
         applicationShell = mock();
@@ -55,7 +55,7 @@ suite('MPLS deprecation prompt', () => {
 
         sendTelemetryEventStub = sinon
             .stub(Telemetry, 'sendTelemetryEvent')
-            .callsFake((eventName: string, _, properties: Record<string, unknown>) => {
+            .callsFake((eventName: string, _, properties: unknown) => {
                 const telemetry = { eventName, properties };
                 telemetryEvents.push(telemetry);
             });
