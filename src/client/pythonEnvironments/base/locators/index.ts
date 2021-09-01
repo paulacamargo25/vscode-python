@@ -7,7 +7,7 @@ import { iterEmpty } from '../../../common/utils/async';
 import { getURIFilter } from '../../../common/utils/misc';
 import { Disposables, IDisposable } from '../../../common/utils/resourceLifecycle';
 import { PythonEnvInfo } from '../info';
-import { BasicEnvInfo, ILocator, IPythonEnvsIterator, PythonLocatorQuery } from '../locator';
+import { ILocator, IPythonEnvsIterator, PythonLocatorQuery } from '../locator';
 import { combineIterators, Locators } from '../locators';
 import { LazyResourceBasedLocator } from './common/resourceBasedLocator';
 
@@ -43,7 +43,7 @@ type WatchRootsFunc = (args: WatchRootsArgs) => IDisposable;
  * The factories are used to produce the locators for each workspace folder.
  */
 
-export class WorkspaceLocators<I = BasicEnvInfo> extends LazyResourceBasedLocator<I> {
+export class WorkspaceLocators<I = PythonEnvInfo> extends LazyResourceBasedLocator<I> {
     private readonly locators: Record<RootURI, [ILocator<I>, IDisposable]> = {};
 
     private readonly roots: Record<RootURI, Uri> = {};
