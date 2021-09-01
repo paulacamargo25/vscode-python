@@ -8,7 +8,7 @@
 
 import * as util from 'util';
 import * as winston from 'winston';
-import * as Transport from 'winston-transport';
+import Transport from 'winston-transport';
 import { getFormatter } from './formatters';
 import { LogLevel, resolveLevelName } from './levels';
 import { getConsoleTransport, getFileTransport, isConsoleTransport } from './transports';

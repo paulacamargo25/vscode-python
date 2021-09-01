@@ -1,7 +1,7 @@
 import * as logform from 'logform';
 import * as path from 'path';
 import * as winston from 'winston';
-import * as Transport from 'winston-transport';
+import Transport from 'winston-transport';
 
 const folderPath = path.dirname(__dirname);
 const folderName = path.basename(folderPath);

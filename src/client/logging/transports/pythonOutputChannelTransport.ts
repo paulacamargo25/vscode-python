@@ -9,7 +9,7 @@
 import * as logform from 'logform';
 import { EOL } from 'os';
 import { OutputChannel } from 'vscode';
-import * as Transport from 'winston-transport';
+import Transport from 'winston-transport';
 
 const formattedMessage = Symbol.for('message');
 
