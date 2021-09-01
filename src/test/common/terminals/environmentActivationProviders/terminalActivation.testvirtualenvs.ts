@@ -6,7 +6,7 @@
 import { expect } from 'chai';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import * as vscode from 'vscode';
 import { DeprecatePythonPath } from '../../../../client/common/experiments/groups';
 import { FileSystem } from '../../../../client/common/platform/fileSystem';
