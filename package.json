@@ -2118,7 +2118,6 @@
         "gulp-rename": "^1.4.0",
         "gulp-sourcemaps": "^2.6.4",
         "gulp-typescript": "^4.0.1",
-        "gulp-untar": "0.0.8",
         "gulp-vinyl-zip": "^2.1.2",
         "husky": "^1.1.2",
         "immutable": "^4.0.0-rc.12",
