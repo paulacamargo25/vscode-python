@@ -5,7 +5,7 @@ import { gte } from 'semver';
 
 import { Uri } from 'vscode';
 import { IEnvironmentActivationService } from '../../interpreter/activation/types';
-import { IComponentAdapter, ICondaService } from '../../interpreter/contracts';
+import { IComponentAdapter, ICondaService, IInterpreterService } from '../../interpreter/contracts';
 import { IServiceContainer } from '../../ioc/types';
 import { CondaEnvironmentInfo } from '../../pythonEnvironments/common/environmentManagers/conda';
 import { sendTelemetryEvent } from '../../telemetry';
@@ -83,6 +83,15 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
         }
         const processService: IProcessService = await this.processServiceFactory.create(options.resource);
 
+        const interpreterService = this.serviceContainer.get<IInterpreterService>(IInterpreterService);
+        const { hasInterpreters } = interpreterService;
+        if (hasInterpreters()) {
+            const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
+            if (condaExecutionService) {
+                return condaExecutionService;
+            }
+        }
+
         const windowsStoreInterpreterCheck = this.pyenvs.isWindowsStoreInterpreter.bind(this.pyenvs);
 
         return createPythonService(
@@ -116,6 +125,14 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
         const processService: IProcessService = new ProcessService(this.decoder, { ...envVars });
         processService.on('exec', this.logger.logProcess.bind(this.logger));
         this.disposables.push(processService);
+
+        // Allow parts of the code to ignore conda run.
+        if (!options.bypassCondaExecution) {
+            const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
+            if (condaExecutionService) {
+                return condaExecutionService;
+            }
+        }
 
         return createPythonService(pythonPath, processService, this.fileSystem);
     }
