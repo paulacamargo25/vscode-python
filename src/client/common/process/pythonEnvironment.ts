@@ -139,7 +139,7 @@ export function createCondaEnv(
     procs: IProcessService,
     fs: IFileSystem,
 ): PythonEnvironment {
-    const runArgs = ['run'];
+    const runArgs = ['run', '--no-capture—output'];
     if (condaInfo.name === '') {
         runArgs.push('-p', condaInfo.path);
     } else {
@@ -153,7 +153,7 @@ export function createCondaEnv(
         // TODO: Use pythonArgv here once 'conda run' can be
         // run without buffering output.
         // See https://github.com/microsoft/vscode-python/issues/8473.
-        undefined,
+        pythonArgv,
         (file, args, opts) => procs.exec(file, args, opts),
         (command, opts) => procs.shellExec(command, opts),
     );
