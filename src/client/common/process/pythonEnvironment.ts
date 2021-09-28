@@ -139,7 +139,7 @@ export function createCondaEnv(
     procs: IProcessService,
     fs: IFileSystem,
 ): PythonEnvironment {
-    const runArgs = ['run'];
+    const runArgs = ['run', '--no-capture—output'];
     if (condaInfo.name === '') {
         runArgs.push('-p', condaInfo.path);
     } else {
