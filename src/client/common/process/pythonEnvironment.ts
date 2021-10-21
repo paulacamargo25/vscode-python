@@ -139,13 +139,13 @@ export function createCondaEnv(
     procs: IProcessService,
     fs: IFileSystem,
 ): PythonEnvironment {
-    const runArgs = ['run', '--no-capture—output'];
+    const runArgs = ['run'];
     if (condaInfo.name === '') {
         runArgs.push('-p', condaInfo.path);
     } else {
         runArgs.push('-n', condaInfo.name);
     }
-    const pythonArgv = [condaFile, ...runArgs, 'python'];
+    const pythonArgv = [condaFile, ...runArgs, '--no-capture-output', 'python'];
     const deps = createDeps(
         async (filename) => fs.pathExists(filename),
         pythonArgv,
