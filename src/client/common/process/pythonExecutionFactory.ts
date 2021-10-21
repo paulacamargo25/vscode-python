@@ -84,8 +84,8 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
         const processService: IProcessService = await this.processServiceFactory.create(options.resource);
 
         const interpreterService = this.serviceContainer.get<IInterpreterService>(IInterpreterService);
-        const { hasInterpreters } = interpreterService;
-        if (hasInterpreters()) {
+        const hasInterpreters = await interpreterService.hasInterpreters();
+        if (hasInterpreters) {
             const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
             if (condaExecutionService) {
                 return condaExecutionService;
@@ -161,6 +161,7 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
                 procService.on('exec', this.logger.logProcess.bind(this.logger));
                 this.disposables.push(procService);
             }
+
             return createPythonService(
                 pythonPath,
                 procService,
