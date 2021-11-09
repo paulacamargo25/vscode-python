@@ -257,45 +257,6 @@ suite('Process - PythonExecutionFactory', () => {
                 assert.strictEqual(createInvoked, false);
             });
 
-            test("Ensure `create` returns a WindowsStorePythonProcess instance if it's a windows store intepreter path and we're in the discovery experiment", async () => {
-                const pythonPath = 'path/to/python';
-                const pythonSettings = mock(PythonSettings);
-
-                when(processFactory.create(resource)).thenResolve(processService.object);
-                when(pythonSettings.pythonPath).thenReturn(pythonPath);
-                when(configService.getSettings(resource)).thenReturn(instance(pythonSettings));
-                inDiscoveryExperimentStub.resolves(true);
-
-                const service = await factory.create({ resource });
-
-                expect(service).to.not.equal(undefined);
-                verify(processFactory.create(resource)).once();
-                verify(pythonSettings.pythonPath).once();
-                verify(pyenvs.isWindowsStoreInterpreter(pythonPath)).once();
-                sinon.assert.calledOnce(inDiscoveryExperimentStub);
-                sinon.assert.notCalled(isWindowsStoreInterpreterStub);
-            });
-
-            test("Ensure `create` returns a WindowsStorePythonProcess instance if it's a windows store intepreter path and we're not in the discovery experiment", async () => {
-                const pythonPath = 'path/to/python';
-                const pythonSettings = mock(PythonSettings);
-
-                when(processFactory.create(resource)).thenResolve(processService.object);
-                when(pythonSettings.pythonPath).thenReturn(pythonPath);
-                when(configService.getSettings(resource)).thenReturn(instance(pythonSettings));
-                inDiscoveryExperimentStub.resolves(false);
-
-                const service = await factory.create({ resource });
-
-                expect(service).to.not.equal(undefined);
-                verify(processFactory.create(resource)).once();
-                verify(pythonSettings.pythonPath).once();
-                verify(pyenvs.isWindowsStoreInterpreter(pythonPath)).never();
-                sinon.assert.calledOnce(inDiscoveryExperimentStub);
-                sinon.assert.calledOnce(isWindowsStoreInterpreterStub);
-                sinon.assert.calledWith(isWindowsStoreInterpreterStub, pythonPath);
-            });
-
             test('Ensure `create` returns a CondaExecutionService instance if createCondaExecutionService() returns a valid object', async () => {
                 const pythonPath = 'path/to/python';
                 const pythonSettings = mock(PythonSettings);
