@@ -149,10 +149,6 @@ export function createCondaEnv(
     const deps = createDeps(
         async (filename) => fs.pathExists(filename),
         pythonArgv,
-
-        // TODO: Use pythonArgv here once 'conda run' can be
-        // run without buffering output.
-        // See https://github.com/microsoft/vscode-python/issues/8473.
         pythonArgv,
         (file, args, opts) => procs.exec(file, args, opts),
         (command, opts) => procs.shellExec(command, opts),
