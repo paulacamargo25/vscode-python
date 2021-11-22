@@ -19,7 +19,7 @@ export class Pylint extends BaseLinter {
         const uri = document.uri;
         const settings = this.configService.getSettings(uri);
         const args = [
-            "--msg-template='{line},{column},{category},{symbol}:{msg}'",
+            "--msg-template='{line},{column},{category},{symbol}:{msg}''",
             '--reports=n',
             '--output-format=text',
             uri.fsPath,

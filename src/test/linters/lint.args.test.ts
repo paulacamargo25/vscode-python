@@ -153,7 +153,7 @@ suite('Linting - Arguments', () => {
                     test('Flake8', async () => {
                         const linter = new Flake8(outputChannel.object, serviceContainer);
                         const expectedArgs = [
-                            "'--format=%(row)d,%(col)d,%(code).1s,%(code)s:%(text)s'",
+                            "--format='%(row)d,%(col)d,%(code).1s,%(code)s:%(text)s''",
                             fileUri.fsPath,
                         ];
                         await testLinter(linter, expectedArgs);
@@ -161,7 +161,7 @@ suite('Linting - Arguments', () => {
                     test('Pycodestyle', async () => {
                         const linter = new Pycodestyle(outputChannel.object, serviceContainer);
                         const expectedArgs = [
-                            "'--format=%(row)d,%(col)d,%(code).1s,%(code)s:%(text)s'",
+                            "--format='%(row)d,%(col)d,%(code).1s,%(code)s:%(text)s''",
                             fileUri.fsPath,
                         ];
                         await testLinter(linter, expectedArgs);
