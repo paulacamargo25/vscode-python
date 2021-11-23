@@ -27,7 +27,7 @@ suite('Pylint - Function runLinter()', () => {
         uri: vscode.Uri.file('path/to/doc'),
     };
     const args = [
-        "--msg-template='{line},{column},{category},{symbol}:{msg}''",
+        '--msg-template={line},{column},{category},{symbol}:{msg}',
         '--reports=n',
         '--output-format=text',
         doc.uri.fsPath,
