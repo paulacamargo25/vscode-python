@@ -29,8 +29,8 @@ import { IInterpreterAutoSelectionService } from '../../interpreter/autoSelectio
 import { sleep } from '../utils/async';
 import { traceError } from '../../logging';
 
-// Minimum version number of conda required to be able to use 'conda run'
-export const CONDA_RUN_VERSION = '4.6.0';
+// Minimum version number of conda required to be able to use 'conda run' and '--no-capture--output' option
+export const CONDA_RUN_VERSION = '4.9.0';
 
 @injectable()
 export class PythonExecutionFactory implements IPythonExecutionFactory {
@@ -137,8 +137,6 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
         return createPythonService(pythonPath, processService, this.fileSystem);
     }
 
-    // Not using this function for now because there are breaking issues with conda run (conda 4.8, PVSC 2020.1).
-    // See https://github.com/microsoft/vscode-python/issues/9490
     public async createCondaExecutionService(
         pythonPath: string,
         processService?: IProcessService,
