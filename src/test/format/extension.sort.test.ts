@@ -107,7 +107,7 @@ suite('Sorting', () => {
         await window.showTextDocument(textDocument);
         await commands.executeCommand(Commands.Sort_Imports);
         assert.notEqual(originalContent, textDocument.getText(), 'Contents have not changed');
-    }).timeout(TEST_TIMEOUT * 3);
+    }).timeout(TEST_TIMEOUT * 2);
 
     test('With Config', async () => {
         const textDocument = await workspace.openTextDocument(fileToFormatWithConfig);
