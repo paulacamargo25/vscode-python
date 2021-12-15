@@ -141,12 +141,12 @@ suite('Linting - Arguments', () => {
                         expect(invoked).to.be.equal(true, 'method not invoked');
                     }
                     test('Flake8', async () => {
-                        const linter = new Flake8(outputChannel.object, serviceContainer);
+                        const linter = new Flake8(serviceContainer);
                         const expectedArgs = ['--format= %(row)d,%(col)d,%(code).1s,%(code)s:%(text)s', fileUri.fsPath];
                         await testLinter(linter, expectedArgs);
                     });
                     test('Pycodestyle', async () => {
-                        const linter = new Pycodestyle(outputChannel.object, serviceContainer);
+                        const linter = new Pycodestyle(serviceContainer);
                         const expectedArgs = ['--format= %(row)d,%(col)d,%(code).1s,%(code)s:%(text)s', fileUri.fsPath];
                         await testLinter(linter, expectedArgs);
                     });
