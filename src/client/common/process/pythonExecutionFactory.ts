@@ -5,7 +5,7 @@ import { gte } from 'semver';
 
 import { Uri } from 'vscode';
 import { IEnvironmentActivationService } from '../../interpreter/activation/types';
-import { IComponentAdapter, ICondaService, IInterpreterService } from '../../interpreter/contracts';
+import { IComponentAdapter, ICondaService } from '../../interpreter/contracts';
 import { IServiceContainer } from '../../ioc/types';
 import { CondaEnvironmentInfo } from '../../pythonEnvironments/common/environmentManagers/conda';
 import { sendTelemetryEvent } from '../../telemetry';
@@ -83,13 +83,9 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
         }
         const processService: IProcessService = await this.processServiceFactory.create(options.resource);
 
-        const interpreterService = this.serviceContainer.get<IInterpreterService>(IInterpreterService);
-        const hasInterpreters = await interpreterService.hasInterpreters();
-        if (hasInterpreters) {
-            const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
-            if (condaExecutionService) {
-                return condaExecutionService;
-            }
+        const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
+        if (condaExecutionService) {
+            return condaExecutionService;
         }
 
         const windowsStoreInterpreterCheck = this.pyenvs.isWindowsStoreInterpreter.bind(this.pyenvs);

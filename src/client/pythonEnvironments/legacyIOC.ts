@@ -227,14 +227,14 @@ class ComponentAdapter implements IComponentAdapter {
                 }
             }
         });
-        const initialEnvs = this.api.getEnvs() || [];
+        const initialEnvs = this.api.getEnvs();
         if (initialEnvs.length > 0) {
             return true;
         }
         // We should already have initiated discovery. Wait for an env to be added
         // to the collection until the refresh has finished.
         await Promise.race([onAddedToCollection.promise, this.api.refreshPromise]);
-        const envs = await asyncFilter(this.api.getEnvs() || [], (e) => filter(convertEnvInfo(e)));
+        const envs = await asyncFilter(this.api.getEnvs(), (e) => filter(convertEnvInfo(e)));
         return envs.length > 0;
     }
 
