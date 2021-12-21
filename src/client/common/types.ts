@@ -122,7 +122,7 @@ export interface IInstaller {
         cancel?: CancellationToken,
         flags?: ModuleInstallFlags,
     ): Promise<InstallerResponse>;
-    isInstalled(product: Product, resource?: InterpreterUri): Promise<boolean>;
+    isInstalled(product: Product, resource?: InterpreterUri, bypassCondaExecution?: boolean): Promise<boolean>;
     isProductVersionCompatible(
         product: Product,
         semVerRequirement: string,
