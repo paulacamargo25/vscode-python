@@ -178,7 +178,11 @@ abstract class BaseInstaller {
         }
     }
 
-    public async isInstalled(product: Product, resource?: InterpreterUri): Promise<boolean> {
+    public async isInstalled(
+        product: Product,
+        resource?: InterpreterUri,
+        bypassCondaExecution?: boolean,
+    ): Promise<boolean> {
         if (product === Product.unittest) {
             return true;
         }
@@ -191,7 +195,12 @@ abstract class BaseInstaller {
         if (isModule) {
             const pythonProcess = await this.serviceContainer
                 .get<IPythonExecutionFactory>(IPythonExecutionFactory)
-                .createActivatedEnvironment({ resource: uri, interpreter, allowEnvironmentFetchExceptions: true });
+                .createActivatedEnvironment({
+                    resource: uri,
+                    interpreter,
+                    allowEnvironmentFetchExceptions: true,
+                    bypassCondaExecution,
+                });
             return pythonProcess.isModuleInstalled(executableName);
         }
         const process = await this.serviceContainer.get<IProcessServiceFactory>(IProcessServiceFactory).create(uri);
@@ -599,8 +608,12 @@ export class ProductInstaller implements IInstaller {
         return this.createInstaller(product).install(product, resource, cancel, flags);
     }
 
-    public async isInstalled(product: Product, resource?: InterpreterUri): Promise<boolean> {
-        return this.createInstaller(product).isInstalled(product, resource);
+    public async isInstalled(
+        product: Product,
+        resource?: InterpreterUri,
+        bypassCondaExecution?: boolean,
+    ): Promise<boolean> {
+        return this.createInstaller(product).isInstalled(product, resource, bypassCondaExecution);
     }
 
     // eslint-disable-next-line class-methods-use-this

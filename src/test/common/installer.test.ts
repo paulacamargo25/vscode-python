@@ -296,7 +296,7 @@ suite('Installer', () => {
             }
             callback({ stdout: '' });
         });
-        await installer.isInstalled(product, resource);
+        await installer.isInstalled(product, resource, true);
         await checkInstalledDef.promise;
     }
     getNamesAndValues<Product>(Product).forEach((prod) => {
