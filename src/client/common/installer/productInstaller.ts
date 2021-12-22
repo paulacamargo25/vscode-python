@@ -94,6 +94,7 @@ abstract class BaseInstaller {
         resource?: InterpreterUri,
         cancel?: CancellationToken,
         flags?: ModuleInstallFlags,
+        bypassCondaExecution?: boolean,
     ): Promise<InstallerResponse> {
         if (product === Product.unittest) {
             return InstallerResponse.Installed;
@@ -113,7 +114,7 @@ abstract class BaseInstaller {
             .installModule(product, resource, cancel, flags)
             .catch((ex) => traceError(`Error in installing the product '${ProductNames.get(product)}', ${ex}`));
 
-        return this.isInstalled(product, resource).then((isInstalled) => {
+        return this.isInstalled(product, resource, bypassCondaExecution).then((isInstalled) => {
             sendTelemetryEvent(EventName.PYTHON_INSTALL_PACKAGE, undefined, {
                 installer: installer.displayName,
                 productName: ProductNames.get(product),
@@ -604,8 +605,9 @@ export class ProductInstaller implements IInstaller {
         resource?: InterpreterUri,
         cancel?: CancellationToken,
         flags?: ModuleInstallFlags,
+        bypassCondaExecution?: boolean,
     ): Promise<InstallerResponse> {
-        return this.createInstaller(product).install(product, resource, cancel, flags);
+        return this.createInstaller(product).install(product, resource, cancel, flags, bypassCondaExecution);
     }
 
     public async isInstalled(
