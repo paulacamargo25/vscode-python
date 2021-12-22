@@ -327,7 +327,7 @@ suite('Installer', () => {
                 checkInstalledDef.resolve();
             }
         });
-        await installer.install(product);
+        await installer.install(product, undefined, undefined, undefined, true);
         await checkInstalledDef.promise;
     }
     getNamesAndValues<Product>(Product).forEach((prod) => {
