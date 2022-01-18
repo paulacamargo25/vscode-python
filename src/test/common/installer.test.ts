@@ -290,7 +290,7 @@ suite('Installer', () => {
             }
             callback({ stdout: '' });
         });
-        await installer.isInstalled(product, resource, true);
+        await installer.isInstalled(product, resource);
         await checkInstalledDef.promise;
     }
     getNamesAndValues<Product>(Product).forEach((prod) => {
@@ -327,7 +327,7 @@ suite('Installer', () => {
                 checkInstalledDef.resolve();
             }
         });
-        await installer.install(product, undefined, undefined, undefined, true);
+        await installer.install(product);
         await checkInstalledDef.promise;
     }
     getNamesAndValues<Product>(Product).forEach((prod) => {
