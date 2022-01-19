@@ -33,7 +33,7 @@ export class Pylint extends BaseLinter {
             '--output-format=text',
             uri.fsPath,
         ];
-        const messages = await this.run(args, document, cancellation, REGEX);
+        const messages = await this.run(args, document, cancellation);
         messages.forEach((msg) => {
             msg.severity = this.parseMessagesSeverity(msg.type, settings.linting.pylintCategorySeverity);
         });
