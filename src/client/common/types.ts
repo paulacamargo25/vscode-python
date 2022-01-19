@@ -121,9 +121,8 @@ export interface IInstaller {
         resource?: InterpreterUri,
         cancel?: CancellationToken,
         flags?: ModuleInstallFlags,
-        bypassCondaExecution?: boolean,
     ): Promise<InstallerResponse>;
-    isInstalled(product: Product, resource?: InterpreterUri, bypassCondaExecution?: boolean): Promise<boolean>;
+    isInstalled(product: Product, resource?: InterpreterUri): Promise<boolean>;
     isProductVersionCompatible(
         product: Product,
         semVerRequirement: string,

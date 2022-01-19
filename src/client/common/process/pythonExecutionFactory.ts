@@ -83,12 +83,9 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
         }
         const processService: IProcessService = await this.processServiceFactory.create(options.resource);
 
-        // Allow parts of the code to ignore conda run.
-        if (!options.bypassCondaExecution) {
-            const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
-            if (condaExecutionService) {
-                return condaExecutionService;
-            }
+        const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
+        if (condaExecutionService) {
+            return condaExecutionService;
         }
 
         const windowsStoreInterpreterCheck = this.pyenvs.isWindowsStoreInterpreter.bind(this.pyenvs);
@@ -116,7 +113,6 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
             return this.create({
                 resource: options.resource,
                 pythonPath: options.interpreter ? options.interpreter.path : undefined,
-                bypassCondaExecution: options.bypassCondaExecution,
             });
         }
         const pythonPath = options.interpreter
@@ -126,12 +122,9 @@ export class PythonExecutionFactory implements IPythonExecutionFactory {
         processService.on('exec', this.logger.logProcess.bind(this.logger));
         this.disposables.push(processService);
 
-        // Allow parts of the code to ignore conda run.
-        if (!options.bypassCondaExecution) {
-            const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
-            if (condaExecutionService) {
-                return condaExecutionService;
-            }
+        const condaExecutionService = await this.createCondaExecutionService(pythonPath, processService);
+        if (condaExecutionService) {
+            return condaExecutionService;
         }
 
         return createPythonService(pythonPath, processService, this.fileSystem);
