@@ -313,7 +313,7 @@ suite('Installer', () => {
             await testCheckingIfProductIsInstalled(prod.value);
 
             return undefined;
-        });
+        }).timeout(TEST_TIMEOUT * 3);
     });
 
     async function testInstallingProduct(product: Product) {
