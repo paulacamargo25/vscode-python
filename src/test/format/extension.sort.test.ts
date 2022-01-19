@@ -106,7 +106,7 @@ suite('Sorting', () => {
         const originalContent = textDocument.getText();
         await window.showTextDocument(textDocument);
         await commands.executeCommand(Commands.Sort_Imports);
-        assert.notEqual(originalContent, textDocument.getText(), 'Contents have not changed');
+        assert.notStrictEqual(originalContent, textDocument.getText(), 'Contents have not changed');
     }).timeout(TEST_TIMEOUT * 3);
 
     test('With Config', async () => {
