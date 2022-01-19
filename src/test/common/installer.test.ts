@@ -116,7 +116,7 @@ import { rootWorkspaceUri, updateSetting } from '../common';
 import { MockModuleInstaller } from '../mocks/moduleInstaller';
 import { MockProcessService } from '../mocks/proc';
 import { UnitTestIocContainer } from '../testing/serviceRegistry';
-import { closeActiveWindows, initializeTest, IS_MULTI_ROOT_TEST } from '../initialize';
+import { closeActiveWindows, initializeTest, IS_MULTI_ROOT_TEST, TEST_TIMEOUT } from '../initialize';
 import { InterpreterPathProxyService } from '../../client/common/interpreterPathProxyService';
 
 suite('Installer', () => {
@@ -319,7 +319,7 @@ suite('Installer', () => {
             await testCheckingIfProductIsInstalled(prod.value);
 
             return undefined;
-        });
+        }).timeout(TEST_TIMEOUT * 3);
     });
 
     async function testInstallingProduct(product: Product) {
