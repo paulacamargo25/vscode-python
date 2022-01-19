@@ -27,12 +27,7 @@ export class Pylint extends BaseLinter {
     protected async runLinter(document: TextDocument, cancellation: CancellationToken): Promise<ILintMessage[]> {
         const { uri } = document;
         const settings = this.configService.getSettings(uri);
-        const args = [
-            '--msg-template={line},{column},{category},{symbol}:{msg}',
-            '--reports=n',
-            '--output-format=text',
-            uri.fsPath,
-        ];
+        const args = ['--reports=n', '--output-format=json', uri.fsPath];
         const messages = await this.run(args, document, cancellation);
         messages.forEach((msg) => {
             msg.severity = this.parseMessagesSeverity(msg.type, settings.linting.pylintCategorySeverity);
