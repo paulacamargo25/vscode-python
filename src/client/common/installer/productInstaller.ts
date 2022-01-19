@@ -94,7 +94,6 @@ abstract class BaseInstaller {
         resource?: InterpreterUri,
         cancel?: CancellationToken,
         flags?: ModuleInstallFlags,
-        bypassCondaExecution?: boolean,
     ): Promise<InstallerResponse> {
         if (product === Product.unittest) {
             return InstallerResponse.Installed;
@@ -114,7 +113,7 @@ abstract class BaseInstaller {
             .installModule(product, resource, cancel, flags)
             .catch((ex) => traceError(`Error in installing the product '${ProductNames.get(product)}', ${ex}`));
 
-        return this.isInstalled(product, resource, bypassCondaExecution).then((isInstalled) => {
+        return this.isInstalled(product, resource).then((isInstalled) => {
             sendTelemetryEvent(EventName.PYTHON_INSTALL_PACKAGE, undefined, {
                 installer: installer.displayName,
                 productName: ProductNames.get(product),
@@ -179,11 +178,7 @@ abstract class BaseInstaller {
         }
     }
 
-    public async isInstalled(
-        product: Product,
-        resource?: InterpreterUri,
-        bypassCondaExecution?: boolean,
-    ): Promise<boolean> {
+    public async isInstalled(product: Product, resource?: InterpreterUri): Promise<boolean> {
         if (product === Product.unittest) {
             return true;
         }
@@ -200,7 +195,6 @@ abstract class BaseInstaller {
                     resource: uri,
                     interpreter,
                     allowEnvironmentFetchExceptions: true,
-                    bypassCondaExecution,
                 });
             return pythonProcess.isModuleInstalled(executableName);
         }
@@ -605,17 +599,12 @@ export class ProductInstaller implements IInstaller {
         resource?: InterpreterUri,
         cancel?: CancellationToken,
         flags?: ModuleInstallFlags,
-        bypassCondaExecution?: boolean,
     ): Promise<InstallerResponse> {
-        return this.createInstaller(product).install(product, resource, cancel, flags, bypassCondaExecution);
+        return this.createInstaller(product).install(product, resource, cancel, flags);
     }
 
-    public async isInstalled(
-        product: Product,
-        resource?: InterpreterUri,
-        bypassCondaExecution?: boolean,
-    ): Promise<boolean> {
-        return this.createInstaller(product).isInstalled(product, resource, bypassCondaExecution);
+    public async isInstalled(product: Product, resource?: InterpreterUri): Promise<boolean> {
+        return this.createInstaller(product).isInstalled(product, resource);
     }
 
     // eslint-disable-next-line class-methods-use-this

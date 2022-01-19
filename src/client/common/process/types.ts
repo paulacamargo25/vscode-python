@@ -65,7 +65,6 @@ export const IPythonExecutionFactory = Symbol('IPythonExecutionFactory');
 export type ExecutionFactoryCreationOptions = {
     resource?: Uri;
     pythonPath?: string;
-    bypassCondaExecution?: boolean;
 };
 export type ExecutionFactoryCreateWithEnvironmentOptions = {
     resource?: Uri;
@@ -77,7 +76,6 @@ export type ExecutionFactoryCreateWithEnvironmentOptions = {
      *
      * @type {boolean}
      */
-    bypassCondaExecution?: boolean;
 };
 export interface IPythonExecutionFactory {
     create(options: ExecutionFactoryCreationOptions): Promise<IPythonExecutionService>;
