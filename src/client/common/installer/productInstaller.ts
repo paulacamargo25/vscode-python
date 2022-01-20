@@ -191,11 +191,7 @@ abstract class BaseInstaller {
         if (isModule) {
             const pythonProcess = await this.serviceContainer
                 .get<IPythonExecutionFactory>(IPythonExecutionFactory)
-                .createActivatedEnvironment({
-                    resource: uri,
-                    interpreter,
-                    allowEnvironmentFetchExceptions: true,
-                });
+                .createActivatedEnvironment({ resource: uri, interpreter, allowEnvironmentFetchExceptions: true });
             return pythonProcess.isModuleInstalled(executableName);
         }
         const process = await this.serviceContainer.get<IProcessServiceFactory>(IProcessServiceFactory).create(uri);

@@ -351,6 +351,6 @@ suite('Installer', () => {
             await testInstallingProduct(prod.value);
 
             return undefined;
-        });
+        }).timeout(TEST_TIMEOUT * 3);
     });
 });
