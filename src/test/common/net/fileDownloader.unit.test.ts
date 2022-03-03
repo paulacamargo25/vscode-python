@@ -212,7 +212,7 @@ suite('File Downloader', () => {
             expect(progressReportStub.args[4][0].message).to.equal(getProgressMessage(50, 100));
 
             function getProgressMessage(downloadedKb: number, percentage: number) {
-                return Http.downloadingFileProgress().format(
+                return Http.downloadingFileProgress.format(
                     'Downloading-something',
                     downloadedKb.toFixed(),
                     totalKb.toFixed(),
@@ -255,7 +255,7 @@ suite('File Downloader', () => {
                 extension: '.pdf',
             });
 
-            traceLogStub.calledWithExactly(Http.downloadingFile().format('file to download'));
+            traceLogStub.calledWithExactly(Http.downloadingFile.format('file to download'));
         });
         test('Display progress when downloading', async () => {
             const tmpFile = { filePath: 'my temp file', dispose: noop };

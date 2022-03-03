@@ -50,7 +50,7 @@ suite('Localization', () => {
     }
 
     test('keys', (done) => {
-        const val = localize.ExtensionSurveyBanner.bannerMessage();
+        const val = localize.ExtensionSurveyBanner.bannerMessage;
         assert.strictEqual(
             val,
             'Can you please take 2 minutes to tell us how the Python extension is working for you?',
@@ -63,7 +63,7 @@ suite('Localization', () => {
         // Force a config change
         setLocale('it');
 
-        const val = localize.ExtensionSurveyBanner.bannerLabelYes();
+        const val = localize.ExtensionSurveyBanner.bannerLabelYes;
         assert.strictEqual(val, 'Sì, prenderò il sondaggio ora', 'bannerLabelYes is not being translated');
         done();
     });
@@ -75,8 +75,8 @@ suite('Localization', () => {
         });
         setLocale('spam');
 
-        const title = localize.DebugConfigStrings.selectConfiguration.title();
-        const gotIt = localize.Common.gotIt();
+        const title = localize.DebugConfigStrings.selectConfiguration.title;
+        const gotIt = localize.Common.gotIt;
 
         assert.strictEqual(title, '???', 'not used');
         assert.strictEqual(gotIt, '!!!', 'not used');
@@ -89,7 +89,7 @@ suite('Localization', () => {
         });
         setLocale('spam');
 
-        const gotIt = localize.Common.gotIt();
+        const gotIt = localize.Common.gotIt;
 
         assert.strictEqual(gotIt, 'Got it!', `default not used (got ${gotIt})`);
         done();

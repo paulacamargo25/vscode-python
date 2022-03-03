@@ -5,20 +5,20 @@ import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
 import { LanguageClientOptions, State } from 'vscode-languageclient';
 import { LanguageClient } from 'vscode-languageclient/browser';
+import * as nls from 'vscode-nls';
 import { LanguageClientMiddlewareBase } from '../activation/languageClientMiddlewareBase';
 import { LanguageServerType } from '../activation/types';
 import { AppinsightsKey, PVSC_EXTENSION_ID, PYLANCE_EXTENSION_ID } from '../common/constants';
-import { loadLocalizedStringsForBrowser } from '../common/utils/localizeHelpers';
 import { EventName } from '../telemetry/constants';
 import { createStatusItem } from './intellisenseStatus';
+
+nls.config({ messageFormat: nls.MessageFormat.bundle, bundleFormat: nls.BundleFormat.standalone })();
 
 interface BrowserConfig {
     distUrl: string; // URL to Pylance's dist folder.
 }
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
-    // Run in a promise and return early so that VS Code can go activate Pylance.
-    await loadLocalizedStringsForBrowser();
     const pylanceExtension = vscode.extensions.getExtension(PYLANCE_EXTENSION_ID);
     if (pylanceExtension) {
         runPylance(context, pylanceExtension);

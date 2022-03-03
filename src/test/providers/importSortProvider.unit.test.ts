@@ -663,12 +663,12 @@ suite('Import Sort Provider', () => {
         shell
             .setup((s) =>
                 s.showWarningMessage(
-                    Diagnostics.checkIsort5UpgradeGuide(),
-                    Common.openOutputPanel(),
-                    Common.doNotShowAgain(),
+                    Diagnostics.checkIsort5UpgradeGuide,
+                    Common.openOutputPanel,
+                    Common.doNotShowAgain,
                 ),
             )
-            .returns(() => Promise.resolve(Common.openOutputPanel()));
+            .returns(() => Promise.resolve(Common.openOutputPanel));
         commandManager.setup((c) => c.executeCommand(Commands.ViewOutput)).verifiable(TypeMoq.Times.once());
         await sortProvider._showWarningAndOptionallyShowOutput();
     });
@@ -689,12 +689,12 @@ suite('Import Sort Provider', () => {
         shell
             .setup((s) =>
                 s.showWarningMessage(
-                    Diagnostics.checkIsort5UpgradeGuide(),
-                    Common.openOutputPanel(),
-                    Common.doNotShowAgain(),
+                    Diagnostics.checkIsort5UpgradeGuide,
+                    Common.openOutputPanel,
+                    Common.doNotShowAgain,
                 ),
             )
-            .returns(() => Promise.resolve(Common.doNotShowAgain()))
+            .returns(() => Promise.resolve(Common.doNotShowAgain))
             .verifiable(TypeMoq.Times.once());
 
         await sortProvider._showWarningAndOptionallyShowOutput();

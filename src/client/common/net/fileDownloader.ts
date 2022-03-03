@@ -22,7 +22,7 @@ export class FileDownloader implements IFileDownloader {
         @inject(IApplicationShell) private readonly appShell: IApplicationShell,
     ) {}
     public async downloadFile(uri: string, options: DownloadOptions): Promise<string> {
-        traceLog(Http.downloadingFile().format(uri));
+        traceLog(Http.downloadingFile.format(uri));
         const tempFile = await this.fs.createTemporaryFile(options.extension);
 
         await this.downloadFileWithStatusBarProgress(uri, options.progressMessagePrefix, tempFile.filePath).then(
@@ -97,7 +97,7 @@ function formatProgressMessageWithState(progressMessagePrefix: string, state: Re
     const total = Math.round(state.size.total / 1024);
     const percentage = Math.round(100 * state.percent);
 
-    return Http.downloadingFileProgress().format(
+    return Http.downloadingFileProgress.format(
         progressMessagePrefix,
         received.toString(),
         total.toString(),

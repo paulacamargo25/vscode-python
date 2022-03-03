@@ -69,7 +69,7 @@ export class AttachProcessProvider implements IAttachProcessProvider {
         } else if (this.platformService.isWindows) {
             processCmd = WmicProcessParser.wmicCommand;
         } else {
-            throw new Error(AttachProcessLocalization.unsupportedOS().format(this.platformService.osType));
+            throw new Error(AttachProcessLocalization.unsupportedOS.format(this.platformService.osType));
         }
 
         const processService = await this.processServiceFactory.create();

@@ -540,7 +540,7 @@ suite('Module Installer', () => {
                                             const options = {
                                                 location: ProgressLocation.Notification,
                                                 cancellable: true,
-                                                title: Products.installingModule().format(product.name),
+                                                title: Products.installingModule.format(product.name),
                                             };
                                             appShell
                                                 .setup((a) => a.withProgress(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
