@@ -14,9 +14,5 @@
 	"python.command.python.goToPythonObject.title": "Ir al objeto de Python",
 	"python.command.python.setLinter.title": "Seleccionar Linter",
 	"python.command.python.enableLinting.title": "Habilitar Linting",
-	"python.command.python.runLinting.title": "Ejecutar Linting",
-	"python.snippet.launch.standard.label": "Python: Archivo actual",
-	"python.snippet.launch.module.label": "Python: Módulo",
-	"python.snippet.launch.django.label": "Python: Django",
-	"python.snippet.launch.flask.label": "Python: Flask"
+	"python.command.python.runLinting.title": "Ejecutar Linting"
 }
