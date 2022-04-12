@@ -361,7 +361,7 @@ function hasNativeDependencies() {
     return false;
 }
 
-const translationProjectName = 'vscode-extensions';
+const translationProjectName = 'vscode-python-translations-export';
 const translationExtensionName = 'vscode-python';
 
 const defaultLanguages = [
@@ -426,7 +426,7 @@ const exportTranslations = (done) => {
         // package.nls.json and nls.metadata.json are used to generate the xlf file
         // Does not re-queue any files to the stream.  Outputs only the XLF file
         .pipe(nls.createXlfFiles(translationProjectName, translationExtensionName))
-        .pipe(gulp.dest(`${translationProjectName}-localization-export`))
+        .pipe(gulp.dest('../'))
         .pipe(
             es.wait(() => {
                 done();
@@ -447,14 +447,14 @@ gulp.task('translations-import', (done) => {
     const options = minimist(process.argv.slice(2), {
         string: 'location',
         default: {
-            location: 'vscode-extensions-localization-export',
+            location: 'vscode-translations-import',
         },
     });
     es.merge(
         defaultLanguages.map((language) => {
             const id = language.transifexId || language.id;
             return gulp
-                .src(path.join(options.location, id, translationProjectName, `${translationExtensionName}.xlf`))
+                .src(path.join(options.location, id, `${translationExtensionName}.xlf`))
                 .pipe(nls.prepareJsonFiles())
                 .pipe(gulp.dest(path.join('./i18n', language.folderName)));
         }),
