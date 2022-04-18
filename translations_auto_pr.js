@@ -1,11 +1,5 @@
 'use strict';
 
-// import { copySync } from 'fs-extra';
-// import { execSync } from 'child_process';
-// import { Octokit as _Octokit } from '@octokit/rest';
-// import { parse, resolve } from 'path';
-// import { sync } from 'parse-git-config';
-
 const fs = require('fs-extra');
 const cp = require('child_process');
 const Octokit = require('@octokit/rest');
@@ -162,7 +156,7 @@ let existingUserEmail;
 const gitConfigPath = path.resolve(process.cwd(), '.git/config');
 const config = parseGitConfig.sync({ path: gitConfigPath });
 
-if (typeof config === 'object' && config.hasOwnProperty('user')) {
+if (typeof config === 'object' && config.user) {
     existingUserName = config.user.name;
     existingUserEmail = config.user.email;
 }
