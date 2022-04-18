@@ -23,7 +23,7 @@ stages:
     skipComponentGovernanceDetection: true
     VSCODE_EXTENSIONS_LOC_DIR: $(Pipeline.Workspace)/vscode-extensions-loc
     EXTENSION_DIR: $(Build.SourcesDirectory)
-    VSCODE_TRANSLATIONS_EXPORT_DIR: $(Pipeline.Workspace)/vscode-python-translations-export
+    VSCODE_TRANSLATIONS_EXPORT_DIR: $(Pipeline.Workspace)/ms-python.python
   jobs:
   - job: Localization
     timeoutInMinutes: 180
@@ -55,7 +55,7 @@ stages:
     - pwsh: |
         $Destination = "$(VSCODE_EXTENSIONS_LOC_DIR)/src/en"
         New-Item -ItemType Directory -Force "$(VSCODE_EXTENSIONS_LOC_DIR)/src/en"
-        Move-Item "$(VSCODE_TRANSLATIONS_EXPORT_DIR)/*" $Destination
+        Move-Item "$(VSCODE_TRANSLATIONS_EXPORT_DIR)" $Destination
       displayName: Move vscode-python-translations-export to expected path
 
     - name: Create Pull Request on vscode-extensions-loc

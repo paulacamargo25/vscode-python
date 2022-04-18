@@ -361,13 +361,14 @@ function hasNativeDependencies() {
     return false;
 }
 
-const translationProjectName = 'vscode-python-translations-export';
+const translationProjectName = 'ms-python.python';
 const translationExtensionName = 'vscode-python';
 
 const defaultLanguages = [
-    { id: 'de', folderName: 'de' },
-    { id: 'fr', folderName: 'fr' },
-    { id: 'es', folderName: 'es' },
+    // { id: 'de', folderName: 'de' },
+    // { id: 'fr', folderName: 'fr' },
+    // { id: 'es', folderName: 'es' },
+    { id: 'qps-ploc', folderName: 'qps-ploc' },
 ];
 // ****************************
 // Command: translations-generate
@@ -447,7 +448,7 @@ gulp.task('translations-import', (done) => {
     const options = minimist(process.argv.slice(2), {
         string: 'location',
         default: {
-            location: 'vscode-translations-import',
+            location: '../vscode-translations-import',
         },
     });
     es.merge(
