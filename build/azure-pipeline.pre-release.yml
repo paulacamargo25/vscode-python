@@ -15,7 +15,7 @@ resources:
     - repository: templates
       type: github
       name: microsoft/vscode-engineering
-      ref: main
+      ref: tyler/translations
       endpoint: Monaco
 
 extends:
@@ -24,24 +24,18 @@ extends:
     locPushSteps:
       - script: echo '$(SetTranslationsPath.EnglishStrings)'
       - displayName: Install NPM dependencies
-        script: 'cd $(EXTENSION_DIR) && npm ci'
+        script: npm ci
       - script: npm run translations-export
         displayName: Run translations-export
-      - publish: $(VSCODE_TRANSLATIONS_EXPORT_DIR)
-        artifact: translations-export
-        displayName: Publish translations-export
       - pwsh: |
           $Destination = "$(SetTranslationsPath.EnglishStrings)"
-          New-Item -ItemType Directory -Force "$(SetTranslationsPath.EnglishStrings)"
           Move-Item "$(Pipeline.Workspace)/ms-python.python" $Destination
         displayName: Move vscode-python-translations-export to translations path
 
     locPullSteps:
         - script: echo '$(SetTranslationsPath.TranslatedStrings)'
         - script: 'gulp translations-import --option "${SetTranslationsPath.TranslatedStrings}"'
-        - pwsh: ls
-          displayName: test if there is stuff
-          workingDirectory: '$(SetTranslationsPath.TranslatedStrings)'
+        - pwsh: ls ./i18n/
 
     buildSteps:
       - task: NodeTool@0
