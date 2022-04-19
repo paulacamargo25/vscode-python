@@ -275,7 +275,7 @@ suite('Interpreters Display', () => {
                     statusBar.verify(
                         (s) =>
                             (s.text = TypeMoq.It.isValue(
-                                `$(alert) ${InterpreterQuickPickList.browsePath.openButtonLabel()}`,
+                                `$(alert) ${InterpreterQuickPickList.browsePath.openButtonLabel}`,
                             )),
                         TypeMoq.Times.once(),
                     );

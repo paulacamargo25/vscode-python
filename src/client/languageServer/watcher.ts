@@ -135,7 +135,7 @@ export class LanguageServerWatcher
             serverType !== LanguageServerType.Node &&
             serverType !== LanguageServerType.None
         ) {
-            traceLog(LanguageService.untrustedWorkspaceMessage());
+            traceLog(LanguageService.untrustedWorkspaceMessage);
             serverType = LanguageServerType.None;
         }
 
@@ -284,13 +284,13 @@ function logStartup(languageServerType: LanguageServerType, resource: Uri): void
 
     switch (languageServerType) {
         case LanguageServerType.Jedi:
-            outputLine = LanguageService.startingJedi().format(basename);
+            outputLine = LanguageService.startingJedi.format(basename);
             break;
         case LanguageServerType.Node:
-            outputLine = LanguageService.startingPylance().format(basename);
+            outputLine = LanguageService.startingPylance.format(basename);
             break;
         case LanguageServerType.None:
-            outputLine = LanguageService.startingNone().format(basename);
+            outputLine = LanguageService.startingNone.format(basename);
             break;
         default:
             throw new Error(`Unknown language server type: ${languageServerType}`);

@@ -88,7 +88,7 @@ suite('Virtual Environment Prompt', () => {
         const resource = Uri.file('a');
         const interpreter1 = { path: 'path/to/interpreter1' };
         const interpreter2 = { path: 'path/to/interpreter2' };
-        const prompts = [Common.bannerLabelYes(), Common.bannerLabelNo(), Common.doNotShowAgain()];
+        const prompts = [Common.bannerLabelYes, Common.bannerLabelNo, Common.doNotShowAgain];
         const notificationPromptEnabled = TypeMoq.Mock.ofType<IPersistentState<boolean>>();
 
         // Return interpreters using the component adapter instead

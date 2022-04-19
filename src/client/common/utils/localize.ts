@@ -388,7 +388,7 @@ export namespace Products {
 export namespace DebugConfigStrings {
     export const selectConfiguration = {
         title: localize('debug.selectConfigurationTitle', 'Select a debug configuration'),
-        placeholder: localize('debug.selectConfigurationPlaceholder', 'Debug Configutation'),
+        placeholder: localize('debug.selectConfigurationPlaceholder', 'Debug Configuration'),
     };
     export const launchJsonCompletions = {
         label: localize('debug.launchJsonConfigurationsCompletionLabel', 'Python'),
