@@ -23,8 +23,8 @@ extends:
   parameters:
     locPushSteps:
       - script: echo '$(SetTranslationsPath.EnglishStrings)'
-      - displayName: Install NPM dependencies
-        script: npm ci
+      - script: npm ci
+        displayName: Install NPM dependencies
       - script: npm run translations-export
         displayName: Run translations-export
       - pwsh: |
