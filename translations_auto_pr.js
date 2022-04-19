@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 const cp = require('child_process');
-const Octokit = require('@octokit/rest');
+// const Octokit = require('@octokit/rest');
 const path = require('path');
 const parseGitConfig = require('parse-git-config');
 
@@ -208,41 +208,41 @@ if (existingUserEmail === undefined) {
 console.log(`pushing to remove branch (git push -f origin ${branchName})`);
 cp.execSync(`git push -f origin ${branchName}`);
 
-console.log('Checking if there is already a pull request...');
-const octokit = new Octokit.Octokit({ auth: authToken });
-octokit.pulls.list({ owner: repoOwner, repo: repoName }).then(({ data }) => {
-    let alreadyHasPullRequest = false;
-    if (data) {
-        data.forEach((pr) => {
-            alreadyHasPullRequest = alreadyHasPullRequest || pr.title === pullRequestTitle;
-        });
-    }
+// console.log('Checking if there is already a pull request...');
+// const octokit = new Octokit.Octokit({ auth: authToken });
+// octokit.pulls.list({ owner: repoOwner, repo: repoName }).then(({ data }) => {
+//     let alreadyHasPullRequest = false;
+//     if (data) {
+//         data.forEach((pr) => {
+//             alreadyHasPullRequest = alreadyHasPullRequest || pr.title === pullRequestTitle;
+//         });
+//     }
 
-    // If not already present, create a PR against our remote branch.
-    if (!alreadyHasPullRequest) {
-        console.log('There is not already a pull request.  Creating one.');
-        octokit.pulls.create({
-            body: '',
-            owner: repoOwner,
-            repo: repoName,
-            title: pullRequestTitle,
-            head: branchName,
-            base: mergeTo,
-        });
-    } else {
-        console.log('There is already a pull request.');
-    }
+//     // If not already present, create a PR against our remote branch.
+//     if (!alreadyHasPullRequest) {
+//         console.log('There is not already a pull request.  Creating one.');
+//         octokit.pulls.create({
+//             body: '',
+//             owner: repoOwner,
+//             repo: repoName,
+//             title: pullRequestTitle,
+//             head: branchName,
+//             base: mergeTo,
+//         });
+//     } else {
+//         console.log('There is already a pull request.');
+//     }
 
-    console.log(`Restoring default git permissions`);
-    cp.execSync('git remote remove origin');
-    cp.execSync(`git remote add origin https://github.com/${repoOwner}/${repoName}.git`);
+//     console.log(`Restoring default git permissions`);
+//     cp.execSync('git remote remove origin');
+//     cp.execSync(`git remote add origin https://github.com/${repoOwner}/${repoName}.git`);
 
-    console.log(`Run 'git fetch' against updated remote`);
-    cp.execSync('git fetch');
+//     console.log(`Run 'git fetch' against updated remote`);
+//     cp.execSync('git fetch');
 
-    console.log(`Switching back to main (git checkout main)`);
-    cp.execSync('git checkout main');
+//     console.log(`Switching back to main (git checkout main)`);
+//     cp.execSync('git checkout main');
 
-    console.log(`Remove localization branch (git branch -D localization)`);
-    cp.execSync('git branch -D localization');
+//     console.log(`Remove localization branch (git branch -D localization)`);
+//     cp.execSync('git branch -D localization');
 });
