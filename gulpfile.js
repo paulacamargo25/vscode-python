@@ -365,9 +365,19 @@ const translationProjectName = 'ms-python.python';
 const translationExtensionName = 'vscode-python';
 
 const defaultLanguages = [
-    // { id: 'de', folderName: 'de' },
-    // { id: 'fr', folderName: 'fr' },
-    // { id: 'es', folderName: 'es' },
+    { id: 'de', folderName: 'de' },
+    { id: 'fr', folderName: 'fr' },
+    { id: 'es', folderName: 'es' },
+    { id: 'cs', folderName: 'cs' },
+    { id: 'it', folderName: 'it' },
+    { id: 'ja', folderName: 'ja' },
+    { id: 'ko', folderName: 'ko' },
+    { id: 'pl', folderName: 'pl' },
+    { id: 'pt-BR', folderName: 'pt-BR' },
+    { id: 'ru', folderName: 'ru' },
+    { id: 'tr', folderName: 'tr' },
+    { id: 'zh-Hans', folderName: 'zh-Hans' },
+    { id: 'zh-Hant', folderName: 'zh-Hant' },
     { id: 'qps-ploc', folderName: 'qps-ploc' },
 ];
 // ****************************
