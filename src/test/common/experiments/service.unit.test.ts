@@ -158,7 +158,7 @@ suite('Experimentation service', () => {
                 instance(stateFactory),
             );
             await exp.activate();
-            const output = `${Experiments.inGroup().format('pythonExperiment')}\n`;
+            const output = `${Experiments.inGroup.format('pythonExperiment')}\n`;
 
             assert.strictEqual(outputChannel.output, output);
         });

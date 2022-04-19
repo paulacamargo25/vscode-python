@@ -291,15 +291,15 @@ suite('Formatter installer', async () => {
 
     test('If black is not installed, offer autopep8 and yapf as options', async () => {
         const messageOptions = [
-            Common.bannerLabelYes(),
-            Products.useFormatter().format(ProductNames.get(Product.autopep8)!),
-            Products.useFormatter().format(ProductNames.get(Product.yapf)!),
-            Common.doNotShowAgain(),
+            Common.bannerLabelYes,
+            Products.useFormatter.format(ProductNames.get(Product.autopep8)!),
+            Products.useFormatter.format(ProductNames.get(Product.yapf)!),
+            Common.doNotShowAgain,
         ];
 
         appShell
             .setup((a) => a.showErrorMessage(TypeMoq.It.isAnyString(), ...messageOptions))
-            .returns(() => Promise.resolve(Common.bannerLabelYes()))
+            .returns(() => Promise.resolve(Common.bannerLabelYes))
             .verifiable(TypeMoq.Times.once());
         productPathService
             .setup((p) => p.isExecutableAModule(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
@@ -323,15 +323,15 @@ suite('Formatter installer', async () => {
 
     test('If autopep8 is not installed, offer black and yapf as options', async () => {
         const messageOptions = [
-            Common.bannerLabelYes(),
-            Products.useFormatter().format(ProductNames.get(Product.black)!),
-            Products.useFormatter().format(ProductNames.get(Product.yapf)!),
-            Common.doNotShowAgain(),
+            Common.bannerLabelYes,
+            Products.useFormatter.format(ProductNames.get(Product.black)!),
+            Products.useFormatter.format(ProductNames.get(Product.yapf)!),
+            Common.doNotShowAgain,
         ];
 
         appShell
             .setup((a) => a.showErrorMessage(TypeMoq.It.isAnyString(), ...messageOptions))
-            .returns(() => Promise.resolve(Common.bannerLabelYes()))
+            .returns(() => Promise.resolve(Common.bannerLabelYes))
             .verifiable(TypeMoq.Times.once());
         productPathService
             .setup((p) => p.isExecutableAModule(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
@@ -355,15 +355,15 @@ suite('Formatter installer', async () => {
 
     test('If yapf is not installed, offer autopep8 and black as options', async () => {
         const messageOptions = [
-            Common.bannerLabelYes(),
-            Products.useFormatter().format(ProductNames.get(Product.autopep8)!),
-            Products.useFormatter().format(ProductNames.get(Product.black)!),
-            Common.doNotShowAgain(),
+            Common.bannerLabelYes,
+            Products.useFormatter.format(ProductNames.get(Product.autopep8)!),
+            Products.useFormatter.format(ProductNames.get(Product.black)!),
+            Common.doNotShowAgain,
         ];
 
         appShell
             .setup((a) => a.showErrorMessage(TypeMoq.It.isAnyString(), ...messageOptions))
-            .returns(() => Promise.resolve(Common.bannerLabelYes()))
+            .returns(() => Promise.resolve(Common.bannerLabelYes))
             .verifiable(TypeMoq.Times.once());
         productPathService
             .setup((p) => p.isExecutableAModule(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
@@ -387,14 +387,14 @@ suite('Formatter installer', async () => {
 
     test('If the formatter is not executable as a module, display an error message', async () => {
         const messageOptions = [
-            Products.useFormatter().format(ProductNames.get(Product.autopep8)!),
-            Products.useFormatter().format(ProductNames.get(Product.yapf)!),
-            Common.doNotShowAgain(),
+            Products.useFormatter.format(ProductNames.get(Product.autopep8)!),
+            Products.useFormatter.format(ProductNames.get(Product.yapf)!),
+            Common.doNotShowAgain,
         ];
 
         appShell
             .setup((a) => a.showErrorMessage(TypeMoq.It.isAnyString(), ...messageOptions))
-            .returns(() => Promise.resolve(Common.bannerLabelYes()))
+            .returns(() => Promise.resolve(Common.bannerLabelYes))
             .verifiable(TypeMoq.Times.once());
         productPathService
             .setup((p) => p.isExecutableAModule(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
@@ -420,15 +420,15 @@ suite('Formatter installer', async () => {
 
     test('If "Do not show again" has been selected earlier, do not display the prompt', async () => {
         const messageOptions = [
-            Common.bannerLabelYes(),
-            Products.useFormatter().format(ProductNames.get(Product.autopep8)!),
-            Products.useFormatter().format(ProductNames.get(Product.yapf)!),
-            Common.doNotShowAgain(),
+            Common.bannerLabelYes,
+            Products.useFormatter.format(ProductNames.get(Product.autopep8)!),
+            Products.useFormatter.format(ProductNames.get(Product.yapf)!),
+            Common.doNotShowAgain,
         ];
 
         appShell
             .setup((a) => a.showErrorMessage(TypeMoq.It.isAnyString(), ...messageOptions))
-            .returns(() => Promise.resolve(Common.bannerLabelYes()))
+            .returns(() => Promise.resolve(Common.bannerLabelYes))
             .verifiable(TypeMoq.Times.never());
         persistentStateFactory
             .setup((p) => p.createGlobalPersistentState(TypeMoq.It.isAnyString(), false))
@@ -448,15 +448,15 @@ suite('Formatter installer', async () => {
     test('If "Do not show again" is selected, do not install the formatter and do not show the prompt again', async () => {
         let value = false;
         const messageOptions = [
-            Common.bannerLabelYes(),
-            Products.useFormatter().format(ProductNames.get(Product.autopep8)!),
-            Products.useFormatter().format(ProductNames.get(Product.yapf)!),
-            Common.doNotShowAgain(),
+            Common.bannerLabelYes,
+            Products.useFormatter.format(ProductNames.get(Product.autopep8)!),
+            Products.useFormatter.format(ProductNames.get(Product.yapf)!),
+            Common.doNotShowAgain,
         ];
 
         appShell
             .setup((a) => a.showErrorMessage(TypeMoq.It.isAnyString(), ...messageOptions))
-            .returns(() => Promise.resolve(Common.doNotShowAgain()))
+            .returns(() => Promise.resolve(Common.doNotShowAgain))
             .verifiable(TypeMoq.Times.once());
         productPathService
             .setup((p) => p.isExecutableAModule(TypeMoq.It.isAny(), TypeMoq.It.isAny()))

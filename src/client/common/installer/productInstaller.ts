@@ -249,16 +249,16 @@ export class FormatterInstaller extends BaseInstaller {
         const formatterNames = formatters.map((formatter) => ProductNames.get(formatter)!);
         const productName = ProductNames.get(product)!;
         formatterNames.splice(formatterNames.indexOf(productName), 1);
-        const useOptions = formatterNames.map((name) => Products.useFormatter().format(name));
-        const yesChoice = Common.bannerLabelYes();
+        const useOptions = formatterNames.map((name) => Products.useFormatter.format(name));
+        const yesChoice = Common.bannerLabelYes;
 
-        const options = [...useOptions, Common.doNotShowAgain()];
-        let message = Products.formatterNotInstalled().format(productName);
+        const options = [...useOptions, Common.doNotShowAgain];
+        let message = Products.formatterNotInstalled.format(productName);
         if (this.isExecutableAModule(product, resource)) {
             options.splice(0, 0, yesChoice);
         } else {
             const executable = this.getExecutableNameFromSettings(product, resource);
-            message = Products.invalidFormatterPath().format(productName, executable);
+            message = Products.invalidFormatterPath.format(productName, executable);
         }
 
         const item = await this.appShell.showErrorMessage(message, ...options);
@@ -266,7 +266,7 @@ export class FormatterInstaller extends BaseInstaller {
             return this.install(product, resource, cancel);
         }
 
-        if (item === Common.doNotShowAgain()) {
+        if (item === Common.doNotShowAgain) {
             neverShowAgain.updateValue(true);
             return InstallerResponse.Ignore;
         }
@@ -316,10 +316,10 @@ export class LinterInstaller extends BaseInstaller {
 
     private async oldPromptForInstallation(product: Product, resource?: Uri, cancel?: CancellationToken) {
         const productName = ProductNames.get(product)!;
-        const install = Common.install();
-        const doNotShowAgain = Common.doNotShowAgain();
+        const { install } = Common;
+        const { doNotShowAgain } = Common;
         const disableLinterInstallPromptKey = `${productName}_DisableLinterInstallPrompt`;
-        const selectLinter = Linters.selectLinter();
+        const { selectLinter } = Linters;
 
         if (this.getStoredResponse(disableLinterInstallPromptKey) === true) {
             return InstallerResponse.Ignore;
@@ -501,7 +501,7 @@ export class DataScienceInstaller extends BaseInstaller {
         const installerModule: IModuleInstaller | undefined = channels.find((v) => v.type === requiredInstaller);
 
         if (!installerModule) {
-            this.appShell.showErrorMessage(Installer.couldNotInstallLibrary().format(moduleName)).then(noop, noop);
+            this.appShell.showErrorMessage(Installer.couldNotInstallLibrary.format(moduleName)).then(noop, noop);
             sendTelemetryEvent(EventName.PYTHON_INSTALL_PACKAGE, undefined, {
                 installer: 'unavailable',
                 requiredInstaller,
@@ -541,7 +541,7 @@ export class DataScienceInstaller extends BaseInstaller {
     ): Promise<InstallerResponse> {
         const productName = ProductNames.get(product)!;
         const item = await this.appShell.showErrorMessage(
-            Installer.dataScienceInstallPrompt().format(productName),
+            Installer.dataScienceInstallPrompt.format(productName),
             'Yes',
             'No',
         );

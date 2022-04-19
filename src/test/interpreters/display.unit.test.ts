@@ -136,7 +136,7 @@ suite('Interpreters Display', () => {
                     languageStatusItem.verify(
                         (s) =>
                             (s.command = TypeMoq.It.isValue({
-                                title: InterpreterQuickPickList.browsePath.openButtonLabel(),
+                                title: InterpreterQuickPickList.browsePath.openButtonLabel,
                                 command: Commands.Set_Interpreter,
                             })),
                         TypeMoq.Times.once(),
@@ -211,7 +211,7 @@ suite('Interpreters Display', () => {
                     .returns(() => Promise.resolve(activeInterpreter));
 
                 await interpreterDisplay.refresh(resource);
-                traceLogStub.calledOnceWithExactly(Interpreters.pythonInterpreterPath().format(activeInterpreter.path));
+                traceLogStub.calledOnceWithExactly(Interpreters.pythonInterpreterPath.format(activeInterpreter.path));
             });
             test('If interpreter is not identified then tooltip should point to python Path', async () => {
                 const resource = Uri.file('x');
@@ -275,7 +275,7 @@ suite('Interpreters Display', () => {
                     statusBar.verify(
                         (s) =>
                             (s.text = TypeMoq.It.isValue(
-                                `$(alert) ${InterpreterQuickPickList.browsePath.openButtonLabel()}`,
+                                `$(alert) ${InterpreterQuickPickList.browsePath.openButtonLabel}`,
                             )),
                         TypeMoq.Times.once(),
                     );

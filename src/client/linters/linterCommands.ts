@@ -71,7 +71,7 @@ export class LinterCommands implements IDisposable {
                 const index = linters.findIndex((x) => x.id === selection);
                 if (activeLinters.length > 1) {
                     const response = await this.appShell.showWarningMessage(
-                        Linters.replaceWithSelectedLinter().format(selection),
+                        Linters.replaceWithSelectedLinter.format(selection),
                         'Yes',
                         'No',
                     );

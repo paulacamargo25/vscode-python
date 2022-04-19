@@ -33,7 +33,7 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
         let manuallyEnteredAValue: boolean | undefined;
 
         const config: Partial<LaunchRequestArguments> = {
-            name: DebugConfigStrings.pyramid.snippet.name(),
+            name: DebugConfigStrings.pyramid.snippet.name,
             type: DebuggerTypeName,
             request: 'launch',
             module: 'pyramid.scripts.pserve',
@@ -45,9 +45,9 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
 
         if (!iniPath) {
             const selectedIniPath = await input.showInputBox({
-                title: DebugConfigStrings.pyramid.enterDevelopmentIniPath.title(),
+                title: DebugConfigStrings.pyramid.enterDevelopmentIniPath.title,
                 value: defaultIni,
-                prompt: DebugConfigStrings.pyramid.enterDevelopmentIniPath.prompt(),
+                prompt: DebugConfigStrings.pyramid.enterDevelopmentIniPath.prompt,
                 validate: (value) => this.validateIniPath(state ? state.folder : undefined, defaultIni, value),
             });
             if (selectedIniPath) {
@@ -71,7 +71,7 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
         if (!folder) {
             return;
         }
-        const error = DebugConfigStrings.pyramid.enterDevelopmentIniPath.invalid();
+        const error = DebugConfigStrings.pyramid.enterDevelopmentIniPath.invalid;
         if (!selected || selected.trim().length === 0) {
             return error;
         }

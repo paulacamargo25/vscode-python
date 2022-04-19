@@ -162,7 +162,7 @@ export class ExperimentService implements IExperimentService {
 
         if (this._optOutFrom.includes('All')) {
             // We prioritize opt out first
-            traceLog(Experiments.optedOutOf().format('All'));
+            traceLog(Experiments.optedOutOf.format('All'));
 
             // Since we are in the Opt Out all case, this means when checking for experiment we
             // short circuit and return. So, printing out additional experiment info might cause
@@ -171,7 +171,7 @@ export class ExperimentService implements IExperimentService {
         }
         if (this._optInto.includes('All')) {
             // Only if 'All' is not in optOut then check if it is in Opt In.
-            traceLog(Experiments.inGroup().format('All'));
+            traceLog(Experiments.inGroup.format('All'));
 
             // Similar to the opt out case. If user is opting into to all experiments we short
             // circuit the experiment checks. So, skip printing any additional details to the logs.
@@ -182,14 +182,14 @@ export class ExperimentService implements IExperimentService {
         this._optOutFrom
             .filter((exp) => exp !== 'All' && exp.toLowerCase().startsWith('python'))
             .forEach((exp) => {
-                traceLog(Experiments.optedOutOf().format(exp));
+                traceLog(Experiments.optedOutOf.format(exp));
             });
 
         // Log experiments that users manually opt into, these are experiments which are added using the exp framework.
         this._optInto
             .filter((exp) => exp !== 'All' && exp.toLowerCase().startsWith('python'))
             .forEach((exp) => {
-                traceLog(Experiments.inGroup().format(exp));
+                traceLog(Experiments.inGroup.format(exp));
             });
 
         if (!experimentsDisabled) {
@@ -202,7 +202,7 @@ export class ExperimentService implements IExperimentService {
                     !this._optOutFrom.includes(exp) &&
                     !this._optInto.includes(exp)
                 ) {
-                    traceLog(Experiments.inGroup().format(exp));
+                    traceLog(Experiments.inGroup.format(exp));
                 }
             });
         }

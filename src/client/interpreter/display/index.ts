@@ -64,7 +64,7 @@ export class InterpreterDisplay implements IInterpreterDisplay, IExtensionSingle
             });
             this.languageStatus.severity = LanguageStatusSeverity.Information;
             this.languageStatus.command = {
-                title: InterpreterQuickPickList.browsePath.openButtonLabel(),
+                title: InterpreterQuickPickList.browsePath.openButtonLabel,
                 command: Commands.Set_Interpreter,
             };
             this.disposableRegistry.push(this.languageStatus);
@@ -114,7 +114,7 @@ export class InterpreterDisplay implements IInterpreterDisplay, IExtensionSingle
                 this.statusBar.tooltip = this.pathUtils.getDisplayName(interpreter.path, workspaceFolder?.fsPath);
                 if (this.currentlySelectedInterpreterPath !== interpreter.path) {
                     traceLog(
-                        Interpreters.pythonInterpreterPath().format(
+                        Interpreters.pythonInterpreterPath.format(
                             this.pathUtils.getDisplayName(interpreter.path, workspaceFolder?.fsPath),
                         ),
                     );
@@ -127,7 +127,7 @@ export class InterpreterDisplay implements IInterpreterDisplay, IExtensionSingle
             } else {
                 this.statusBar.tooltip = '';
                 this.statusBar.color = '';
-                this.statusBar.text = `$(alert) ${InterpreterQuickPickList.browsePath.openButtonLabel()}`;
+                this.statusBar.text = `$(alert) ${InterpreterQuickPickList.browsePath.openButtonLabel}`;
                 this.currentlySelectedInterpreterDisplay = undefined;
             }
         } else if (this.languageStatus) {
@@ -135,7 +135,7 @@ export class InterpreterDisplay implements IInterpreterDisplay, IExtensionSingle
                 this.languageStatus.detail = this.pathUtils.getDisplayName(interpreter.path, workspaceFolder?.fsPath);
                 if (this.currentlySelectedInterpreterPath !== interpreter.path) {
                     traceLog(
-                        Interpreters.pythonInterpreterPath().format(
+                        Interpreters.pythonInterpreterPath.format(
                             this.pathUtils.getDisplayName(interpreter.path, workspaceFolder?.fsPath),
                         ),
                     );
