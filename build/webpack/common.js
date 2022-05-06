@@ -54,7 +54,7 @@ function getListOfExistingModulesInOutDir() {
 exports.getListOfExistingModulesInOutDir = getListOfExistingModulesInOutDir;
 function getTranlationsLoader() {
     const loaders = [];
-    if (process.env.IsPRBuild !== 'true') {
+    if (process.env.DISABLE_TRANSLATIONS !== 'true') {
         loaders.push({
             loader: 'vscode-nls-dev/lib/webpack-loader',
             options: {
