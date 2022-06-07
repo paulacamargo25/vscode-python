@@ -114,13 +114,13 @@ function parseEnvLine(line: string): [string, string] {
     //   https://github.com/motdotla/dotenv/blob/master/lib/main.js#L32
     // We don't use dotenv here because it loses ordering, which is
     // significant for substitution.
-    const match = line.match(/^\s*((_?)[a-zA-Z]\w*)\s*=\s*(.*?)?\s*$/);
+    const match = line.match(/^\s*(_*[a-zA-Z]\w*)\s*=\s*(.*?)?\s*$/);
     if (!match) {
         return ['', ''];
     }
 
     const name = match[1];
-    let value = match[3];
+    let value = match[2];
     if (value && value !== '') {
         if (value[0] === "'" && value[value.length - 1] === "'") {
             value = value.substring(1, value.length - 1);
