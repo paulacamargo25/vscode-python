@@ -402,7 +402,7 @@ bogus-5=...
 bogus~6=...
 VAR1=3456
 VAR_2=7890
-_VAR_3=3456
+_VAR_3=1234
             `);
 
             expect(vars).to.not.equal(undefined, 'Variables is undefiend');
@@ -412,7 +412,7 @@ _VAR_3=3456
             expect(vars).to.have.property('Eggs', '9012', 'value is invalid');
             expect(vars).to.have.property('VAR1', '3456', 'value is invalid');
             expect(vars).to.have.property('VAR_2', '7890', 'value is invalid');
-            expect(vars).to.have.property('_VAR_3', '3456', 'value is invalid');
+            expect(vars).to.have.property('_VAR_3', '1234', 'value is invalid');
         });
 
         test('Empty values become empty string', () => {
