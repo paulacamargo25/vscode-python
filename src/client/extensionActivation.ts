@@ -3,8 +3,20 @@
 
 'use strict';
 
-import { CodeActionKind, debug, DebugConfigurationProvider, languages, OutputChannel, window } from 'vscode';
+import {
+    CodeActionKind,
+    debug,
+    DebugConfiguration,
+    DebugConfigurationProvider,
+    DebugConfigurationProviderTriggerKind,
+    languages,
+    OutputChannel,
+    ProviderResult,
+    window,
+    WorkspaceFolder,
+} from 'vscode';
 
+import * as path from 'path';
 import { registerTypes as activationRegisterTypes } from './activation/serviceRegistry';
 import { IExtensionActivationManager } from './activation/types';
 import { registerTypes as appRegisterTypes } from './application/serviceRegistry';
@@ -13,7 +25,7 @@ import { IApplicationEnvironment, ICommandManager, IWorkspaceService } from './c
 import { Commands, PYTHON, PYTHON_LANGUAGE, STANDARD_OUTPUT_CHANNEL, UseProposedApi } from './common/constants';
 import { registerTypes as installerRegisterTypes } from './common/installer/serviceRegistry';
 import { IFileSystem } from './common/platform/types';
-import { IConfigurationService, IDisposableRegistry, IExtensions, IOutputChannel } from './common/types';
+import { IConfigurationService, IDisposableRegistry, IExtensions, IOutputChannel, IPathUtils } from './common/types';
 import { noop } from './common/utils/misc';
 import { DebuggerTypeName } from './debugger/constants';
 import { registerTypes as debugConfigurationRegisterTypes } from './debugger/extension/serviceRegistry';
@@ -136,6 +148,8 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
     const disposables = serviceManager.get<IDisposableRegistry>(IDisposableRegistry);
     const workspaceService = serviceContainer.get<IWorkspaceService>(IWorkspaceService);
     const cmdManager = serviceContainer.get<ICommandManager>(ICommandManager);
+    const pathUtils = serviceManager.get<IPathUtils>(IPathUtils);
+
     languages.setLanguageConfiguration(PYTHON_LANGUAGE, getLanguageConfiguration());
     if (workspaceService.isTrusted) {
         const interpreterManager = serviceContainer.get<IInterpreterService>(IInterpreterService);
@@ -188,6 +202,34 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
                 .forEach((debugConfigProvider) => {
                     disposables.push(debug.registerDebugConfigurationProvider(DebuggerTypeName, debugConfigProvider));
                 });
+
+            // register a dynamic configuration provider for 'python-dynamic' debug type
+            context.subscriptions.push(
+                debug.registerDebugConfigurationProvider(
+                    'python-dynamic',
+                    {
+                        provideDebugConfigurations(folder: WorkspaceFolder): ProviderResult<DebugConfiguration[]> {
+                            const providers = [];
+                            const defaultLocationOfManagePy = path.join(folder.uri.path, 'manage.py');
+                            const workspaceFolderToken = '${workspaceFolder}';
+
+                            if (fs.fileExistsSync(defaultLocationOfManagePy)) {
+                                providers.push({
+                                    name: 'Python: Django',
+                                    type: 'python-dynamic',
+                                    request: 'launch',
+                                    program: `${workspaceFolderToken}${pathUtils.separator}manage.py`,
+                                    args: ['runserver'],
+                                    django: true,
+                                    justMyCode: true,
+                                });
+                            }
+                            return providers;
+                        },
+                    },
+                    DebugConfigurationProviderTriggerKind.Dynamic,
+                ),
+            );
 
             serviceContainer.get<IDebuggerBanner>(IDebuggerBanner).initialize();
         }
