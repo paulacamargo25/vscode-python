@@ -1072,6 +1072,10 @@
                                 "description": "Path (fully qualified) to the python debug adapter executable.",
                                 "type": "string"
                             },
+                            "is_dynamic": {
+                                "default": false,
+                                "type": "boolean"
+                            },
                             "django": {
                                 "default": false,
                                 "description": "Django debugging.",

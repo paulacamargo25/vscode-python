@@ -6,17 +6,13 @@
 import {
     CodeActionKind,
     debug,
-    DebugConfiguration,
     DebugConfigurationProvider,
     DebugConfigurationProviderTriggerKind,
     languages,
     OutputChannel,
-    ProviderResult,
     window,
-    WorkspaceFolder,
 } from 'vscode';
 
-import * as path from 'path';
 import { registerTypes as activationRegisterTypes } from './activation/serviceRegistry';
 import { IExtensionActivationManager } from './activation/types';
 import { registerTypes as appRegisterTypes } from './application/serviceRegistry';
@@ -25,11 +21,15 @@ import { IApplicationEnvironment, ICommandManager, IWorkspaceService } from './c
 import { Commands, PYTHON, PYTHON_LANGUAGE, STANDARD_OUTPUT_CHANNEL, UseProposedApi } from './common/constants';
 import { registerTypes as installerRegisterTypes } from './common/installer/serviceRegistry';
 import { IFileSystem } from './common/platform/types';
-import { IConfigurationService, IDisposableRegistry, IExtensions, IOutputChannel, IPathUtils } from './common/types';
+import { IConfigurationService, IDisposableRegistry, IExtensions, IOutputChannel } from './common/types';
 import { noop } from './common/utils/misc';
 import { DebuggerTypeName } from './debugger/constants';
 import { registerTypes as debugConfigurationRegisterTypes } from './debugger/extension/serviceRegistry';
-import { IDebugConfigurationService, IDebuggerBanner } from './debugger/extension/types';
+import {
+    IDebugConfigurationService,
+    IDebuggerBanner,
+    IDynamicDebugConfigurationService,
+} from './debugger/extension/types';
 import { registerTypes as formattersRegisterTypes } from './formatters/serviceRegistry';
 import { IInterpreterService } from './interpreter/contracts';
 import { getLanguageConfiguration } from './language/languageConfiguration';
@@ -60,6 +60,7 @@ import { DebugService } from './common/application/debugService';
 import { DebugSessionEventDispatcher } from './debugger/extension/hooks/eventHandlerDispatcher';
 import { IDebugSessionEventHandlers } from './debugger/extension/hooks/types';
 import { WorkspaceService } from './common/application/workspace';
+import { DynamicPythonDebugConfigurationService } from './debugger/extension/configuration/dynamicdebugConfigurationService';
 
 export async function activateComponents(
     // `ext` is passed to any extra activation funcs.
@@ -148,7 +149,6 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
     const disposables = serviceManager.get<IDisposableRegistry>(IDisposableRegistry);
     const workspaceService = serviceContainer.get<IWorkspaceService>(IWorkspaceService);
     const cmdManager = serviceContainer.get<ICommandManager>(ICommandManager);
-    const pathUtils = serviceManager.get<IPathUtils>(IPathUtils);
 
     languages.setLanguageConfiguration(PYTHON_LANGUAGE, getLanguageConfiguration());
     if (workspaceService.isTrusted) {
@@ -203,30 +203,16 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
                     disposables.push(debug.registerDebugConfigurationProvider(DebuggerTypeName, debugConfigProvider));
                 });
 
+            const provider2 = serviceContainer.get<DynamicPythonDebugConfigurationService>(
+                IDynamicDebugConfigurationService,
+            );
+            const a = !!provider2.provideDebugConfigurations;
+
             // register a dynamic configuration provider for 'python-dynamic' debug type
             context.subscriptions.push(
                 debug.registerDebugConfigurationProvider(
-                    'python-dynamic',
-                    {
-                        provideDebugConfigurations(folder: WorkspaceFolder): ProviderResult<DebugConfiguration[]> {
-                            const providers = [];
-                            const defaultLocationOfManagePy = path.join(folder.uri.path, 'manage.py');
-                            const workspaceFolderToken = '${workspaceFolder}';
-
-                            if (fs.fileExistsSync(defaultLocationOfManagePy)) {
-                                providers.push({
-                                    name: 'Python: Django',
-                                    type: 'python-dynamic',
-                                    request: 'launch',
-                                    program: `${workspaceFolderToken}${pathUtils.separator}manage.py`,
-                                    args: ['runserver'],
-                                    django: true,
-                                    justMyCode: true,
-                                });
-                            }
-                            return providers;
-                        },
-                    },
+                    DebuggerTypeName,
+                    serviceContainer.get<DynamicPythonDebugConfigurationService>(IDynamicDebugConfigurationService),
                     DebugConfigurationProviderTriggerKind.Dynamic,
                 ),
             );
