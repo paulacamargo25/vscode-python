@@ -1072,10 +1072,6 @@
                                 "description": "Path (fully qualified) to the python debug adapter executable.",
                                 "type": "string"
                             },
-                            "is_dynamic": {
-                                "default": false,
-                                "type": "boolean"
-                            },
                             "django": {
                                 "default": false,
                                 "description": "Django debugging.",
@@ -1407,44 +1403,6 @@
                     "pickProcess": "python.pickLocalProcess"
                 },
                 "when": "!virtualWorkspace && shellExecutionSupported"
-            },
-            {
-                "label": "Python Dynamic",
-                "languages": [
-                    "python"
-                ],
-                "type": "python-dynamic",
-                "configurationAttributes": {
-                    "launch":{
-                        "properties": {
-                            "args": {
-                                "default": [],
-                                "description": "Command line arguments passed to the program",
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            "django": {
-                                "default": false,
-                                "description": "Django debugging.",
-                                "type": "boolean"
-                            },
-                            "justMyCode": {
-                                "default": true,
-                                "description": "Debug only user-written code.",
-                                "type": "boolean"
-                            },
-                            "program": {
-                                "default": "${file}",
-                                "description": "Absolute path to the program.",
-                                "type": "string"
-                            }
-                        }
-
-                    }
-                }
-
             }
         ],
         "grammars": [

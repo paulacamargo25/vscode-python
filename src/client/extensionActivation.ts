@@ -203,12 +203,7 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
                     disposables.push(debug.registerDebugConfigurationProvider(DebuggerTypeName, debugConfigProvider));
                 });
 
-            const provider2 = serviceContainer.get<DynamicPythonDebugConfigurationService>(
-                IDynamicDebugConfigurationService,
-            );
-            const a = !!provider2.provideDebugConfigurations;
-
-            // register a dynamic configuration provider for 'python-dynamic' debug type
+            // register a dynamic configuration provider for 'python' debug type
             context.subscriptions.push(
                 debug.registerDebugConfigurationProvider(
                     DebuggerTypeName,
