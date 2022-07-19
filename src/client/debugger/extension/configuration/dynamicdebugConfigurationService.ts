@@ -9,6 +9,7 @@ import { CancellationToken, DebugConfiguration, WorkspaceFolder } from 'vscode';
 import { IDebugConfigurationService } from '../types';
 import { IFileSystem } from '../../../common/platform/types';
 import { IPathUtils } from '../../../common/types';
+import { DebuggerTypeName } from '../../constants';
 
 const workspaceFolderToken = '${workspaceFolder}';
 
@@ -21,14 +22,23 @@ export class DynamicPythonDebugConfigurationService implements IDebugConfigurati
         _token?: CancellationToken,
     ): Promise<DebugConfiguration[] | undefined> {
         const providers = [];
-        const defaultLocationOfManagePy = path.join(folder.uri.path, 'manage.py');
 
-        if (this.fs.fileExistsSync(defaultLocationOfManagePy)) {
+        providers.push({
+            name: 'Dynamic Python: File',
+            type: DebuggerTypeName,
+            request: 'launch',
+            program: '${file}',
+            justMyCode: true,
+        });
+
+        const djangoManagePath = await this.fs.search(path.join(folder.uri.fsPath, '**/manage.py'));
+        if (djangoManagePath.length) {
+            const managePath = path.relative(folder.uri.fsPath, djangoManagePath[0]);
             providers.push({
                 name: 'Dynamic Python: Django',
-                type: 'python',
+                type: DebuggerTypeName,
                 request: 'launch',
-                program: `${workspaceFolderToken}${this.pathUtils.separator}manage.py`,
+                program: `${workspaceFolderToken}${this.pathUtils.separator}${managePath}`,
                 args: ['runserver'],
                 django: true,
                 justMyCode: true,
