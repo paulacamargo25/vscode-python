@@ -68,7 +68,7 @@ export function registerTypes(serviceManager: IServiceManager) {
         IDebugConfigurationService,
         PythonDebugConfigurationService,
     );
-    serviceManager.addSingleton<IDebugConfigurationService>(
+    serviceManager.addSingleton<IDynamicDebugConfigurationService>(
         IDynamicDebugConfigurationService,
         DynamicPythonDebugConfigurationService,
     );

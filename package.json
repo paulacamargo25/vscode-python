@@ -64,7 +64,6 @@
         "onLanguage:python",
         "onDebugDynamicConfigurations:python",
         "onDebugResolve:python",
-        "onCommand:python.createNewFile",
         "onCommand:python.execInTerminal",
         "onCommand:python.debugInTerminal",
         "onCommand:python.sortImports",
