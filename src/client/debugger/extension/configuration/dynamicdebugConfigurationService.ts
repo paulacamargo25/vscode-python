@@ -6,7 +6,7 @@
 import * as path from 'path';
 import { inject, injectable } from 'inversify';
 import { CancellationToken, DebugConfiguration, WorkspaceFolder } from 'vscode';
-import { IDebugConfigurationService } from '../types';
+import { IDynamicDebugConfigurationService } from '../types';
 import { IFileSystem } from '../../../common/platform/types';
 import { IPathUtils } from '../../../common/types';
 import { DebuggerTypeName } from '../../constants';
@@ -14,7 +14,7 @@ import { DebuggerTypeName } from '../../constants';
 const workspaceFolderToken = '${workspaceFolder}';
 
 @injectable()
-export class DynamicPythonDebugConfigurationService implements IDebugConfigurationService {
+export class DynamicPythonDebugConfigurationService implements IDynamicDebugConfigurationService {
     constructor(@inject(IFileSystem) private fs: IFileSystem, @inject(IPathUtils) private pathUtils: IPathUtils) {}
 
     public async provideDebugConfigurations(
