@@ -57,6 +57,22 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
                 request: 'launch',
                 module: 'uvicorn',
                 args: [`${fastApiPath}:app`],
+            });
+        }
+
+        const flaskPath = await this.getFlaskPath(folder);
+
+        if (flaskPath) {
+            providers.push({
+                name: 'Dynamic Python: Flask',
+                type: DebuggerTypeName,
+                request: 'launch',
+                module: 'flask',
+                env: {
+                    FLASK_APP: path.relative(folder.uri.fsPath, flaskPath),
+                    FLASK_ENV: 'development',
+                },
+                args: ['run', '--no-debugger'],
                 jinja: true,
                 justMyCode: true,
             });
@@ -76,6 +92,21 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
         const regExpression = /app\s*=\s*FastAPI\(/;
         const flaskPaths = await asyncFilter(possiblePaths, async (possiblePath) =>
             regExpression.exec((await this.fs.readFile(possiblePath)).toString()),
+        );
+
+        return flaskPaths.length ? flaskPaths[0] : null;
+    }
+
+    private async getFlaskPath(folder: WorkspaceFolder) {
+        const initPaths = await this.fs.search(path.join(folder.uri.fsPath, '**/__init__.py'));
+        const appPaths = await this.fs.search(path.join(folder.uri.fsPath, '**/app.py'));
+        const wsgiPaths = await this.fs.search(path.join(folder.uri.fsPath, '**/wsgi.py'));
+        const possiblePaths = [...initPaths, ...appPaths, ...wsgiPaths];
+
+        const regExpression = /app(?:lication)?\s*=\s*(?:flask\.)?Flask\(|def\s+(?:create|make)_app\(/;
+
+        const flaskPaths = possiblePaths.filter((applicationPath) =>
+            regExpression.exec(this.fs.readFileSync(applicationPath).toString()),
         );
 
         return flaskPaths.length ? flaskPaths[0] : null;
