@@ -44,6 +44,38 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
                 justMyCode: true,
             });
         }
+
+        let fastApiPath = await this.getFastApiPath(folder);
+
+        if (fastApiPath) {
+            fastApiPath = path
+                .relative(folder.uri.fsPath, fastApiPath)
+                .replaceAll(this.pathUtils.separator, '.')
+                .replace('.py', '');
+
+            providers.push({
+                name: 'Dynamic Python: FastAPI',
+                type: DebuggerTypeName,
+                request: 'launch',
+                module: 'uvicorn',
+                args: [`${fastApiPath}:app`],
+                jinja: true,
+                justMyCode: true,
+            });
+        }
+
         return providers;
+    }
+
+    private async getFastApiPath(folder: WorkspaceFolder) {
+        const mainPaths = await this.fs.search(path.join(folder.uri.fsPath, '**/main.py'));
+        const appPaths = await this.fs.search(path.join(folder.uri.fsPath, '**/app.py'));
+        const possiblePaths = [...mainPaths, ...appPaths];
+        const regExpression = /app\s*=\s*FastAPI\(/;
+        const flaskPaths = possiblePaths.filter((applicationPath) =>
+            regExpression.exec(this.fs.readFileSync(applicationPath).toString()),
+        );
+
+        return flaskPaths.length ? flaskPaths[0] : null;
     }
 }
