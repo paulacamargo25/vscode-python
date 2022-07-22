@@ -45,6 +45,23 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
             });
         }
 
+        const flaskPath = await this.getFlaskPath(folder);
+        if (flaskPath) {
+            providers.push({
+                name: 'Dynamic Python: Flask',
+                type: DebuggerTypeName,
+                request: 'launch',
+                module: 'flask',
+                env: {
+                    FLASK_APP: path.relative(folder.uri.fsPath, flaskPath),
+                    FLASK_ENV: 'development',
+                },
+                args: ['run', '--no-debugger'],
+                jinja: true,
+                justMyCode: true,
+            });
+        }
+
         let fastApiPath = await this.getFastApiPath(folder);
         if (fastApiPath) {
             fastApiPath = path
