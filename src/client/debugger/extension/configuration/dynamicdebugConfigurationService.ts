@@ -61,7 +61,6 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
         }
 
         const flaskPath = await this.getFlaskPath(folder);
-
         if (flaskPath) {
             providers.push({
                 name: 'Dynamic Python: Flask',
@@ -98,13 +97,15 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
     }
 
     private async getFlaskPath(folder: WorkspaceFolder) {
-        const initPaths = await this.fs.search(path.join(folder.uri.fsPath, '**/__init__.py'));
-        const appPaths = await this.fs.search(path.join(folder.uri.fsPath, '**/app.py'));
-        const wsgiPaths = await this.fs.search(path.join(folder.uri.fsPath, '**/wsgi.py'));
-        const possiblePaths = [...initPaths, ...appPaths, ...wsgiPaths];
-
+        const possiblePaths = await this.getPossiblePaths(folder, [
+            '__init__.py',
+            'app.py',
+            'wsgi.py',
+            '*/__init__.py',
+            '*/app.py',
+            '*/wsgi.py',
+        ]);
         const regExpression = /app(?:lication)?\s*=\s*(?:flask\.)?Flask\(|def\s+(?:create|make)_app\(/;
-
         const flaskPaths = possiblePaths.filter((applicationPath) =>
             regExpression.exec(this.fs.readFileSync(applicationPath).toString()),
         );
