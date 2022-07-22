@@ -81,6 +81,23 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
         return flaskPaths.length ? flaskPaths[0] : null;
     }
 
+    private async getFlaskPath(folder: WorkspaceFolder) {
+        const possiblePaths = await this.getPossiblePaths(folder, [
+            '__init__.py',
+            'app.py',
+            'wsgi.py',
+            '*/__init__.py',
+            '*/app.py',
+            '*/wsgi.py',
+        ]);
+        const regExpression = /app(?:lication)?\s*=\s*(?:flask\.)?Flask\(|def\s+(?:create|make)_app\(/;
+        const flaskPaths = possiblePaths.filter((applicationPath) =>
+            regExpression.exec(this.fs.readFileSync(applicationPath).toString()),
+        );
+
+        return flaskPaths.length ? flaskPaths[0] : null;
+    }
+
     private async getPossiblePaths(folder: WorkspaceFolder, globPatterns: string[]): Promise<string[]> {
         const foundPathsPromises = (await Promise.allSettled(
             globPatterns.map(
