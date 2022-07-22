@@ -91,11 +91,11 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
     private async getFastApiPath(folder: WorkspaceFolder) {
         const possiblePaths = await this.getPossiblePaths(folder, ['main.py', 'app.py', '*/main.py', '*/app.py']);
         const regExpression = /app\s*=\s*FastAPI\(/;
-        const flaskPaths = await asyncFilter(possiblePaths, async (possiblePath) =>
+        const fastApiPaths = await asyncFilter(possiblePaths, async (possiblePath) =>
             regExpression.exec((await this.fs.readFile(possiblePath)).toString()),
         );
 
-        return flaskPaths.length ? flaskPaths[0] : null;
+        return fastApiPaths.length ? fastApiPaths[0] : null;
     }
 
     private async getFlaskPath(folder: WorkspaceFolder) {
@@ -108,8 +108,8 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
             '*/wsgi.py',
         ]);
         const regExpression = /app(?:lication)?\s*=\s*(?:flask\.)?Flask\(|def\s+(?:create|make)_app\(/;
-        const flaskPaths = possiblePaths.filter((applicationPath) =>
-            regExpression.exec(this.fs.readFileSync(applicationPath).toString()),
+        const flaskPaths = await asyncFilter(possiblePaths, async (possiblePath) =>
+            regExpression.exec((await this.fs.readFile(possiblePath)).toString()),
         );
 
         return flaskPaths.length ? flaskPaths[0] : null;
