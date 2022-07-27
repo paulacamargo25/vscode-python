@@ -89,7 +89,14 @@ export class DynamicPythonDebugConfigurationService implements IDynamicDebugConf
     }
 
     private async getFastApiPath(folder: WorkspaceFolder) {
-        const possiblePaths = await this.getPossiblePaths(folder, ['main.py', 'app.py', '*/main.py', '*/app.py']);
+        const possiblePaths = await this.getPossiblePaths(folder, [
+            'main.py',
+            'app.py',
+            '*/main.py',
+            '*/app.py',
+            '*/*/main.py',
+            '*/*/app.py',
+        ]);
         const regExpression = /app\s*=\s*FastAPI\(/;
         const fastApiPaths = await asyncFilter(possiblePaths, async (possiblePath) =>
             regExpression.exec((await this.fs.readFile(possiblePath)).toString()),
