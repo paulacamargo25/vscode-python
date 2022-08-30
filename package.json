@@ -1200,7 +1200,13 @@
                             "args": {
                                 "default": "",
                                 "description": "Command line arguments passed to the program. (not supported for `internalConsole`)",
-                                "type": "string"
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": [
+                                    "array",
+                                    "string"
+                                ]
                             },
                             "autoReload": {
                                 "default": {},
