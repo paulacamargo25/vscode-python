@@ -5,10 +5,9 @@
 
 import { inject, injectable } from 'inversify';
 import * as path from 'path';
+import * as fs from 'fs';
 import { Uri, WorkspaceFolder } from 'vscode';
 import { IWorkspaceService } from '../../../../common/application/types';
-import { IFileSystem } from '../../../../common/platform/types';
-import { IPathUtils } from '../../../../common/types';
 import { DebugConfigStrings } from '../../../../common/utils/localize';
 import { MultiStepInput } from '../../../../common/utils/multiStepInput';
 import { SystemVariables } from '../../../../common/variables/systemVariables';
@@ -25,14 +24,10 @@ const workspaceFolderToken = '${workspaceFolder}';
 
 @injectable()
 export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurationProvider {
-    constructor(
-        @inject(IFileSystem) private fs: IFileSystem,
-        @inject(IWorkspaceService) private readonly workspace: IWorkspaceService,
-        @inject(IPathUtils) private pathUtils: IPathUtils,
-    ) {}
+    constructor(@inject(IWorkspaceService) private readonly workspace: IWorkspaceService) {}
     public async buildConfiguration(input: MultiStepInput<DebugConfigurationState>, state: DebugConfigurationState) {
         const iniPath = await this.getDevelopmentIniPath(state.folder);
-        const defaultIni = `${workspaceFolderToken}${this.pathUtils.separator}development.ini`;
+        const defaultIni = `${workspaceFolderToken}${path.sep}development.ini`;
         let manuallyEnteredAValue: boolean | undefined;
 
         const config: Partial<LaunchRequestArguments> = {
@@ -83,7 +78,7 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
             return error;
         }
         const resolvedPath = this.resolveVariables(selected, folder.uri);
-        if (selected !== defaultValue && !(await this.fs.fileExists(resolvedPath))) {
+        if (selected !== defaultValue && !fs.existsSync(resolvedPath)) {
             return error;
         }
         if (!resolvedPath.trim().toLowerCase().endsWith('.ini')) {
@@ -95,13 +90,13 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
         return systemVariables.resolveAny(pythonPath);
     }
 
-    protected async getDevelopmentIniPath(folder: WorkspaceFolder | undefined): Promise<string | undefined> {
+    protected getDevelopmentIniPath(folder: WorkspaceFolder | undefined): string | undefined {
         if (!folder) {
             return;
         }
         const defaultLocationOfManagePy = path.join(folder.uri.fsPath, 'development.ini');
-        if (await this.fs.fileExists(defaultLocationOfManagePy)) {
-            return `${workspaceFolderToken}${this.pathUtils.separator}development.ini`;
+        if (fs.existsSync(defaultLocationOfManagePy)) {
+            return `${workspaceFolderToken}${path.sep}development.ini`;
         }
     }
 }

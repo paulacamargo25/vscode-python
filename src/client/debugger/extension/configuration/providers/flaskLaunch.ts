@@ -3,10 +3,10 @@
 
 'use strict';
 
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import * as path from 'path';
+import * as fs from 'fs';
 import { WorkspaceFolder } from 'vscode';
-import { IFileSystem } from '../../../../common/platform/types';
 import { DebugConfigStrings } from '../../../../common/utils/localize';
 import { MultiStepInput } from '../../../../common/utils/multiStepInput';
 import { sendTelemetryEvent } from '../../../../telemetry';
@@ -17,12 +17,11 @@ import { DebugConfigurationState, DebugConfigurationType, IDebugConfigurationPro
 
 @injectable()
 export class FlaskLaunchDebugConfigurationProvider implements IDebugConfigurationProvider {
-    constructor(@inject(IFileSystem) private fs: IFileSystem) {}
     public isSupported(debugConfigurationType: DebugConfigurationType): boolean {
         return debugConfigurationType === DebugConfigurationType.launchFlask;
     }
     public async buildConfiguration(input: MultiStepInput<DebugConfigurationState>, state: DebugConfigurationState) {
-        const application = await this.getApplicationPath(state.folder);
+        const application = this.getApplicationPath(state.folder);
         let manuallyEnteredAValue: boolean | undefined;
         const config: Partial<LaunchRequestArguments> = {
             name: DebugConfigStrings.flask.snippet.name,
@@ -63,12 +62,12 @@ export class FlaskLaunchDebugConfigurationProvider implements IDebugConfiguratio
         });
         Object.assign(state.config, config);
     }
-    protected async getApplicationPath(folder: WorkspaceFolder | undefined): Promise<string | undefined> {
+    protected getApplicationPath(folder: WorkspaceFolder | undefined): string | undefined {
         if (!folder) {
             return;
         }
         const defaultLocationOfManagePy = path.join(folder.uri.fsPath, 'app.py');
-        if (await this.fs.fileExists(defaultLocationOfManagePy)) {
+        if (fs.existsSync(defaultLocationOfManagePy)) {
             return 'app.py';
         }
     }
