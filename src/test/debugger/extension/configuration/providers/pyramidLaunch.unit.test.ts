@@ -30,7 +30,7 @@ suite('Debugging - Configuration Provider Pyramid', () => {
             return super.resolveVariables(pythonPath, resource);
         }
 
-        public async getDevelopmentIniPath(folder: WorkspaceFolder): Promise<string | undefined> {
+        public getDevelopmentIniPath(folder: WorkspaceFolder): string | undefined {
             return super.getDevelopmentIniPath(folder);
         }
     }
@@ -39,11 +39,7 @@ suite('Debugging - Configuration Provider Pyramid', () => {
         workspaceService = mock(WorkspaceService);
         pathUtils = mock(PathUtils);
         input = mock<MultiStepInput<DebugConfigurationState>>(MultiStepInput);
-        provider = new TestPyramidLaunchDebugConfigurationProvider(
-            instance(fs),
-            instance(workspaceService),
-            instance(pathUtils),
-        );
+        provider = new TestPyramidLaunchDebugConfigurationProvider(instance(workspaceService));
     });
     test("getDevelopmentIniPath should return undefined if file doesn't exist", async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
@@ -125,7 +121,7 @@ suite('Debugging - Configuration Provider Pyramid', () => {
     test('Launch JSON with valid ini path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
-        provider.getDevelopmentIniPath = () => Promise.resolve('xyz.ini');
+        provider.getDevelopmentIniPath = () => 'xyz.ini';
         when(pathUtils.separator).thenReturn('-');
 
         await provider.buildConfiguration(instance(input), state);
@@ -146,7 +142,7 @@ suite('Debugging - Configuration Provider Pyramid', () => {
     test('Launch JSON with selected ini path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
-        provider.getDevelopmentIniPath = () => Promise.resolve(undefined);
+        provider.getDevelopmentIniPath = () => undefined;
         when(pathUtils.separator).thenReturn('-');
         when(input.showInputBox(anything())).thenResolve('hello');
 
@@ -168,7 +164,7 @@ suite('Debugging - Configuration Provider Pyramid', () => {
     test('Launch JSON with default ini path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
-        provider.getDevelopmentIniPath = () => Promise.resolve(undefined);
+        provider.getDevelopmentIniPath = () => undefined;
         const workspaceFolderToken = '${workspaceFolder}';
         const defaultIni = `${workspaceFolderToken}-development.ini`;
 

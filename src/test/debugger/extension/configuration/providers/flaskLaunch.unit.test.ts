@@ -20,14 +20,14 @@ suite('Debugging - Configuration Provider Flask', () => {
     let provider: TestFlaskLaunchDebugConfigurationProvider;
     let input: MultiStepInput<DebugConfigurationState>;
     class TestFlaskLaunchDebugConfigurationProvider extends FlaskLaunchDebugConfigurationProvider {
-        public async getApplicationPath(folder: WorkspaceFolder): Promise<string | undefined> {
+        public getApplicationPath(folder: WorkspaceFolder): string | undefined {
             return super.getApplicationPath(folder);
         }
     }
     setup(() => {
         fs = mock(FileSystem);
         input = mock<MultiStepInput<DebugConfigurationState>>(MultiStepInput);
-        provider = new TestFlaskLaunchDebugConfigurationProvider(instance(fs));
+        provider = new TestFlaskLaunchDebugConfigurationProvider();
     });
     test("getApplicationPath should return undefined if file doesn't exist", async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
@@ -51,7 +51,7 @@ suite('Debugging - Configuration Provider Flask', () => {
     test('Launch JSON with valid python path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
-        provider.getApplicationPath = () => Promise.resolve('xyz.py');
+        provider.getApplicationPath = () => 'xyz.py';
 
         await provider.buildConfiguration(instance(input), state);
 
@@ -74,7 +74,7 @@ suite('Debugging - Configuration Provider Flask', () => {
     test('Launch JSON with selected app path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
-        provider.getApplicationPath = () => Promise.resolve(undefined);
+        provider.getApplicationPath = () => undefined;
 
         when(input.showInputBox(anything())).thenResolve('hello');
 
@@ -99,7 +99,7 @@ suite('Debugging - Configuration Provider Flask', () => {
     test('Launch JSON with default managepy path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
-        provider.getApplicationPath = () => Promise.resolve(undefined);
+        provider.getApplicationPath = () => undefined;
 
         when(input.showInputBox(anything())).thenResolve();
 
