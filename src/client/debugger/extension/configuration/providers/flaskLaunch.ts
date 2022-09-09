@@ -5,7 +5,7 @@
 
 import { injectable } from 'inversify';
 import * as path from 'path';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import { WorkspaceFolder } from 'vscode';
 import { DebugConfigStrings } from '../../../../common/utils/localize';
 import { MultiStepInput } from '../../../../common/utils/multiStepInput';
@@ -21,7 +21,7 @@ export class FlaskLaunchDebugConfigurationProvider implements IDebugConfiguratio
         return debugConfigurationType === DebugConfigurationType.launchFlask;
     }
     public async buildConfiguration(input: MultiStepInput<DebugConfigurationState>, state: DebugConfigurationState) {
-        const application = this.getApplicationPath(state.folder);
+        const application = await this.getApplicationPath(state.folder);
         let manuallyEnteredAValue: boolean | undefined;
         const config: Partial<LaunchRequestArguments> = {
             name: DebugConfigStrings.flask.snippet.name,
@@ -62,12 +62,12 @@ export class FlaskLaunchDebugConfigurationProvider implements IDebugConfiguratio
         });
         Object.assign(state.config, config);
     }
-    protected getApplicationPath(folder: WorkspaceFolder | undefined): string | undefined {
+    protected async getApplicationPath(folder: WorkspaceFolder | undefined): Promise<string | undefined> {
         if (!folder) {
             return;
         }
         const defaultLocationOfManagePy = path.join(folder.uri.fsPath, 'app.py');
-        if (fs.existsSync(defaultLocationOfManagePy)) {
+        if (await fs.pathExists(defaultLocationOfManagePy)) {
             return 'app.py';
         }
     }

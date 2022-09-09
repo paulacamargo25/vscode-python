@@ -5,6 +5,7 @@
 
 import { injectable } from 'inversify';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { WorkspaceFolder } from 'vscode';
 import { DebugConfigStrings } from '../../../../common/utils/localize';
 import { MultiStepInput } from '../../../../common/utils/multiStepInput';
@@ -20,7 +21,7 @@ export class FastAPILaunchDebugConfigurationProvider implements IDebugConfigurat
         return debugConfigurationType === DebugConfigurationType.launchFastAPI;
     }
     public async buildConfiguration(input: MultiStepInput<DebugConfigurationState>, state: DebugConfigurationState) {
-        const application = this.getApplicationPath(state.folder);
+        const application = await this.getApplicationPath(state.folder);
         let manuallyEnteredAValue: boolean | undefined;
         const config: Partial<LaunchRequestArguments> = {
             name: DebugConfigStrings.fastapi.snippet.name,
@@ -57,12 +58,12 @@ export class FastAPILaunchDebugConfigurationProvider implements IDebugConfigurat
         });
         Object.assign(state.config, config);
     }
-    protected getApplicationPath(folder: WorkspaceFolder | undefined): string | undefined {
+    protected async getApplicationPath(folder: WorkspaceFolder | undefined): Promise<string | undefined> {
         if (!folder) {
             return;
         }
         const defaultLocationOfManagePy = path.join(folder.uri.fsPath, 'main.py');
-        if (defaultLocationOfManagePy) {
+        if (await fs.pathExists(defaultLocationOfManagePy)) {
             return 'main.py';
         }
     }

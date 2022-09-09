@@ -5,10 +5,10 @@
 
 import { expect } from 'chai';
 import * as path from 'path';
+import * as fs from 'fs-extra';
+import * as sinon from 'sinon';
 import { anything, instance, mock, when } from 'ts-mockito';
 import { Uri, WorkspaceFolder } from 'vscode';
-import { FileSystem } from '../../../../../client/common/platform/fileSystem';
-import { IFileSystem } from '../../../../../client/common/platform/types';
 import { DebugConfigStrings } from '../../../../../client/common/utils/localize';
 import { MultiStepInput } from '../../../../../client/common/utils/multiStepInput';
 import { DebuggerTypeName } from '../../../../../client/debugger/constants';
@@ -16,24 +16,26 @@ import { FastAPILaunchDebugConfigurationProvider } from '../../../../../client/d
 import { DebugConfigurationState } from '../../../../../client/debugger/extension/types';
 
 suite('Debugging - Configuration Provider FastAPI', () => {
-    let fs: IFileSystem;
     let provider: TestFastAPILaunchDebugConfigurationProvider;
     let input: MultiStepInput<DebugConfigurationState>;
+    let pathExistsStub: sinon.SinonStub;
     class TestFastAPILaunchDebugConfigurationProvider extends FastAPILaunchDebugConfigurationProvider {
-        public getApplicationPath(folder: WorkspaceFolder): string | undefined {
+        public async getApplicationPath(folder: WorkspaceFolder): Promise<string | undefined> {
             return super.getApplicationPath(folder);
         }
     }
     setup(() => {
-        fs = mock(FileSystem);
         input = mock<MultiStepInput<DebugConfigurationState>>(MultiStepInput);
         provider = new TestFastAPILaunchDebugConfigurationProvider();
+        pathExistsStub = sinon.stub(fs, 'pathExists');
+    });
+    teardown(() => {
+        sinon.restore();
     });
     test("getApplicationPath should return undefined if file doesn't exist", async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const appPyPath = path.join(folder.uri.fsPath, 'main.py');
-        when(fs.fileExists(appPyPath)).thenResolve(false);
-
+        pathExistsStub.withArgs(appPyPath).resolves(false);
         const file = await provider.getApplicationPath(folder);
 
         expect(file).to.be.equal(undefined, 'Should return undefined');
@@ -41,9 +43,7 @@ suite('Debugging - Configuration Provider FastAPI', () => {
     test('getApplicationPath should find path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const appPyPath = path.join(folder.uri.fsPath, 'main.py');
-
-        when(fs.fileExists(appPyPath)).thenResolve(true);
-
+        pathExistsStub.withArgs(appPyPath).resolves(true);
         const file = await provider.getApplicationPath(folder);
 
         expect(file).to.be.equal('main.py');
@@ -51,7 +51,7 @@ suite('Debugging - Configuration Provider FastAPI', () => {
     test('Launch JSON with valid python path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
-        provider.getApplicationPath = () => 'xyz.py';
+        provider.getApplicationPath = () => Promise.resolve('xyz.py');
 
         await provider.buildConfiguration(instance(input), state);
 
@@ -70,7 +70,7 @@ suite('Debugging - Configuration Provider FastAPI', () => {
     test('Launch JSON with selected app path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
-        provider.getApplicationPath = () => undefined;
+        provider.getApplicationPath = () => Promise.resolve(undefined);
 
         when(input.showInputBox(anything())).thenResolve('main');
 

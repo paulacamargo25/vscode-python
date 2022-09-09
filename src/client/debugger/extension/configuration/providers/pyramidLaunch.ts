@@ -3,20 +3,19 @@
 
 'use strict';
 
-import { inject, injectable } from 'inversify';
+import * as vscode from 'vscode';
 import * as path from 'path';
-import * as fs from 'fs';
-import { Uri, WorkspaceFolder } from 'vscode';
-import { IWorkspaceService } from '../../../../common/application/types';
+import * as fs from 'fs-extra';
+import { injectable } from 'inversify';
 import { DebugConfigStrings } from '../../../../common/utils/localize';
 import { MultiStepInput } from '../../../../common/utils/multiStepInput';
-import { SystemVariables } from '../../../../common/variables/systemVariables';
 import { sendTelemetryEvent } from '../../../../telemetry';
 import { EventName } from '../../../../telemetry/constants';
 import { DebuggerTypeName } from '../../../constants';
 import { LaunchRequestArguments } from '../../../types';
 import { DebugConfigurationState, DebugConfigurationType, IDebugConfigurationProvider } from '../../types';
 import * as nls from 'vscode-nls';
+import { resolveVariables } from './common';
 
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
@@ -24,7 +23,6 @@ const workspaceFolderToken = '${workspaceFolder}';
 
 @injectable()
 export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurationProvider {
-    constructor(@inject(IWorkspaceService) private readonly workspace: IWorkspaceService) {}
     public async buildConfiguration(input: MultiStepInput<DebugConfigurationState>, state: DebugConfigurationState) {
         const iniPath = await this.getDevelopmentIniPath(state.folder);
         const defaultIni = `${workspaceFolderToken}${path.sep}development.ini`;
@@ -66,7 +64,7 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
         Object.assign(state.config, config);
     }
     public async validateIniPath(
-        folder: WorkspaceFolder | undefined,
+        folder: vscode.WorkspaceFolder | undefined,
         defaultValue: string,
         selected?: string,
     ): Promise<string | undefined> {
@@ -77,25 +75,21 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
         if (!selected || selected.trim().length === 0) {
             return error;
         }
-        const resolvedPath = this.resolveVariables(selected, folder.uri);
-        if (selected !== defaultValue && !fs.existsSync(resolvedPath)) {
+        const resolvedPath = resolveVariables(selected, undefined, folder);
+        if (selected !== defaultValue && !fs.pathExists(resolvedPath)) {
             return error;
         }
         if (!resolvedPath.trim().toLowerCase().endsWith('.ini')) {
             return error;
         }
     }
-    protected resolveVariables(pythonPath: string, resource: Uri | undefined): string {
-        const systemVariables = new SystemVariables(resource, undefined, this.workspace);
-        return systemVariables.resolveAny(pythonPath);
-    }
 
-    protected getDevelopmentIniPath(folder: WorkspaceFolder | undefined): string | undefined {
+    protected async getDevelopmentIniPath(folder: vscode.WorkspaceFolder | undefined): Promise<string | undefined> {
         if (!folder) {
             return;
         }
         const defaultLocationOfManagePy = path.join(folder.uri.fsPath, 'development.ini');
-        if (fs.existsSync(defaultLocationOfManagePy)) {
+        if (await fs.pathExists(defaultLocationOfManagePy)) {
             return `${workspaceFolderToken}${path.sep}development.ini`;
         }
     }
