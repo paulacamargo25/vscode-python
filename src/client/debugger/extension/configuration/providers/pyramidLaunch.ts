@@ -3,9 +3,9 @@
 
 'use strict';
 
-import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { WorkspaceFolder } from 'vscode';
 import { injectable } from 'inversify';
 import { DebugConfigStrings } from '../../../../common/utils/localize';
 import { MultiStepInput } from '../../../../common/utils/multiStepInput';
@@ -64,7 +64,7 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
         Object.assign(state.config, config);
     }
     public async validateIniPath(
-        folder: vscode.WorkspaceFolder | undefined,
+        folder: WorkspaceFolder | undefined,
         defaultValue: string,
         selected?: string,
     ): Promise<string | undefined> {
@@ -84,7 +84,7 @@ export class PyramidLaunchDebugConfigurationProvider implements IDebugConfigurat
         }
     }
 
-    protected async getDevelopmentIniPath(folder: vscode.WorkspaceFolder | undefined): Promise<string | undefined> {
+    protected async getDevelopmentIniPath(folder: WorkspaceFolder | undefined): Promise<string | undefined> {
         if (!folder) {
             return;
         }
