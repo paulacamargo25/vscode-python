@@ -41,7 +41,7 @@ suite('Debugging - Configuration Provider Flask', () => {
 
         expect(file).to.be.equal('app.py');
     });
-    test.only('Launch JSON with valid python path', async () => {
+    test('Launch JSON with valid python path', async () => {
         const folder = { uri: Uri.parse(path.join('one', 'two')), name: '1', index: 0 };
         const state = { config: {}, folder };
 
