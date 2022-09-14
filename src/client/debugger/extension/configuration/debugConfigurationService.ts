@@ -17,9 +17,11 @@ import { AttachRequestArguments, DebugConfigurationArguments, LaunchRequestArgum
 import { DebugConfigurationState, DebugConfigurationType, IDebugConfigurationService } from '../types';
 import { buildDjangoLaunchDebugConfiguration } from './providers/djangoLaunch';
 import { buildFastAPILaunchDebugConfiguration } from './providers/fastapiLaunch';
+import { buildFileLaunchDebugConfiguration } from './providers/fileLaunch';
 import { buildFlaskLaunchDebugConfiguration } from './providers/flaskLaunch';
 import { buildModuleLaunchConfiguration } from './providers/moduleLaunch';
 import { buildPidAttachConfiguration } from './providers/pidAttach';
+import { buildPyramidLaunchConfiguration } from './providers/pyramidLaunch';
 import { buildRemoteAttachConfiguration } from './providers/remoteAttach';
 import { IDebugConfigurationResolver } from './types';
 
@@ -161,13 +163,12 @@ export class PythonDebugConfigurationService implements IDebugConfigurationServi
         >();
         debugConfigurations.set(DebugConfigurationType.launchDjango, buildDjangoLaunchDebugConfiguration);
         debugConfigurations.set(DebugConfigurationType.launchFastAPI, buildFastAPILaunchDebugConfiguration);
-        debugConfigurations.set(DebugConfigurationType.launchFile, buildDjangoLaunchDebugConfiguration);
+        debugConfigurations.set(DebugConfigurationType.launchFile, buildFileLaunchDebugConfiguration);
         debugConfigurations.set(DebugConfigurationType.launchFlask, buildFlaskLaunchDebugConfiguration);
         debugConfigurations.set(DebugConfigurationType.launchModule, buildModuleLaunchConfiguration);
         debugConfigurations.set(DebugConfigurationType.pidAttach, buildPidAttachConfiguration);
         debugConfigurations.set(DebugConfigurationType.remoteAttach, buildRemoteAttachConfiguration);
-        debugConfigurations.set(DebugConfigurationType.launchPyramid, buildPidAttachConfiguration);
-        buildRemoteAttachConfiguration;
+        debugConfigurations.set(DebugConfigurationType.launchPyramid, buildPyramidLaunchConfiguration);
 
         state.config = {};
         const pick = await input.showQuickPick<
