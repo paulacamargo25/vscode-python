@@ -10,7 +10,7 @@ import { EventName } from '../../../../telemetry/constants';
 import { DebuggerTypeName } from '../../../constants';
 import { AttachRequestArguments } from '../../../types';
 import { DebugConfigurationState, DebugConfigurationType } from '../../types';
-import { configurePort } from './common';
+import { configurePort } from '../utils/configuration';
 
 const defaultHost = 'localhost';
 const defaultPort = 5678;

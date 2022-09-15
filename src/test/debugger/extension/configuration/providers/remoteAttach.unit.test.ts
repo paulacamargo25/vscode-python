@@ -11,7 +11,7 @@ import { Uri } from 'vscode';
 import { DebugConfigStrings } from '../../../../../client/common/utils/localize';
 import { MultiStepInput } from '../../../../../client/common/utils/multiStepInput';
 import { DebuggerTypeName } from '../../../../../client/debugger/constants';
-import * as common from '../../../../../client/debugger/extension/configuration/providers/common';
+import * as configuration from '../../../../../client/debugger/extension/configuration/utils/configuration';
 import * as remoteAttach from '../../../../../client/debugger/extension/configuration/providers/remoteAttach';
 import { DebugConfigurationState } from '../../../../../client/debugger/extension/types';
 
@@ -27,7 +27,7 @@ suite('Debugging - Configuration Provider Remote Attach', () => {
     test('Configure port will display prompt', async () => {
         when(input.showInputBox(anything())).thenResolve();
 
-        await common.configurePort(instance(input), {});
+        await configuration.configurePort(instance(input), {});
 
         verify(input.showInputBox(anything())).once();
     });
@@ -35,7 +35,7 @@ suite('Debugging - Configuration Provider Remote Attach', () => {
         const config: { connect?: { port?: number } } = {};
         when(input.showInputBox(anything())).thenResolve('xyz');
 
-        await common.configurePort(instance(input), config);
+        await configuration.configurePort(instance(input), config);
 
         verify(input.showInputBox(anything())).once();
         expect(config).to.be.deep.equal({ connect: { port: 5678 } });
@@ -44,7 +44,7 @@ suite('Debugging - Configuration Provider Remote Attach', () => {
         const config: { connect?: { port?: number } } = {};
         when(input.showInputBox(anything())).thenResolve();
 
-        await common.configurePort(instance(input), config);
+        await configuration.configurePort(instance(input), config);
 
         verify(input.showInputBox(anything())).once();
         expect(config).to.be.deep.equal({ connect: { port: 5678 } });
@@ -53,7 +53,7 @@ suite('Debugging - Configuration Provider Remote Attach', () => {
         const config: { connect?: { port?: number } } = {};
         when(input.showInputBox(anything())).thenResolve('1234');
 
-        await common.configurePort(instance(input), config);
+        await configuration.configurePort(instance(input), config);
 
         verify(input.showInputBox(anything())).once();
         expect(config).to.be.deep.equal({ connect: { port: 1234 } });
@@ -64,7 +64,7 @@ suite('Debugging - Configuration Provider Remote Attach', () => {
         let portConfigured = false;
         when(input.showInputBox(anything())).thenResolve();
 
-        sinon.stub(common, 'configurePort').callsFake(async () => {
+        sinon.stub(configuration, 'configurePort').callsFake(async () => {
             portConfigured = true;
         });
 
@@ -98,7 +98,7 @@ suite('Debugging - Configuration Provider Remote Attach', () => {
         const state = { config: {}, folder };
         let portConfigured = false;
         when(input.showInputBox(anything())).thenResolve('Hello');
-        sinon.stub(common, 'configurePort').callsFake(async (_, cfg) => {
+        sinon.stub(configuration, 'configurePort').callsFake(async (_, cfg) => {
             portConfigured = true;
             cfg.connect!.port = 9999;
         });

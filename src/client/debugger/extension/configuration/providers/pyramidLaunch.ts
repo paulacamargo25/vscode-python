@@ -14,7 +14,7 @@ import { DebuggerTypeName } from '../../../constants';
 import { LaunchRequestArguments } from '../../../types';
 import { DebugConfigurationState, DebugConfigurationType } from '../../types';
 import * as nls from 'vscode-nls';
-import { resolveVariables } from './common';
+import { resolveVariables } from '../utils/common';
 
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 

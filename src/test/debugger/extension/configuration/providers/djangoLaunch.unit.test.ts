@@ -9,13 +9,12 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as sinon from 'sinon';
 import { anything, instance, mock, when } from 'ts-mockito';
-import * as workspaceFolder from '../../../../../client/common/utils/workspaceFolder';
 import { DebugConfigStrings } from '../../../../../client/common/utils/localize';
 import { MultiStepInput } from '../../../../../client/common/utils/multiStepInput';
 import { DebuggerTypeName } from '../../../../../client/debugger/constants';
 import { DebugConfigurationState } from '../../../../../client/debugger/extension/types';
-import { resolveVariables } from '../../../../../client/debugger/extension/configuration/providers/common';
-
+import { resolveVariables } from '../../../../../client/debugger/extension/configuration/utils/common';
+import * as workspaceFolder from '../../../../../client/debugger/extension/configuration/utils/workspaceFolder';
 import * as djangoLaunch from '../../../../../client/debugger/extension/configuration/providers/djangoLaunch';
 
 suite('Debugging - Configuration Provider Django', () => {

@@ -13,7 +13,7 @@ import { EventName } from '../../../../telemetry/constants';
 import { DebuggerTypeName } from '../../../constants';
 import { LaunchRequestArguments } from '../../../types';
 import { DebugConfigurationState, DebugConfigurationType } from '../../types';
-import { resolveVariables } from './common';
+import { resolveVariables } from '../utils/common';
 
 const workspaceFolderToken = '${workspaceFolder}';
 
