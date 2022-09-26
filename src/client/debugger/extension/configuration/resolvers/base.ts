@@ -5,6 +5,7 @@
 
 import { injectable } from 'inversify';
 import * as path from 'path';
+import * as vscode from 'vscode';
 import { CancellationToken, DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
 import { IDocumentManager, IWorkspaceService } from '../../../../common/application/types';
 import { PYTHON_LANGUAGE } from '../../../../common/constants';
@@ -18,6 +19,7 @@ import { DebuggerTelemetry } from '../../../../telemetry/types';
 import { AttachRequestArguments, DebugOptions, LaunchRequestArguments, PathMapping } from '../../../types';
 import { PythonPathSource } from '../../types';
 import { IDebugConfigurationResolver } from '../types';
+import { resolveVariables } from '../utils/common';
 
 @injectable()
 export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
@@ -59,17 +61,14 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             return folder.uri;
         }
         const program = this.getProgram();
-        if (
-            !Array.isArray(this.workspaceService.workspaceFolders) ||
-            this.workspaceService.workspaceFolders.length === 0
-        ) {
+        if (!Array.isArray(vscode.workspace.workspaceFolders) || vscode.workspace.workspaceFolders.length === 0) {
             return program ? Uri.file(path.dirname(program)) : undefined;
         }
-        if (this.workspaceService.workspaceFolders.length === 1) {
-            return this.workspaceService.workspaceFolders[0].uri;
+        if (vscode.workspace.workspaceFolders.length === 1) {
+            return vscode.workspace.workspaceFolders[0].uri;
         }
         if (program) {
-            const workspaceFolder = this.workspaceService.getWorkspaceFolder(Uri.file(program));
+            const workspaceFolder = vscode.workspace.getWorkspaceFolder(Uri.file(program));
             if (workspaceFolder) {
                 return workspaceFolder.uri;
             }
@@ -112,6 +111,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
         debugConfiguration: LaunchRequestArguments,
     ): Promise<void> {
         if (!debugConfiguration) {
+            45;
             return;
         }
         const systemVariables: SystemVariables = new SystemVariables(
@@ -133,6 +133,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             this.pythonPathSource = PythonPathSource.launchJson;
         }
         debugConfiguration.python = systemVariables.resolveAny(debugConfiguration.python);
+        const newDebug = resolveVariables(debugConfiguration.python.pythonPath);
     }
 
     protected debugOption(debugOptions: DebugOptions[], debugOption: DebugOptions) {
