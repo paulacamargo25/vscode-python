@@ -71,10 +71,7 @@ export class LinterCommands implements IDisposable {
                 const index = linters.findIndex((x) => x.id === selection);
                 if (activeLinters.length > 1) {
                     const response = await this.appShell.showWarningMessage(
-                        l10n.t(
-                            "Multiple linters are enabled in settings. Replace with '{0}'?",
-                            selection,
-                        ),
+                        l10n.t("Multiple linters are enabled in settings. Replace with '{0}'?", selection),
                         Common.bannerLabelYes,
                         Common.bannerLabelNo,
                     );

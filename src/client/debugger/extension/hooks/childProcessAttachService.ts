@@ -35,9 +35,7 @@ export class ChildProcessAttachService implements IChildProcessAttachService {
         const launched = await this.debugService.startDebugging(folder, debugConfig, parentSession);
         if (!launched) {
             this.appShell
-                .showErrorMessage(
-                    l10n.t('Failed to launch debugger for child process {0}', processId),
-                )
+                .showErrorMessage(l10n.t('Failed to launch debugger for child process {0}', processId))
                 .then(noop, noop);
         }
     }

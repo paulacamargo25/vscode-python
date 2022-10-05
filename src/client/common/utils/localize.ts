@@ -5,27 +5,48 @@
 
 import { l10n } from 'vscode';
 
-
 /* eslint-disable @typescript-eslint/no-namespace, no-shadow */
 
 // External callers of localize use these tables to retrieve localized values.
 export namespace Diagnostics {
-    export const warnSourceMaps = l10n.t('Source map support is enabled in the Python Extension, this will adversely impact performance of the extension.');
+    export const warnSourceMaps = l10n.t(
+        'Source map support is enabled in the Python Extension, this will adversely impact performance of the extension.',
+    );
     export const disableSourceMaps = l10n.t('Disable Source Map Support');
-    export const warnBeforeEnablingSourceMaps = l10n.t('Enabling source map support in the Python Extension will adversely impact performance of the extension.');
+    export const warnBeforeEnablingSourceMaps = l10n.t(
+        'Enabling source map support in the Python Extension will adversely impact performance of the extension.',
+    );
     export const enableSourceMapsAndReloadVSC = l10n.t('Enable and reload Window.');
-    export const lsNotSupported = l10n.t('Your operating system does not meet the minimum requirements of the Python Language Server. Reverting to the alternative autocompletion provider, Jedi.');
-    export const removedPythonPathFromSettings = l10n.t('The "python.pythonPath" setting in your settings.json is no longer used by the Python extension. If you want, you can use a new setting called "python.defaultInterpreterPath" instead. Keep in mind that you need to change the value of this setting manually as the Python extension doesn\'t modify it when you change interpreters. [Learn more](https://aka.ms/AA7jfor).');
-    export const invalidPythonPathInDebuggerSettings = l10n.t('You need to select a Python interpreter before you start debugging.\n\nTip: click on "Select Interpreter" in the status bar.');
+    export const lsNotSupported = l10n.t(
+        'Your operating system does not meet the minimum requirements of the Python Language Server. Reverting to the alternative autocompletion provider, Jedi.',
+    );
+    export const removedPythonPathFromSettings = l10n.t(
+        'The "python.pythonPath" setting in your settings.json is no longer used by the Python extension. If you want, you can use a new setting called "python.defaultInterpreterPath" instead. Keep in mind that you need to change the value of this setting manually as the Python extension doesn\'t modify it when you change interpreters. [Learn more](https://aka.ms/AA7jfor).',
+    );
+    export const invalidPythonPathInDebuggerSettings = l10n.t(
+        'You need to select a Python interpreter before you start debugging.\n\nTip: click on "Select Interpreter" in the status bar.',
+    );
     export const invalidPythonPathInDebuggerLaunch = l10n.t('The Python path in your debug configuration is invalid.');
-    export const invalidDebuggerTypeDiagnostic = l10n.t('Your launch.json file needs to be updated to change the "pythonExperimental" debug configurations to use the "python" debugger type, otherwise Python debugging may not work. Would you like to automatically update your launch.json file now?');
-    export const consoleTypeDiagnostic = l10n.t('Your launch.json file needs to be updated to change the console type string from "none" to "internalConsole", otherwise Python debugging may not work. Would you like to automatically update your launch.json file now?');
-    export const justMyCodeDiagnostic = l10n.t('Configuration "debugStdLib" in launch.json is no longer supported. It\'s recommended to replace it with "justMyCode", which is the exact opposite of using "debugStdLib". Would you like to automatically update your launch.json file to do that?');
+    export const invalidDebuggerTypeDiagnostic = l10n.t(
+        'Your launch.json file needs to be updated to change the "pythonExperimental" debug configurations to use the "python" debugger type, otherwise Python debugging may not work. Would you like to automatically update your launch.json file now?',
+    );
+    export const consoleTypeDiagnostic = l10n.t(
+        'Your launch.json file needs to be updated to change the console type string from "none" to "internalConsole", otherwise Python debugging may not work. Would you like to automatically update your launch.json file now?',
+    );
+    export const justMyCodeDiagnostic = l10n.t(
+        'Configuration "debugStdLib" in launch.json is no longer supported. It\'s recommended to replace it with "justMyCode", which is the exact opposite of using "debugStdLib". Would you like to automatically update your launch.json file to do that?',
+    );
     export const yesUpdateLaunch = l10n.t('Yes, update launch.json');
-    export const invalidTestSettings = l10n.t('Your settings needs to be updated to change the setting "python.unitTest." to "python.testing.", otherwise testing Python code using the extension may not work. Would you like to automatically update your settings now?');
+    export const invalidTestSettings = l10n.t(
+        'Your settings needs to be updated to change the setting "python.unitTest." to "python.testing.", otherwise testing Python code using the extension may not work. Would you like to automatically update your settings now?',
+    );
     export const updateSettings = l10n.t('Yes, update settings');
-    export const checkIsort5UpgradeGuide = l10n.t('We found outdated configuration for sorting imports in this workspace. Check the [isort upgrade guide](https://aka.ms/AA9j5x4) to update your settings.');
-    export const pylanceDefaultMessage = l10n.t("The Python extension now includes Pylance to improve completions, code navigation, overall performance and much more! You can learn more about the update and learn how to change your language server [here](https://aka.ms/new-python-bundle).\n\nRead Pylance's license [here](https://marketplace.visualstudio.com/items/ms-python.vscode-pylance/license).");
+    export const checkIsort5UpgradeGuide = l10n.t(
+        'We found outdated configuration for sorting imports in this workspace. Check the [isort upgrade guide](https://aka.ms/AA9j5x4) to update your settings.',
+    );
+    export const pylanceDefaultMessage = l10n.t(
+        "The Python extension now includes Pylance to improve completions, code navigation, overall performance and much more! You can learn more about the update and learn how to change your language server [here](https://aka.ms/new-python-bundle).\n\nRead Pylance's license [here](https://marketplace.visualstudio.com/items/ms-python.vscode-pylance/license).",
+    );
 }
 
 export namespace Common {
@@ -76,34 +97,56 @@ export namespace Pylance {
     export const remindMeLater = l10n.t('Remind me later');
 
     export const pylanceNotInstalledMessage = l10n.t('Pylance extension is not installed.');
-    export const pylanceInstalledReloadPromptMessage = l10n.t('Pylance extension is now installed. Reload window to activate?');
+    export const pylanceInstalledReloadPromptMessage = l10n.t(
+        'Pylance extension is now installed. Reload window to activate?',
+    );
 
-    export const pylanceRevertToJediPrompt = l10n.t('The Pylance extension is not installed but the python.languageServer value is set to "Pylance". Would you like to install the Pylance extension to use Pylance, or revert back to Jedi?');
+    export const pylanceRevertToJediPrompt = l10n.t(
+        'The Pylance extension is not installed but the python.languageServer value is set to "Pylance". Would you like to install the Pylance extension to use Pylance, or revert back to Jedi?',
+    );
     export const pylanceInstallPylance = l10n.t('Install Pylance');
     export const pylanceRevertToJedi = l10n.t('Revert to Jedi');
 }
 
 export namespace TensorBoard {
     export const enterRemoteUrl = l10n.t('Enter remote URL');
-    export const enterRemoteUrlDetail = l10n.t('Enter a URL pointing to a remote directory containing your TensorBoard log files');
-    export const useCurrentWorkingDirectoryDetail = l10n.t('TensorBoard will search for tfevent files in all subdirectories of the current working directory');
+    export const enterRemoteUrlDetail = l10n.t(
+        'Enter a URL pointing to a remote directory containing your TensorBoard log files',
+    );
+    export const useCurrentWorkingDirectoryDetail = l10n.t(
+        'TensorBoard will search for tfevent files in all subdirectories of the current working directory',
+    );
     export const useCurrentWorkingDirectory = l10n.t('Use current working directory');
     export const logDirectoryPrompt = l10n.t('Select a log directory to start TensorBoard with');
     export const progressMessage = l10n.t('Starting TensorBoard session...');
-    export const nativeTensorBoardPrompt = l10n.t('VS Code now has integrated TensorBoard support. Would you like to launch TensorBoard?  (Tip: Launch TensorBoard anytime by opening the command palette and searching for "Launch TensorBoard".)');
+    export const nativeTensorBoardPrompt = l10n.t(
+        'VS Code now has integrated TensorBoard support. Would you like to launch TensorBoard?  (Tip: Launch TensorBoard anytime by opening the command palette and searching for "Launch TensorBoard".)',
+    );
     export const selectAFolder = l10n.t('Select a folder');
     export const selectAFolderDetail = l10n.t('Select a log directory containing tfevent files');
     export const selectAnotherFolder = l10n.t('Select another folder');
     export const selectAnotherFolderDetail = l10n.t('Use the file explorer to select another folder');
-    export const installPrompt = l10n.t('The package TensorBoard is required to launch a TensorBoard session. Would you like to install it?');
-    export const installTensorBoardAndProfilerPluginPrompt = l10n.t('TensorBoard >= 2.4.1 and the PyTorch Profiler TensorBoard plugin >= 0.2.0 are required. Would you like to install these packages?');
-    export const installProfilerPluginPrompt = l10n.t('We recommend installing version >= 0.2.0 of the PyTorch Profiler TensorBoard plugin. Would you like to install the package?');
-    export const upgradePrompt = l10n.t('Integrated TensorBoard support is only available for TensorBoard >= 2.4.1. Would you like to upgrade your copy of TensorBoard?');
+    export const installPrompt = l10n.t(
+        'The package TensorBoard is required to launch a TensorBoard session. Would you like to install it?',
+    );
+    export const installTensorBoardAndProfilerPluginPrompt = l10n.t(
+        'TensorBoard >= 2.4.1 and the PyTorch Profiler TensorBoard plugin >= 0.2.0 are required. Would you like to install these packages?',
+    );
+    export const installProfilerPluginPrompt = l10n.t(
+        'We recommend installing version >= 0.2.0 of the PyTorch Profiler TensorBoard plugin. Would you like to install the package?',
+    );
+    export const upgradePrompt = l10n.t(
+        'Integrated TensorBoard support is only available for TensorBoard >= 2.4.1. Would you like to upgrade your copy of TensorBoard?',
+    );
     export const launchNativeTensorBoardSessionCodeLens = l10n.t('▶ Launch TensorBoard Session');
     export const launchNativeTensorBoardSessionCodeAction = l10n.t('Launch TensorBoard session');
-    export const missingSourceFile = l10n.t('We could not locate the requested source file on disk. Please manually specify the file.');
+    export const missingSourceFile = l10n.t(
+        'We could not locate the requested source file on disk. Please manually specify the file.',
+    );
     export const selectMissingSourceFile = l10n.t('Choose File');
-    export const selectMissingSourceFileDescription = l10n.t("The source file's contents may not match the original contents in the trace.");
+    export const selectMissingSourceFileDescription = l10n.t(
+        "The source file's contents may not match the original contents in the trace.",
+    );
 }
 
 export namespace LanguageService {
@@ -117,29 +160,49 @@ export namespace LanguageService {
     };
     export const startingPylance = l10n.t('Starting Pylance language server.');
     export const startingNone = l10n.t('Editor support is inactive since language server is set to None.');
-    export const untrustedWorkspaceMessage = l10n.t('Only Pylance is supported in untrusted workspaces, setting language server to None.');
+    export const untrustedWorkspaceMessage = l10n.t(
+        'Only Pylance is supported in untrusted workspaces, setting language server to None.',
+    );
 
-    export const reloadAfterLanguageServerChange = l10n.t('Please reload the window switching between language servers.');
+    export const reloadAfterLanguageServerChange = l10n.t(
+        'Please reload the window switching between language servers.',
+    );
 
-    export const lsFailedToStart = l10n.t('We encountered an issue starting the language server. Reverting to Jedi language engine. Check the Python output panel for details.');
-    export const lsFailedToDownload = l10n.t('We encountered an issue downloading the language server. Reverting to Jedi language engine. Check the Python output panel for details.');
-    export const lsFailedToExtract = l10n.t('We encountered an issue extracting the language server. Reverting to Jedi language engine. Check the Python output panel for details.');
+    export const lsFailedToStart = l10n.t(
+        'We encountered an issue starting the language server. Reverting to Jedi language engine. Check the Python output panel for details.',
+    );
+    export const lsFailedToDownload = l10n.t(
+        'We encountered an issue downloading the language server. Reverting to Jedi language engine. Check the Python output panel for details.',
+    );
+    export const lsFailedToExtract = l10n.t(
+        'We encountered an issue extracting the language server. Reverting to Jedi language engine. Check the Python output panel for details.',
+    );
     export const downloadFailedOutputMessage = l10n.t('Language server download failed.');
     export const extractionFailedOutputMessage = l10n.t('Language server extraction failed.');
     export const extractionCompletedOutputMessage = l10n.t('Language server download complete.');
     export const extractionDoneOutputMessage = l10n.t('done.');
-    export const reloadVSCodeIfSeachPathHasChanged = l10n.t('Search paths have changed for this Python interpreter. Please reload the extension to ensure that the IntelliSense works correctly.');
+    export const reloadVSCodeIfSeachPathHasChanged = l10n.t(
+        'Search paths have changed for this Python interpreter. Please reload the extension to ensure that the IntelliSense works correctly.',
+    );
 }
 export namespace Interpreters {
     export const installingPython = l10n.t('Installing Python into Environment...');
     export const discovering = l10n.t('Discovering Python Interpreters');
     export const refreshing = l10n.t('Refreshing Python Interpreters');
-    export const condaInheritEnvMessage = l10n.t('We noticed you\'re using a conda environment. If you are experiencing issues with this environment in the integrated terminal, we recommend that you let the Python extension change "terminal.integrated.inheritEnv" to false in your user settings.');
-    export const environmentPromptMessage = l10n.t('We noticed a new environment has been created. Do you want to select it for the workspace folder?');
+    export const condaInheritEnvMessage = l10n.t(
+        'We noticed you\'re using a conda environment. If you are experiencing issues with this environment in the integrated terminal, we recommend that you let the Python extension change "terminal.integrated.inheritEnv" to false in your user settings.',
+    );
+    export const environmentPromptMessage = l10n.t(
+        'We noticed a new environment has been created. Do you want to select it for the workspace folder?',
+    );
     export const entireWorkspace = l10n.t('Select at workspace level');
     export const clearAtWorkspace = l10n.t('Clear at workspace level');
-    export const selectInterpreterTip = l10n.t('Tip: you can change the Python interpreter used by the Python extension by clicking on the Python version in the status bar');
-    export const installPythonTerminalMessage = l10n.t('💡 Please try installing the python package using your package manager. Alternatively you can also download it from https://www.python.org/downloads');
+    export const selectInterpreterTip = l10n.t(
+        'Tip: you can change the Python interpreter used by the Python extension by clicking on the Python version in the status bar',
+    );
+    export const installPythonTerminalMessage = l10n.t(
+        '💡 Please try installing the python package using your package manager. Alternatively you can also download it from https://www.python.org/downloads',
+    );
 }
 
 export namespace InterpreterQuickPickList {
@@ -179,13 +242,17 @@ export namespace Linters {
 }
 
 export namespace Installer {
-    export const noCondaOrPipInstaller = l10n.t('There is no Conda or Pip installer available in the selected environment.');
+    export const noCondaOrPipInstaller = l10n.t(
+        'There is no Conda or Pip installer available in the selected environment.',
+    );
     export const noPipInstaller = l10n.t('There is no Pip installer available in the selected environment.');
     export const searchForHelp = l10n.t('Search for help');
 }
 
 export namespace ExtensionSurveyBanner {
-    export const bannerMessage = l10n.t('Can you please take 2 minutes to tell us how the Python extension is working for you?');
+    export const bannerMessage = l10n.t(
+        'Can you please take 2 minutes to tell us how the Python extension is working for you?',
+    );
     export const bannerLabelYes = l10n.t('Yes, take survey now');
     export const bannerLabelNo = l10n.t('No, thanks');
     export const maybeLater = l10n.t('Maybe later');
@@ -268,7 +335,9 @@ export namespace DebugConfigStrings {
         };
         export const enterManagePyPath = {
             title: l10n.t('Debug Django'),
-            prompt: l10n.t("Enter the path to manage.py ('${workspaceFolderToken}' points to the root of the current workspace folder)"),
+            prompt: l10n.t(
+                "Enter the path to manage.py ('${workspaceFolderToken}' points to the root of the current workspace folder)",
+            ),
             invalid: l10n.t('Enter a valid Python file path'),
         };
     }
@@ -329,15 +398,21 @@ export namespace Testing {
 }
 
 export namespace OutdatedDebugger {
-    export const outdatedDebuggerMessage = l10n.t('We noticed you are attaching to ptvsd (Python debugger), which was deprecated on May 1st, 2020. Please switch to [debugpy](https://aka.ms/migrateToDebugpy).');
+    export const outdatedDebuggerMessage = l10n.t(
+        'We noticed you are attaching to ptvsd (Python debugger), which was deprecated on May 1st, 2020. Please switch to [debugpy](https://aka.ms/migrateToDebugpy).',
+    );
 }
 
 export namespace Python27Support {
-    export const jediMessage = l10n.t('IntelliSense with Jedi for Python 2.7 is no longer supported. [Learn more](https://aka.ms/python-27-support).');
+    export const jediMessage = l10n.t(
+        'IntelliSense with Jedi for Python 2.7 is no longer supported. [Learn more](https://aka.ms/python-27-support).',
+    );
 }
 
 export namespace SwitchToDefaultLS {
-    export const bannerMessage = l10n.t("The Microsoft Python Language Server has reached end of life. Your language server has been set to the default for Python in VS Code, Pylance.\n\nIf you'd like to change your language server, you can learn about how to do so [here](https://devblogs.microsoft.com/python/python-in-visual-studio-code-may-2021-release/#configuring-your-language-server).\n\nRead Pylance's license [here](https://marketplace.visualstudio.com/items/ms-python.vscode-pylance/license).");
+    export const bannerMessage = l10n.t(
+        "The Microsoft Python Language Server has reached end of life. Your language server has been set to the default for Python in VS Code, Pylance.\n\nIf you'd like to change your language server, you can learn about how to do so [here](https://devblogs.microsoft.com/python/python-in-visual-studio-code-may-2021-release/#configuring-your-language-server).\n\nRead Pylance's license [here](https://marketplace.visualstudio.com/items/ms-python.vscode-pylance/license).",
+    );
 }
 
 export namespace CreateEnv {
@@ -368,7 +443,9 @@ export namespace CreateEnv {
         export const created = l10n.t('Environment created...');
         export const installingPackages = l10n.t('Installing packages...');
         export const errorCreatingEnvironment = l10n.t('Error while creating conda environment.');
-        export const selectPythonQuickPickPlaceholder = l10n.t('Please select the version of Python to install in the environment');
+        export const selectPythonQuickPickPlaceholder = l10n.t(
+            'Please select the version of Python to install in the environment',
+        );
         export const creating = l10n.t('Creating conda environment...');
         export const providerDescription = l10n.t('Creates a `.conda` Conda environment in the current workspace');
     }

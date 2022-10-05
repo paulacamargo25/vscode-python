@@ -33,9 +33,7 @@ export class PythonPathUpdaterService implements IPythonPathUpdaterServiceManage
             failed = true;
             const reason = err as Error;
             const message = reason && typeof reason.message === 'string' ? (reason.message as string) : '';
-            window.showErrorMessage(
-                l10n.t('Failed to set interpreter path. Error: {0}', message),
-            );
+            window.showErrorMessage(l10n.t('Failed to set interpreter path. Error: {0}', message));
             traceError(reason);
         }
         // do not wait for this to complete

@@ -124,9 +124,7 @@ export class SortImportsEditingProvider implements ISortImportsEditingProvider {
         if (!uri) {
             const activeEditor = this.documentManager.activeTextEditor;
             if (!activeEditor || activeEditor.document.languageId !== PYTHON_LANGUAGE) {
-                this.shell
-                    .showErrorMessage(l10n.t('Please open a Python file to sort the imports.'))
-                    .then(noop, noop);
+                this.shell.showErrorMessage(l10n.t('Please open a Python file to sort the imports.')).then(noop, noop);
                 return;
             }
             uri = activeEditor.document.uri;

@@ -253,19 +253,12 @@ export class FormatterInstaller extends BaseInstaller {
         const yesChoice = Common.bannerLabelYes;
 
         const options = [...useOptions, Common.doNotShowAgain];
-        let message = l10n.t(
-            'Formatter {0} is not installed. Install?',
-            productName,
-        );
+        let message = l10n.t('Formatter {0} is not installed. Install?', productName);
         if (this.isExecutableAModule(product, resource)) {
             options.splice(0, 0, yesChoice);
         } else {
             const executable = this.getExecutableNameFromSettings(product, resource);
-            message = l10n.t(
-                'Path to the {0} formatter is invalid ({1})',
-                productName,
-                executable,
-            );
+            message = l10n.t('Path to the {0} formatter is invalid ({1})', productName, executable);
         }
 
         const item = await this.appShell.showErrorMessage(message, ...options);
@@ -339,11 +332,7 @@ export class LinterInstaller extends BaseInstaller {
             options.splice(0, 0, install);
         } else {
             const executable = this.getExecutableNameFromSettings(product, resource);
-            message = l10n.t(
-                'Path to the {0} linter is invalid ({1})',
-                productName,
-                executable,
-            );
+            message = l10n.t('Path to the {0} linter is invalid ({1})', productName, executable);
         }
         const response = await this.appShell.showErrorMessage(message, ...options);
         if (response === install) {
@@ -398,19 +387,12 @@ export class TestFrameworkInstaller extends BaseInstaller {
         const productName = ProductNames.get(product)!;
 
         const options: string[] = [];
-        let message = l10n.t(
-            'Test framework {0} is not installed. Install?',
-            productName,
-        );
+        let message = l10n.t('Test framework {0} is not installed. Install?', productName);
         if (this.isExecutableAModule(product, resource)) {
             options.push(...[Common.bannerLabelYes, Common.bannerLabelNo]);
         } else {
             const executable = this.getExecutableNameFromSettings(product, resource);
-            message = l10n.t(
-                'Path to the {0} test framework is invalid ({1})',
-                productName,
-                executable,
-            );
+            message = l10n.t('Path to the {0} test framework is invalid ({1})', productName, executable);
         }
 
         const item = await this.appShell.showErrorMessage(message, ...options);
@@ -566,10 +548,7 @@ export class DataScienceInstaller extends BaseInstaller {
     ): Promise<InstallerResponse> {
         const productName = ProductNames.get(product)!;
         const item = await this.appShell.showErrorMessage(
-            l10n.t(
-                'Data Science library {0} is not installed. Install?',
-                productName,
-            ),
+            l10n.t('Data Science library {0} is not installed. Install?', productName),
             Common.bannerLabelYes,
             Common.bannerLabelNo,
         );

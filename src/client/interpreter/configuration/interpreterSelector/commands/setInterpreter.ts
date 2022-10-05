@@ -140,11 +140,7 @@ export class SetInterpreterCommand extends BaseInterpreterSelectorCommand implem
         const placeholder =
             params?.placeholder === null
                 ? undefined
-                : params?.placeholder ??
-                  l10n.t(
-                      'Selected Interpreter: {0}',
-                      currentInterpreterPathDisplay,
-                  );
+                : params?.placeholder ?? l10n.t('Selected Interpreter: {0}', currentInterpreterPathDisplay);
         const title =
             params?.title === null ? undefined : params?.title ?? InterpreterQuickPickList.browsePath.openButtonLabel;
         const selection = await input.showQuickPick<QuickPickType, IQuickPickParameters<QuickPickType>>({
