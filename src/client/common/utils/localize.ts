@@ -43,14 +43,10 @@ export namespace Diagnostics {
     export const pylanceDefaultMessage = l10n.t(
         "The Python extension now includes Pylance to improve completions, code navigation, overall performance and much more! You can learn more about the update and learn how to change your language server [here](https://aka.ms/new-python-bundle).\n\nRead Pylance's license [here](https://marketplace.visualstudio.com/items/ms-python.vscode-pylance/license).",
     );
-    export const warnSourceMaps = l10n.t(
-        'Source map support is enabled in the Python Extension, this will adversely impact performance of the extension.',
-    );
-    export const disableSourceMaps = l10n.t('Disable Source Map Support');
 }
 
 export namespace Common {
-    export const openFolder = localize('Common.openFolder', 'Open Folder...');
+    export const openFolder = l10n.t('Common.openFolder', 'Open Folder...');
     export const bannerLabelYes = l10n.t('Yes');
     export const bannerLabelNo = l10n.t('No');
     export const yesPlease = l10n.t('Yes, please');
@@ -204,8 +200,6 @@ export namespace Interpreters {
     export const installPythonTerminalMessage = l10n.t(
         '💡 Please try installing the python package using your package manager. Alternatively you can also download it from https://www.python.org/downloads',
     );
-    export const changePythonInterpreter = l10n.t('Change Python Interpreter');
-    export const selectedPythonInterpreter = l10n.t('Selected Python Interpreter');
 }
 
 export namespace InterpreterQuickPickList {

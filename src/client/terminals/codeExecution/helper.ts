@@ -87,15 +87,11 @@ export class CodeExecutionHelper implements ICodeExecutionHelper {
             return undefined;
         }
         if (activeEditor.document.isUntitled) {
-            this.applicationShell.showErrorMessage(
-                l10n.t('The active file needs to be saved before it can be run'),
-            );
+            this.applicationShell.showErrorMessage(l10n.t('The active file needs to be saved before it can be run'));
             return undefined;
         }
         if (activeEditor.document.languageId !== PYTHON_LANGUAGE) {
-            this.applicationShell.showErrorMessage(
-                l10n.t('The active file is not a Python source file)'),
-            );
+            this.applicationShell.showErrorMessage(l10n.t('The active file is not a Python source file)'));
             return undefined;
         }
         if (activeEditor.document.isDirty) {

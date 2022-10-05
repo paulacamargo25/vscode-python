@@ -37,9 +37,7 @@ export class BlackFormatter extends BaseFormatter {
             const shell = this.serviceContainer.get<IApplicationShell>(IApplicationShell);
             // Black does not support partial formatting on purpose.
             shell
-                .showErrorMessage(
-                    vscode.l10n.t('Black does not support the "Format Selection" command'),
-                )
+                .showErrorMessage(vscode.l10n.t('Black does not support the "Format Selection" command'))
                 .then(noop, noop);
             return [];
         }
