@@ -4,7 +4,7 @@
 'use strict';
 
 import { inject, injectable } from 'inversify';
-import { Disposable, env, UIKind } from 'vscode';
+import { Disposable, env, l10n, UIKind } from 'vscode';
 import { IApplicationShell, IDebugService } from '../../common/application/types';
 import '../../common/extensions';
 import { IBrowserService, IDisposableRegistry, IPersistentStateFactory, IRandom } from '../../common/types';
@@ -13,9 +13,6 @@ import { IServiceContainer } from '../../ioc/types';
 import { traceError } from '../../logging';
 import { DebuggerTypeName } from '../constants';
 import { IDebuggerBanner } from './types';
-import * as nls from 'vscode-nls';
-
-const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
 const SAMPLE_SIZE_PER_HUNDRED = 10;
 
@@ -78,10 +75,7 @@ export class DebuggerBanner implements IDebuggerBanner {
 
     public async show(): Promise<void> {
         const appShell = this.serviceContainer.get<IApplicationShell>(IApplicationShell);
-        const msg = localize(
-            'debuggerSurveyText',
-            'Can you please take 2 minutes to tell us how the debugger is working for you?',
-        );
+        const msg = l10n.t('Can you please take 2 minutes to tell us how the debugger is working for you?');
         const yes = CommonSurvey.yesLabel;
         const no = CommonSurvey.noLabel;
         const later = CommonSurvey.remindMeLaterLabel;

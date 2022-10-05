@@ -4,16 +4,13 @@
 'use strict';
 
 import { inject, injectable } from 'inversify';
-import { DebugConfiguration, DebugSession, WorkspaceFolder } from 'vscode';
+import { DebugConfiguration, DebugSession, l10n, WorkspaceFolder } from 'vscode';
 import { IApplicationShell, IDebugService, IWorkspaceService } from '../../../common/application/types';
 import { noop } from '../../../common/utils/misc';
 import { captureTelemetry } from '../../../telemetry';
 import { EventName } from '../../../telemetry/constants';
 import { AttachRequestArguments } from '../../types';
 import { IChildProcessAttachService } from './types';
-import * as nls from 'vscode-nls';
-
-const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
 /**
  * This class is responsible for attaching the debugger to any
@@ -39,7 +36,7 @@ export class ChildProcessAttachService implements IChildProcessAttachService {
         if (!launched) {
             this.appShell
                 .showErrorMessage(
-                    localize('debuggerError', 'Failed to launch debugger for child process {0}', processId),
+                    l10n.t('Failed to launch debugger for child process {0}', processId),
                 )
                 .then(noop, noop);
         }

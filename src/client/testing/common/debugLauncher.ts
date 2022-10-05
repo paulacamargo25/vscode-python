@@ -1,7 +1,7 @@
 import { inject, injectable, named } from 'inversify';
 
 import * as path from 'path';
-import { DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
+import { DebugConfiguration, l10n, Uri, WorkspaceFolder } from 'vscode';
 import { IApplicationShell, IDebugService, IWorkspaceService } from '../../common/application/types';
 import { EXTENSION_ROOT_DIR } from '../../common/constants';
 import * as internalScripts from '../../common/process/internal/scripts';
@@ -13,9 +13,6 @@ import { IServiceContainer } from '../../ioc/types';
 import { traceError } from '../../logging';
 import { TestProvider } from '../types';
 import { ITestDebugLauncher, LaunchOptions } from './types';
-import * as nls from 'vscode-nls';
-
-const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
 @injectable()
 export class DebugLauncher implements ITestDebugLauncher {
@@ -64,7 +61,7 @@ export class DebugLauncher implements ITestDebugLauncher {
             traceError('could not get debug config', exc);
             const appShell = this.serviceContainer.get<IApplicationShell>(IApplicationShell);
             await appShell.showErrorMessage(
-                localize('readDebugError', 'Could not load unit test config from launch.json as it is missing a field'),
+                l10n.t('Could not load unit test config from launch.json as it is missing a field'),
             );
             return [];
         }

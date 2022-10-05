@@ -1,6 +1,7 @@
 import { inject, injectable } from 'inversify';
 import {
     Disposable,
+    l10n,
     LanguageStatusItem,
     LanguageStatusSeverity,
     StatusBarAlignment,
@@ -23,9 +24,6 @@ import {
     IInterpreterService,
     IInterpreterStatusbarVisibilityFilter,
 } from '../contracts';
-import * as nls from 'vscode-nls';
-
-const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
 /**
  * Based on https://github.com/microsoft/vscode-python/issues/18040#issuecomment-992567670.
@@ -126,8 +124,7 @@ export class InterpreterDisplay implements IInterpreterDisplay, IExtensionSingle
                 this.statusBar.tooltip = this.pathUtils.getDisplayName(interpreter.path, workspaceFolder?.fsPath);
                 if (this.currentlySelectedInterpreterPath !== interpreter.path) {
                     traceLog(
-                        localize(
-                            'Interpreters.sttausBarPythonInterpreterPath',
+                        l10n.t(
                             'Python interpreter path: {0}',
                             this.pathUtils.getDisplayName(interpreter.path, workspaceFolder?.fsPath),
                         ),
@@ -151,8 +148,7 @@ export class InterpreterDisplay implements IInterpreterDisplay, IExtensionSingle
                 this.languageStatus.detail = this.pathUtils.getDisplayName(interpreter.path, workspaceFolder?.fsPath);
                 if (this.currentlySelectedInterpreterPath !== interpreter.path) {
                     traceLog(
-                        localize(
-                            'Interpreters.pythonInterpreterPath',
+                        l10n.t(
                             'Python interpreter path: {0}',
                             this.pathUtils.getDisplayName(interpreter.path, workspaceFolder?.fsPath),
                         ),
