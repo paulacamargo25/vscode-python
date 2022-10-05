@@ -5,7 +5,6 @@
 
 import * as path from 'path';
 import * as vscode from 'vscode';
-import * as nls from 'vscode-nls';
 import { IApplicationShell } from '../common/application/types';
 import { Product } from '../common/installer/productInstaller';
 import { IConfigurationService } from '../common/types';
@@ -15,8 +14,6 @@ import { IServiceContainer } from '../ioc/types';
 import { sendTelemetryWhenDone } from '../telemetry';
 import { EventName } from '../telemetry/constants';
 import { BaseFormatter } from './baseFormatter';
-
-const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
 export class BlackFormatter extends BaseFormatter {
     constructor(serviceContainer: IServiceContainer) {
@@ -41,7 +38,7 @@ export class BlackFormatter extends BaseFormatter {
             // Black does not support partial formatting on purpose.
             shell
                 .showErrorMessage(
-                    localize('formatSelectionError', 'Black does not support the "Format Selection" command'),
+                    vscode.l10n.t('Black does not support the "Format Selection" command'),
                 )
                 .then(noop, noop);
             return [];

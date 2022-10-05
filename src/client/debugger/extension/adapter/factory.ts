@@ -10,6 +10,7 @@ import {
     DebugAdapterExecutable,
     DebugAdapterServer,
     DebugSession,
+    l10n,
     WorkspaceFolder,
 } from 'vscode';
 import { EXTENSION_ROOT_DIR } from '../../../constants';
@@ -20,14 +21,11 @@ import { sendTelemetryEvent } from '../../../telemetry';
 import { EventName } from '../../../telemetry/constants';
 import { AttachRequestArguments, LaunchRequestArguments } from '../../types';
 import { IDebugAdapterDescriptorFactory } from '../types';
-import * as nls from 'vscode-nls';
 import { showErrorMessage } from '../../../common/vscodeApis/windowApis';
 import { Common, Interpreters } from '../../../common/utils/localize';
 import { IPersistentStateFactory } from '../../../common/types';
 import { Commands } from '../../../common/constants';
 import { ICommandManager } from '../../../common/application/types';
-
-const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
 // persistent state names, exported to make use of in testing
 export enum debugStateKeys {
@@ -206,7 +204,7 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
      */
     private async notifySelectInterpreter() {
         await showErrorMessage(
-            localize('interpreterError', 'Please install Python or select a Python Interpreter to use the debugger.'),
+            l10n.t('interpreterError', 'Please install Python or select a Python Interpreter to use the debugger.'),
         );
     }
 }

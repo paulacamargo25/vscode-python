@@ -19,7 +19,8 @@
     "publisher": "ms-python",
     "enabledApiProposals": [
         "quickPickSortByLabel",
-        "testObserver"
+        "testObserver",
+        "localization"
     ],
     "author": {
         "name": "Microsoft Corporation"
@@ -89,6 +90,7 @@
     ],
     "main": "./out/client/extension",
     "browser": "./dist/extension.browser.js",
+    "l10n": "./l10n",
     "contributes": {
         "walkthroughs": [
             {
@@ -1837,7 +1839,6 @@
         "vscode-languageclient": "8.0.2-next.5",
         "vscode-languageserver": "8.0.2-next.5",
         "vscode-languageserver-protocol": "3.17.2-next.6",
-        "vscode-nls": "^5.0.1",
         "vscode-tas-client": "^0.1.63",
         "winreg": "^1.2.4",
         "xml2js": "^0.4.19",
@@ -1914,7 +1915,6 @@
         "uuid": "^8.3.2",
         "vsce": "^2.6.6",
         "vscode-debugadapter-testsupport": "^1.27.0",
-        "vscode-nls-dev": "^4.0.0",
         "webpack": "^5.70.0",
         "webpack-bundle-analyzer": "^4.5.0",
         "webpack-cli": "^4.9.2",
