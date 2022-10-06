@@ -6,10 +6,8 @@
 import { injectable } from 'inversify';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { CancellationToken, DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
-import { IDocumentManager, IWorkspaceService } from '../../../../common/application/types';
+import { CancellationToken, DebugConfiguration, Uri, WorkspaceFolder, window } from 'vscode';
 import { PYTHON_LANGUAGE } from '../../../../common/constants';
-import { IPlatformService } from '../../../../common/platform/types';
 import { IConfigurationService } from '../../../../common/types';
 import { SystemVariables } from '../../../../common/variables/systemVariables';
 import { IInterpreterService } from '../../../../interpreter/contracts';
@@ -20,6 +18,7 @@ import { AttachRequestArguments, DebugOptions, LaunchRequestArguments, PathMappi
 import { PythonPathSource } from '../../types';
 import { IDebugConfigurationResolver } from '../types';
 import { resolveVariables } from '../utils/common';
+import { getWorkspaceFolder as getVSCodeWorkspaceFolder } from '../utils/workspaceFolder';
 
 @injectable()
 export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
@@ -27,9 +26,6 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
     protected pythonPathSource: PythonPathSource = PythonPathSource.launchJson;
 
     constructor(
-        protected readonly workspaceService: IWorkspaceService,
-        protected readonly documentManager: IDocumentManager,
-        protected readonly platformService: IPlatformService,
         protected readonly configurationService: IConfigurationService,
         protected readonly interpreterService: IInterpreterService,
     ) {}
@@ -61,6 +57,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             return folder.uri;
         }
         const program = this.getProgram();
+
         if (!Array.isArray(vscode.workspace.workspaceFolders) || vscode.workspace.workspaceFolders.length === 0) {
             return program ? Uri.file(path.dirname(program)) : undefined;
         }
@@ -68,7 +65,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             return vscode.workspace.workspaceFolders[0].uri;
         }
         if (program) {
-            const workspaceFolder = vscode.workspace.getWorkspaceFolder(Uri.file(program));
+            const workspaceFolder = getVSCodeWorkspaceFolder(Uri.file(program));
             if (workspaceFolder) {
                 return workspaceFolder.uri;
             }
@@ -76,9 +73,9 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
     }
 
     protected getProgram(): string | undefined {
-        const editor = this.documentManager.activeTextEditor;
-        if (editor && editor.document.languageId === PYTHON_LANGUAGE) {
-            return editor.document.fileName;
+        const { activeTextEditor } = window;
+        if (activeTextEditor && activeTextEditor.document.languageId === PYTHON_LANGUAGE) {
+            return activeTextEditor.document.fileName;
         }
     }
 
@@ -111,29 +108,30 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
         debugConfiguration: LaunchRequestArguments,
     ): Promise<void> {
         if (!debugConfiguration) {
-            45;
             return;
         }
-        const systemVariables: SystemVariables = new SystemVariables(
-            undefined,
-            workspaceFolder?.fsPath,
-            this.workspaceService,
-        );
         if (debugConfiguration.pythonPath === '${command:python.interpreterPath}' || !debugConfiguration.pythonPath) {
             const interpreterPath =
                 (await this.interpreterService.getActiveInterpreter(workspaceFolder))?.path ??
                 this.configurationService.getSettings(workspaceFolder).pythonPath;
             debugConfiguration.pythonPath = interpreterPath;
         } else {
-            debugConfiguration.pythonPath = systemVariables.resolveAny(debugConfiguration.pythonPath);
+            debugConfiguration.pythonPath = resolveVariables(
+                debugConfiguration.pythonPath ? debugConfiguration.pythonPath : undefined,
+                workspaceFolder?.fsPath,
+                undefined,
+            );
         }
         if (debugConfiguration.python === '${command:python.interpreterPath}' || !debugConfiguration.python) {
             this.pythonPathSource = PythonPathSource.settingsJson;
         } else {
             this.pythonPathSource = PythonPathSource.launchJson;
         }
-        debugConfiguration.python = systemVariables.resolveAny(debugConfiguration.python);
-        const newDebug = resolveVariables(debugConfiguration.python.pythonPath);
+        debugConfiguration.python = resolveVariables(
+            debugConfiguration.python ? debugConfiguration.python : undefined,
+            workspaceFolder?.fsPath,
+            undefined,
+        );
     }
 
     protected debugOption(debugOptions: DebugOptions[], debugOption: DebugOptions) {
@@ -179,7 +177,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
 
         // If on Windows, lowercase the drive letter for path mappings.
         // TODO: Apply even if no localRoot?
-        if (this.platformService.isWindows) {
+        if (/^win/.test(process.platform)) {
             // TODO: Apply to remoteRoot too?
             pathMappings = pathMappings.map(({ localRoot: windowsLocalRoot, remoteRoot }) => {
                 let localRoot = windowsLocalRoot;
