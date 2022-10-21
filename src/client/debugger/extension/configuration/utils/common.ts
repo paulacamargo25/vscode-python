@@ -6,7 +6,7 @@
 
 'use strict';
 
-import { WorkspaceFolder } from 'vscode';
+import { WorkspaceFolder, window, TextEditor } from 'vscode';
 import { getWorkspaceFolder } from './workspaceFolder';
 
 /**
@@ -40,4 +40,9 @@ export function resolveVariables(
         });
     }
     return value;
+}
+
+export function getActiveTextEditor(): TextEditor | undefined {
+    const { activeTextEditor } = window;
+    return activeTextEditor;
 }

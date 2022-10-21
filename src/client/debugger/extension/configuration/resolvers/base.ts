@@ -5,8 +5,7 @@
 
 import { injectable } from 'inversify';
 import * as path from 'path';
-import * as vscode from 'vscode';
-import { CancellationToken, DebugConfiguration, Uri, WorkspaceFolder, window } from 'vscode';
+import { CancellationToken, DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
 import { PYTHON_LANGUAGE } from '../../../../common/constants';
 import { IConfigurationService } from '../../../../common/types';
 import { SystemVariables } from '../../../../common/variables/systemVariables';
@@ -17,8 +16,8 @@ import { DebuggerTelemetry } from '../../../../telemetry/types';
 import { AttachRequestArguments, DebugOptions, LaunchRequestArguments, PathMapping } from '../../../types';
 import { PythonPathSource } from '../../types';
 import { IDebugConfigurationResolver } from '../types';
-import { resolveVariables } from '../utils/common';
-import { getWorkspaceFolder as getVSCodeWorkspaceFolder } from '../utils/workspaceFolder';
+import { getActiveTextEditor, resolveVariables } from '../utils/common';
+import { getWorkspaceFolder as getVSCodeWorkspaceFolder, getWorkspaceFolders } from '../utils/workspaceFolder';
 
 @injectable()
 export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
@@ -57,12 +56,13 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             return folder.uri;
         }
         const program = this.getProgram();
+        let workspaceFolders = getWorkspaceFolders();
 
-        if (!Array.isArray(vscode.workspace.workspaceFolders) || vscode.workspace.workspaceFolders.length === 0) {
+        if (!Array.isArray(workspaceFolders) || workspaceFolders.length === 0) {
             return program ? Uri.file(path.dirname(program)) : undefined;
         }
-        if (vscode.workspace.workspaceFolders.length === 1) {
-            return vscode.workspace.workspaceFolders[0].uri;
+        if (workspaceFolders.length === 1) {
+            return workspaceFolders[0].uri;
         }
         if (program) {
             const workspaceFolder = getVSCodeWorkspaceFolder(Uri.file(program));
@@ -73,7 +73,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
     }
 
     protected getProgram(): string | undefined {
-        const { activeTextEditor } = window;
+        const activeTextEditor = getActiveTextEditor();
         if (activeTextEditor && activeTextEditor.document.languageId === PYTHON_LANGUAGE) {
             return activeTextEditor.document.fileName;
         }

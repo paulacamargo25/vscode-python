@@ -11,6 +11,7 @@ import { IConfigurationService } from '../../../../common/types';
 import { IInterpreterService } from '../../../../interpreter/contracts';
 import { DebuggerTypeName } from '../../../constants';
 import { DebugOptions, DebugPurpose, LaunchRequestArguments } from '../../../types';
+import { getOSType, OSType } from '../utils/platform';
 import { BaseConfigurationResolver } from './base';
 import { IDebugEnvironmentVariablesService } from './helper';
 
@@ -148,7 +149,7 @@ export class LaunchConfigurationResolver extends BaseConfigurationResolver<Launc
         if (debugConfiguration.subProcess === true) {
             this.debugOption(debugOptions, DebugOptions.SubProcess);
         }
-        if (/^win/.test(process.platform)) {
+        if (getOSType() == OSType.Windows) {
             this.debugOption(debugOptions, DebugOptions.FixFilePathCase);
         }
         const isFastAPI = this.isDebuggingFastAPI(debugConfiguration);
