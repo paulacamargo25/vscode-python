@@ -150,7 +150,6 @@ suite('Debugging - Config Resolver', () => {
             const programPath = path.join('one', 'two', 'three.xyz');
 
             resolver.getProgram = () => programPath;
-            // when(workspaceService.workspaceFolders).thenReturn(item.workspaceFolders);
             getWorkspaceFoldersStub.returns(item.workspaceFolders);
 
             const uri = resolver.getWorkspaceFolder(undefined);
@@ -164,7 +163,7 @@ suite('Debugging - Config Resolver', () => {
         const folders: WorkspaceFolder[] = [folder];
 
         resolver.getProgram = () => undefined;
-        // when(workspaceService.workspaceFolders).thenReturn(folders);
+
         workspaceStub.returns(folder);
 
         getWorkspaceFoldersStub.returns(folders);
@@ -180,10 +179,8 @@ suite('Debugging - Config Resolver', () => {
         const folders: WorkspaceFolder[] = [folder1, folder2];
 
         resolver.getProgram = () => programPath;
-        // when(workspaceService.workspaceFolders).thenReturn(folders);
         getWorkspaceFoldersStub.returns(folders);
 
-        // when(workspaceService.getWorkspaceFolder(anything())).thenReturn(folder2);
         workspaceStub.returns(folder2);
 
         const uri = resolver.getWorkspaceFolder(undefined);
@@ -197,10 +194,8 @@ suite('Debugging - Config Resolver', () => {
         const folders: WorkspaceFolder[] = [folder1, folder2];
 
         resolver.getProgram = () => programPath;
-        // when(workspaceService.workspaceFolders).thenReturn(folders);
         getWorkspaceFoldersStub.returns(folders);
 
-        // when(workspaceService.getWorkspaceFolder(anything())).thenReturn(undefined);
         workspaceStub.returns(undefined);
 
         const uri = resolver.getWorkspaceFolder(undefined);
