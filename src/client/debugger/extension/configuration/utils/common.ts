@@ -46,3 +46,7 @@ export function getActiveTextEditor(): TextEditor | undefined {
     const { activeTextEditor } = window;
     return activeTextEditor;
 }
+
+export function showInformationMessage(message: string, ...items: string[]): Thenable<any> {
+    return window.showInformationMessage(message, ...items);
+}
