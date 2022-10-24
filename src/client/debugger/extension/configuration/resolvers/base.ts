@@ -8,7 +8,6 @@ import * as path from 'path';
 import { CancellationToken, DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
 import { PYTHON_LANGUAGE } from '../../../../common/constants';
 import { IConfigurationService } from '../../../../common/types';
-import { SystemVariables } from '../../../../common/variables/systemVariables';
 import { IInterpreterService } from '../../../../interpreter/contracts';
 import { sendTelemetryEvent } from '../../../../telemetry';
 import { EventName } from '../../../../telemetry/constants';
@@ -96,11 +95,11 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             return;
         }
         if (debugConfiguration.envFile && (workspaceFolder || debugConfiguration.cwd)) {
-            const systemVariables = new SystemVariables(
-                undefined,
+            debugConfiguration.envFile = resolveVariables(
+                debugConfiguration.envFile,
                 (workspaceFolder ? workspaceFolder.fsPath : undefined) || debugConfiguration.cwd,
+                undefined,
             );
-            debugConfiguration.envFile = systemVariables.resolveAny(debugConfiguration.envFile);
         }
     }
 
@@ -168,9 +167,8 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             ];
         } else {
             // Expand ${workspaceFolder} variable first if necessary.
-            const systemVariables = new SystemVariables(undefined, defaultLocalRoot);
             pathMappings = pathMappings.map(({ localRoot: mappedLocalRoot, remoteRoot }) => ({
-                localRoot: systemVariables.resolveAny(mappedLocalRoot),
+                localRoot: resolveVariables(mappedLocalRoot, defaultLocalRoot, undefined),
                 // TODO: Apply to remoteRoot too?
                 remoteRoot,
             }));
