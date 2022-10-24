@@ -167,11 +167,14 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             ];
         } else {
             // Expand ${workspaceFolder} variable first if necessary.
-            pathMappings = pathMappings.map(({ localRoot: mappedLocalRoot, remoteRoot }) => ({
-                localRoot: resolveVariables(mappedLocalRoot, defaultLocalRoot, undefined),
-                // TODO: Apply to remoteRoot too?
-                remoteRoot,
-            }));
+            pathMappings = pathMappings.map(({ localRoot: mappedLocalRoot, remoteRoot }) => {
+                let resolvedLocalRoot = resolveVariables(mappedLocalRoot, defaultLocalRoot, undefined);
+                return {
+                    localRoot: resolvedLocalRoot ? resolvedLocalRoot : '',
+                    // TODO: Apply to remoteRoot too?
+                    remoteRoot,
+                };
+            });
         }
 
         // If on Windows, lowercase the drive letter for path mappings.
