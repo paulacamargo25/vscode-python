@@ -8,10 +8,10 @@ import { CancellationToken, Uri, WorkspaceFolder } from 'vscode';
 import { InvalidPythonPathInDebuggerServiceId } from '../../../../application/diagnostics/checks/invalidPythonPathInDebugger';
 import { IDiagnosticsService, IInvalidPythonPathInDebuggerService } from '../../../../application/diagnostics/types';
 import { IConfigurationService } from '../../../../common/types';
+import { getOSType, OSType } from '../../../../common/utils/platform';
 import { IInterpreterService } from '../../../../interpreter/contracts';
 import { DebuggerTypeName } from '../../../constants';
 import { DebugOptions, DebugPurpose, LaunchRequestArguments } from '../../../types';
-import { getOSType, OSType } from '../utils/platform';
 import { BaseConfigurationResolver } from './base';
 import { IDebugEnvironmentVariablesService } from './helper';
 

@@ -5,8 +5,8 @@
 
 import { injectable } from 'inversify';
 import { CancellationToken, Uri, WorkspaceFolder } from 'vscode';
+import { getOSType, OSType } from '../../../../common/utils/platform';
 import { AttachRequestArguments, DebugOptions, PathMapping } from '../../../types';
-import { getOSType, OSType } from '../utils/platform';
 import { BaseConfigurationResolver } from './base';
 
 @injectable()

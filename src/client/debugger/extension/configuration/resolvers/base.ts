@@ -8,6 +8,7 @@ import * as path from 'path';
 import { CancellationToken, DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
 import { PYTHON_LANGUAGE } from '../../../../common/constants';
 import { IConfigurationService } from '../../../../common/types';
+import { getOSType, OSType } from '../../../../common/utils/platform';
 import { IInterpreterService } from '../../../../interpreter/contracts';
 import { sendTelemetryEvent } from '../../../../telemetry';
 import { EventName } from '../../../../telemetry/constants';
@@ -16,7 +17,6 @@ import { AttachRequestArguments, DebugOptions, LaunchRequestArguments, PathMappi
 import { PythonPathSource } from '../../types';
 import { IDebugConfigurationResolver } from '../types';
 import { getActiveTextEditor, resolveVariables } from '../utils/common';
-import { getOSType, OSType } from '../utils/platform';
 import { getWorkspaceFolder as getVSCodeWorkspaceFolder, getWorkspaceFolders } from '../utils/workspaceFolder';
 
 @injectable()

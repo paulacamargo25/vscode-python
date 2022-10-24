@@ -5,7 +5,7 @@
 
 import * as path from 'path';
 import { getNamesAndValues } from '../../../../../client/common/utils/enum';
-import { OSType, getOSType } from '../../../../../client/debugger/extension/configuration/utils/platform';
+import { OSType, getOSType } from '../../../../../client/common/utils/platform';
 
 const OS_TYPE = getOSType();
 

@@ -15,7 +15,7 @@ import { IInterpreterService } from '../../../../../client/interpreter/contracts
 import { getInfoPerOS } from './common';
 import * as common from '../../../../../client/debugger/extension/configuration/utils/common';
 import * as workspaceFolder from '../../../../../client/debugger/extension/configuration/utils/workspaceFolder';
-import * as platform from '../../../../../client/debugger/extension/configuration/utils/platform';
+import * as platform from '../../../../../client/common/utils/platform';
 
 getInfoPerOS().forEach(([osName, osType, path]) => {
     if (osType === platform.OSType.Unknown) {
