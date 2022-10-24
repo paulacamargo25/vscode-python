@@ -10,9 +10,9 @@ import {
     DebugAdapterExecutable,
     DebugAdapterServer,
     DebugSession,
+    window,
     WorkspaceFolder,
 } from 'vscode';
-import { IApplicationShell } from '../../../common/application/types';
 import { EXTENSION_ROOT_DIR } from '../../../constants';
 import { IInterpreterService } from '../../../interpreter/contracts';
 import { traceLog, traceVerbose } from '../../../logging';
@@ -27,10 +27,7 @@ const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
 @injectable()
 export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFactory {
-    constructor(
-        @inject(IInterpreterService) private readonly interpreterService: IInterpreterService,
-        @inject(IApplicationShell) private readonly appShell: IApplicationShell,
-    ) {}
+    constructor(@inject(IInterpreterService) private readonly interpreterService: IInterpreterService) {}
 
     public async createDebugAdapterDescriptor(
         session: DebugSession,
@@ -161,7 +158,7 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
      * @memberof DebugAdapterDescriptorFactory
      */
     private async notifySelectInterpreter() {
-        await this.appShell.showErrorMessage(
+        await window.showErrorMessage(
             localize('interpreterError', 'Please install Python or select a Python Interpreter to use the debugger.'),
         );
     }

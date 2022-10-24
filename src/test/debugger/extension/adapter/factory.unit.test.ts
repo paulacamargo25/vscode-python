@@ -75,7 +75,7 @@ suite('Debugging - Adapter Factory', () => {
         when(interpreterService.getInterpreterDetails(pythonPath)).thenResolve(interpreter);
         when(interpreterService.getInterpreters(anything())).thenReturn([interpreter]);
 
-        factory = new DebugAdapterDescriptorFactory(instance(interpreterService), instance(appShell));
+        factory = new DebugAdapterDescriptorFactory(instance(interpreterService));
     });
 
     teardown(() => {
