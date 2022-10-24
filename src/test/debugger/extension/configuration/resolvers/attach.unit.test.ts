@@ -338,6 +338,7 @@ getInfoPerOS().forEach(([osName, osType, path]) => {
                 const debugPathMappings = [
                     { localRoot: path.join('${workspaceFolder}', localRoot), remoteRoot: '/app/' },
                 ];
+
                 const debugConfig = await resolveDebugConfiguration(workspaceFolder, {
                     ...attach,
                     localRoot,
@@ -347,7 +348,7 @@ getInfoPerOS().forEach(([osName, osType, path]) => {
                 const pathMappings = (debugConfig as AttachRequestArguments).pathMappings;
 
                 const expected = Uri.file(path.join('USR', 'Debug', 'Python_Path', localRoot)).fsPath;
-                expect(pathMappings![0].localRoot).to.be.equal(expected);
+                expect(Uri.file(pathMappings![0].localRoot).fsPath).to.be.equal(expected);
                 expect(pathMappings![0].remoteRoot).to.be.equal('/app/');
             });
 
