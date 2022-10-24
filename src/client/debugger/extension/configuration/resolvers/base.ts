@@ -17,6 +17,7 @@ import { AttachRequestArguments, DebugOptions, LaunchRequestArguments, PathMappi
 import { PythonPathSource } from '../../types';
 import { IDebugConfigurationResolver } from '../types';
 import { getActiveTextEditor, resolveVariables } from '../utils/common';
+import { getOSType, OSType } from '../utils/platform';
 import { getWorkspaceFolder as getVSCodeWorkspaceFolder, getWorkspaceFolders } from '../utils/workspaceFolder';
 
 @injectable()
@@ -177,7 +178,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
 
         // If on Windows, lowercase the drive letter for path mappings.
         // TODO: Apply even if no localRoot?
-        if (/^win/.test(process.platform)) {
+        if (getOSType() == OSType.Windows) {
             // TODO: Apply to remoteRoot too?
             pathMappings = pathMappings.map(({ localRoot: windowsLocalRoot, remoteRoot }) => {
                 let localRoot = windowsLocalRoot;
