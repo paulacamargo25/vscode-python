@@ -5,7 +5,7 @@
 
 import * as assert from 'assert';
 import * as sinon from 'sinon';
-import { anyString, mock, when } from 'ts-mockito';
+import { anyString, anything, mock, when } from 'ts-mockito';
 import { DebugSession, WorkspaceFolder } from 'vscode';
 import { DebugProtocol } from 'vscode-debugprotocol';
 import { ConfigurationService } from '../../../../client/common/configuration/service';
@@ -69,7 +69,7 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
         };
     }
 
-    test.only('Show prompt when attaching to ptvsd, more info is NOT clicked', async () => {
+    test('Show prompt when attaching to ptvsd, more info is NOT clicked', async () => {
         // when(appShell.showInformationMessage(anything(), anything())).thenReturn(Promise.resolve(undefined));
         showInformationMessageStub.returns(Promise.resolve(undefined));
         const session = createSession();
@@ -95,12 +95,13 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
     });
 
     test('Show prompt when attaching to ptvsd, more info is clicked', async () => {
-        // when(appShell.showInformationMessage(anything(), anything())).thenReturn(Promise.resolve(Common.moreInfo));
         showInformationMessageStub.returns(Promise.resolve(Common.moreInfo));
 
         const deferred = createDeferred();
-        // when(browserService.launch(anything())).thenCall(() => deferred.resolve());
         browserLaunchStub.callsFake(() => deferred.resolve());
+        browserLaunchStub.onCall(1).callsFake(() => {
+            return new Promise(() => deferred.resolve());
+        });
 
         const session = createSession();
         const prompter = await promptFactory.createDebugAdapterTracker(session);
@@ -109,11 +110,9 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
         prompter!.onDidSendMessage!(ptvsdOutputEvent);
         await deferred.promise;
 
-        // verify(browserService.launch(anything())).once();
         sinon.assert.calledOnce(browserLaunchStub);
 
         // First call should show info once
-        // verify(appShell.showInformationMessage(anything(), anything())).once();
         sinon.assert.calledOnce(showInformationMessageStub);
 
         prompter!.onDidSendMessage!(ptvsdOutputEvent);
@@ -121,13 +120,14 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
         // operation to complete.
         await sleep(1);
 
-        // verify(browserService.launch(anyString())).once();
+        sinon.assert.calledOnce(browserLaunchStub);
+
         // Second time it should not be called, so overall count is one.
         // verify(appShell.showInformationMessage(anything(), anything())).once();
+        sinon.assert.calledOnce(showInformationMessageStub);
     });
 
     test("Don't show prompt attaching to debugpy", async () => {
-        // when(appShell.showInformationMessage(anything(), anything())).thenReturn(Promise.resolve(undefined));
         showInformationMessageStub.returns(Promise.resolve(undefined));
 
         const session = createSession();
@@ -138,7 +138,7 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
         // Can't use deferred promise here
         await sleep(1);
 
-        // verify(appShell.showInformationMessage(anything(), anything())).never();
+        showInformationMessageStub.neverCalledWith(anything(), anything());
     });
 
     const someRequest: DebugProtocol.RunInTerminalRequest = {
@@ -166,7 +166,6 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
 
     [someRequest, someEvent, someOutputEvent].forEach((message) => {
         test(`Don't show prompt when non-telemetry events are seen: ${JSON.stringify(message)}`, async () => {
-            // when(appShell.showInformationMessage(anything(), anything())).thenReturn(Promise.resolve(undefined));
             showInformationMessageStub.returns(Promise.resolve(undefined));
 
             const session = createSession();
@@ -177,7 +176,7 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
             // Can't use deferred promise here
             await sleep(1);
 
-            // verify(appShell.showInformationMessage(anything(), anything())).never();
+            showInformationMessageStub.neverCalledWith(anything(), anything());
         });
     });
 });
