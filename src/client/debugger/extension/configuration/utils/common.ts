@@ -50,3 +50,7 @@ export function getActiveTextEditor(): TextEditor | undefined {
 export function showInformationMessage(message: string, ...items: string[]): Thenable<any> {
     return window.showInformationMessage(message, ...items);
 }
+
+export function showErrorMessage(message: string, ...items: string[]): Thenable<any> {
+    return window.showErrorMessage(message, ...items);
+}

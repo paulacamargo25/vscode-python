@@ -70,7 +70,6 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
     }
 
     test('Show prompt when attaching to ptvsd, more info is NOT clicked', async () => {
-        // when(appShell.showInformationMessage(anything(), anything())).thenReturn(Promise.resolve(undefined));
         showInformationMessageStub.returns(Promise.resolve(undefined));
         const session = createSession();
         const prompter = await promptFactory.createDebugAdapterTracker(session);
@@ -123,7 +122,6 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
         sinon.assert.calledOnce(browserLaunchStub);
 
         // Second time it should not be called, so overall count is one.
-        // verify(appShell.showInformationMessage(anything(), anything())).once();
         sinon.assert.calledOnce(showInformationMessageStub);
     });
 
