@@ -10,7 +10,7 @@ import * as path from 'path';
 import * as sinon from 'sinon';
 import rewiremock from 'rewiremock';
 import { SemVer } from 'semver';
-import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
+import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { DebugAdapterExecutable, DebugAdapterServer, DebugConfiguration, DebugSession, WorkspaceFolder } from 'vscode';
 import { ConfigurationService } from '../../../../client/common/configuration/service';
 import { IPythonSettings } from '../../../../client/common/types';
