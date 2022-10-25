@@ -10,7 +10,6 @@ import {
     DebugAdapterExecutable,
     DebugAdapterServer,
     DebugSession,
-    window,
     WorkspaceFolder,
 } from 'vscode';
 import { EXTENSION_ROOT_DIR } from '../../../constants';
