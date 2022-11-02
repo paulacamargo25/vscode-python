@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 'use strict';
-
+import { injectable } from 'inversify';
 import { DebugAdapterTracker, DebugAdapterTrackerFactory, DebugSession, ProviderResult } from 'vscode';
 import { DebugProtocol } from 'vscode-debugprotocol';
 import { Common, OutdatedDebugger } from '../../../common/utils/localize';
@@ -61,6 +61,7 @@ class OutdatedDebuggerPromptState implements IPromptShowState {
     }
 }
 
+@injectable()
 export class OutdatedDebuggerPromptFactory implements DebugAdapterTrackerFactory {
     private readonly promptCheck: OutdatedDebuggerPromptState;
     constructor() {
