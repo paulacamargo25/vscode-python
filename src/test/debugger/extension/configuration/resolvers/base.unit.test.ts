@@ -149,7 +149,7 @@ suite('Debugging - Config Resolver', () => {
         test(item.title, () => {
             const programPath = path.join('one', 'two', 'three.xyz');
 
-            resolver.getProgram = () => programPath;
+            BaseConfigurationResolver.getProgram = () => programPath;
             getWorkspaceFoldersStub.returns(item.workspaceFolders);
 
             const uri = resolver.getWorkspaceFolder(undefined);

@@ -74,7 +74,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
         return undefined;
     }
 
-    protected static getProgram(): string | undefined {
+    static getProgram(): string | undefined {
         const activeTextEditor = getActiveTextEditor();
         if (activeTextEditor && activeTextEditor.document.languageId === PYTHON_LANGUAGE) {
             return activeTextEditor.document.fileName;
