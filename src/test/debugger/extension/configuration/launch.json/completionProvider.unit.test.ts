@@ -60,7 +60,7 @@ suite('Debugging - launch.json Completion Provider', () => {
         const config = `{
     "version": "0.1.0"
 }`;
-        testCanProvideCompletions(position, 1, config as any, false);
+        testCanProvideCompletions(position, 1, config as string, false);
     });
     test('Cannot provide completions when cursor position is not in configurations array', () => {
         const position = new Position(0, 0);
@@ -83,7 +83,7 @@ suite('Debugging - launch.json Completion Provider', () => {
     test('No Completions for non launch.json', async () => {
         const document = typemoq.Mock.ofType<TextDocument>();
         document.setup((doc) => doc.uri).returns(() => Uri.file('settings.json'));
-        const token = new CancellationTokenSource().token;
+        const { token } = new CancellationTokenSource();
         const position = new Position(0, 0);
 
         const completions = await completionProvider.provideCompletionItems(document.object, position, token);
@@ -93,7 +93,7 @@ suite('Debugging - launch.json Completion Provider', () => {
     test('No Completions for files ending with launch.json', async () => {
         const document = typemoq.Mock.ofType<TextDocument>();
         document.setup((doc) => doc.uri).returns(() => Uri.file('x-launch.json'));
-        const token = new CancellationTokenSource().token;
+        const { token } = new CancellationTokenSource();
         const position = new Position(0, 0);
 
         const completions = await completionProvider.provideCompletionItems(document.object, position, token);
@@ -113,7 +113,7 @@ suite('Debugging - launch.json Completion Provider', () => {
         document.setup((doc) => doc.uri).returns(() => Uri.file('launch.json'));
         document.setup((doc) => doc.offsetAt(typemoq.It.isAny())).returns(() => json.indexOf('# Cursor Position'));
         const position = new Position(0, 0);
-        const token = new CancellationTokenSource().token;
+        const { token } = new CancellationTokenSource();
 
         const completions = await completionProvider.provideCompletionItems(document.object, position, token);
 

@@ -7,7 +7,16 @@ import * as assert from 'assert';
 import * as sinon from 'sinon';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 import * as typemoq from 'typemoq';
-import { CancellationTokenSource, DebugConfiguration, Position, Range, TextDocument, TextEditor, Uri } from 'vscode';
+import {
+    CancellationTokenSource,
+    DebugConfiguration,
+    Position,
+    Range,
+    TextDocument,
+    TextEditor,
+    TextLine,
+    Uri,
+} from 'vscode';
 import { CommandManager } from '../../../../../client/common/application/commandManager';
 import { DocumentManager } from '../../../../../client/common/application/documentManager';
 import { ICommandManager, IDocumentManager, IWorkspaceService } from '../../../../../client/common/application/types';
@@ -191,7 +200,7 @@ suite('Debugging - launch.json Updater Service', () => {
         assert.strictEqual(cursorPosition, 'AfterItem');
     });
     test('Text to be inserted must be prefixed with a comma', async () => {
-        const config = {} as any;
+        const config = {} as DebugConfiguration;
         const expectedText = `,${JSON.stringify(config)}`;
 
         const textToInsert = helper.getTextForInsertion(config, 'AfterItem');
@@ -199,7 +208,7 @@ suite('Debugging - launch.json Updater Service', () => {
         assert.strictEqual(textToInsert, expectedText);
     });
     test('Text to be inserted must not be prefixed with a comma (as a comma already exists)', async () => {
-        const config = {} as any;
+        const config = {} as DebugConfiguration;
         const expectedText = JSON.stringify(config);
 
         const textToInsert = helper.getTextForInsertion(config, 'AfterItem', 'BeforeCursor');
@@ -207,7 +216,7 @@ suite('Debugging - launch.json Updater Service', () => {
         assert.strictEqual(textToInsert, expectedText);
     });
     test('Text to be inserted must be suffixed with a comma', async () => {
-        const config = {} as any;
+        const config = {} as DebugConfiguration;
         const expectedText = `${JSON.stringify(config)},`;
 
         const textToInsert = helper.getTextForInsertion(config, 'BeforeItem');
@@ -215,7 +224,7 @@ suite('Debugging - launch.json Updater Service', () => {
         assert.strictEqual(textToInsert, expectedText);
     });
     test('Text to be inserted must not be prefixed nor suffixed with commas', async () => {
-        const config = {} as any;
+        const config = {} as DebugConfiguration;
         const expectedText = JSON.stringify(config);
 
         const textToInsert = helper.getTextForInsertion(config, 'InsideEmptyArray');
@@ -233,7 +242,7 @@ suite('Debugging - launch.json Updater Service', () => {
         }
     ]
 }`;
-        const config = {} as any;
+        const config = {} as DebugConfiguration;
         const document = typemoq.Mock.ofType<TextDocument>();
         document.setup((doc) => doc.getText(typemoq.It.isAny())).returns(() => json);
         document.setup((doc) => doc.offsetAt(typemoq.It.isAny())).returns(() => json.indexOf('},') + 1);
@@ -248,7 +257,7 @@ suite('Debugging - launch.json Updater Service', () => {
     test('No changes to configuration if there is not active document', async () => {
         const document = typemoq.Mock.ofType<TextDocument>();
         const position = new Position(0, 0);
-        const token = new CancellationTokenSource().token;
+        const { token } = new CancellationTokenSource();
         when(documentManager.activeTextEditor).thenReturn();
         let debugConfigInserted = false;
         helper.insertDebugConfiguration = async () => {
@@ -264,11 +273,11 @@ suite('Debugging - launch.json Updater Service', () => {
     test('No changes to configuration if the active document is not same as the document passed in', async () => {
         const document = typemoq.Mock.ofType<TextDocument>();
         const position = new Position(0, 0);
-        const token = new CancellationTokenSource().token;
+        const { token } = new CancellationTokenSource();
         const textEditor = typemoq.Mock.ofType<TextEditor>();
         textEditor
             .setup((t) => t.document)
-            .returns(() => 'x' as any)
+            .returns(() => ('x' as unknown) as TextDocument)
             .verifiable(typemoq.Times.atLeastOnce());
         when(documentManager.activeTextEditor).thenReturn(textEditor.object);
         let debugConfigInserted = false;
@@ -289,7 +298,7 @@ suite('Debugging - launch.json Updater Service', () => {
         const position = new Position(0, 0);
         const tokenSource = new CancellationTokenSource();
         tokenSource.cancel();
-        const token = tokenSource.token;
+        const { token } = tokenSource;
         const textEditor = typemoq.Mock.ofType<TextEditor>();
         const docUri = Uri.file(__filename);
         const folderUri = Uri.file('Folder Uri');
@@ -304,7 +313,7 @@ suite('Debugging - launch.json Updater Service', () => {
             .verifiable(typemoq.Times.atLeastOnce());
         when(documentManager.activeTextEditor).thenReturn(textEditor.object);
         when(workspace.getWorkspaceFolder(docUri)).thenReturn(folder);
-        when(debugConfigService.provideDebugConfigurations!(folder, token)).thenResolve([''] as any);
+        when(debugConfigService.provideDebugConfigurations!(folder, token)).thenResolve(([''] as unknown) as void);
         let debugConfigInserted = false;
         helper.insertDebugConfiguration = async () => {
             debugConfigInserted = true;
@@ -323,7 +332,7 @@ suite('Debugging - launch.json Updater Service', () => {
         const document = typemoq.Mock.ofType<TextDocument>();
         const position = new Position(0, 0);
         const tokenSource = new CancellationTokenSource();
-        const token = tokenSource.token;
+        const { token } = tokenSource;
         const textEditor = typemoq.Mock.ofType<TextEditor>();
         const docUri = Uri.file(__filename);
         const folderUri = Uri.file('Folder Uri');
@@ -338,7 +347,7 @@ suite('Debugging - launch.json Updater Service', () => {
             .verifiable(typemoq.Times.atLeastOnce());
         when(documentManager.activeTextEditor).thenReturn(textEditor.object);
         when(workspace.getWorkspaceFolder(docUri)).thenReturn(folder);
-        when(debugConfigService.provideDebugConfigurations!(folder, token)).thenResolve([] as any);
+        when(debugConfigService.provideDebugConfigurations!(folder, token)).thenResolve(([] as unknown) as void);
         let debugConfigInserted = false;
         helper.insertDebugConfiguration = async () => {
             debugConfigInserted = true;
@@ -357,7 +366,7 @@ suite('Debugging - launch.json Updater Service', () => {
         const document = typemoq.Mock.ofType<TextDocument>();
         const position = new Position(0, 0);
         const tokenSource = new CancellationTokenSource();
-        const token = tokenSource.token;
+        const { token } = tokenSource;
         const textEditor = typemoq.Mock.ofType<TextEditor>();
         const docUri = Uri.file(__filename);
         const folderUri = Uri.file('Folder Uri');
@@ -372,7 +381,9 @@ suite('Debugging - launch.json Updater Service', () => {
             .verifiable(typemoq.Times.atLeastOnce());
         when(documentManager.activeTextEditor).thenReturn(textEditor.object);
         when(workspace.getWorkspaceFolder(docUri)).thenReturn(folder);
-        when(debugConfigService.provideDebugConfigurations!(folder, token)).thenResolve(['config'] as any);
+        when(debugConfigService.provideDebugConfigurations!(folder, token)).thenResolve(([
+            'config',
+        ] as unknown) as void);
         let debugConfigInserted = false;
         helper.insertDebugConfiguration = async () => {
             debugConfigInserted = true;
@@ -393,7 +404,7 @@ suite('Debugging - launch.json Updater Service', () => {
         const position = new Position(1, 0);
         document
             .setup((doc) => doc.lineAt(1))
-            .returns(() => ({ range: new Range(1, 0, 1, 1) } as any))
+            .returns(() => ({ range: new Range(1, 0, 1, 1) } as TextLine))
             .verifiable(typemoq.Times.atLeastOnce());
         document
             .setup((doc) => doc.getText(typemoq.It.isAny()))
@@ -411,7 +422,7 @@ suite('Debugging - launch.json Updater Service', () => {
         const position = new Position(2, 2);
         document
             .setup((doc) => doc.lineAt(2))
-            .returns(() => ({ range: new Range(2, 0, 1, 5) } as any))
+            .returns(() => ({ range: new Range(2, 0, 1, 5) } as TextLine))
             .verifiable(typemoq.Times.atLeastOnce());
         document
             .setup((doc) => doc.getText(typemoq.It.isAny()))
@@ -429,7 +440,7 @@ suite('Debugging - launch.json Updater Service', () => {
         const position = new Position(2, 2);
         document
             .setup((doc) => doc.lineAt(2))
-            .returns(() => ({ range: new Range(2, 0, 2, 3) } as any))
+            .returns(() => ({ range: new Range(2, 0, 2, 3) } as TextLine))
             .verifiable(typemoq.Times.atLeastOnce());
         document
             .setup((doc) => doc.getText(typemoq.It.isAny()))
@@ -447,11 +458,11 @@ suite('Debugging - launch.json Updater Service', () => {
         const position = new Position(2, 2);
         document
             .setup((doc) => doc.lineAt(1))
-            .returns(() => ({ range: new Range(1, 0, 1, 3), text: '}, ' } as any))
+            .returns(() => ({ range: new Range(1, 0, 1, 3), text: '}, ' } as TextLine))
             .verifiable(typemoq.Times.atLeastOnce());
         document
             .setup((doc) => doc.lineAt(2))
-            .returns(() => ({ range: new Range(2, 0, 2, 3), text: '   ' } as any))
+            .returns(() => ({ range: new Range(2, 0, 2, 3), text: '   ' } as TextLine))
             .verifiable(typemoq.Times.atLeastOnce());
         document
             .setup((doc) => doc.getText(typemoq.It.isAny()))
@@ -469,11 +480,11 @@ suite('Debugging - launch.json Updater Service', () => {
         const position = new Position(2, 2);
         document
             .setup((doc) => doc.lineAt(1))
-            .returns(() => ({ range: new Range(1, 0, 1, 3), text: '} ' } as any))
+            .returns(() => ({ range: new Range(1, 0, 1, 3), text: '} ' } as TextLine))
             .verifiable(typemoq.Times.atLeastOnce());
         document
             .setup((doc) => doc.lineAt(2))
-            .returns(() => ({ range: new Range(2, 0, 2, 3), text: '   ' } as any))
+            .returns(() => ({ range: new Range(2, 0, 2, 3), text: '   ' } as TextLine))
             .verifiable(typemoq.Times.atLeastOnce());
         document
             .setup((doc) => doc.getText(typemoq.It.isAny()))
