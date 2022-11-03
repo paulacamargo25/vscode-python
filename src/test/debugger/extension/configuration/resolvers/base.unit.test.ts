@@ -38,11 +38,11 @@ suite('Debugging - Config Resolver', () => {
         }
 
         public getWorkspaceFolder(folder: WorkspaceFolder | undefined): Uri | undefined {
-            return super.getWorkspaceFolder(folder);
+            return BaseConfigurationResolver.getWorkspaceFolder(folder);
         }
 
         public getProgram(): string | undefined {
-            return super.getProgram();
+            return BaseConfigurationResolver.getProgram();
         }
 
         public resolveAndUpdatePythonPath(
@@ -53,19 +53,19 @@ suite('Debugging - Config Resolver', () => {
         }
 
         public debugOption(debugOptions: DebugOptions[], debugOption: DebugOptions) {
-            return super.debugOption(debugOptions, debugOption);
+            return BaseConfigurationResolver.debugOption(debugOptions, debugOption);
         }
 
         public isLocalHost(hostName?: string) {
-            return super.isLocalHost(hostName);
+            return BaseConfigurationResolver.isLocalHost(hostName);
         }
 
         public isDebuggingFastAPI(debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>) {
-            return super.isDebuggingFastAPI(debugConfiguration);
+            return BaseConfigurationResolver.isDebuggingFastAPI(debugConfiguration);
         }
 
         public isDebuggingFlask(debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>) {
-            return super.isDebuggingFlask(debugConfiguration);
+            return BaseConfigurationResolver.isDebuggingFlask(debugConfiguration);
         }
     }
     let resolver: BaseResolver;

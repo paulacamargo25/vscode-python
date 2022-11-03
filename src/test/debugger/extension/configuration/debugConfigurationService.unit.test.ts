@@ -23,7 +23,7 @@ suite('Debugging - Configuration Service', () => {
             input: MultiStepInput<DebugConfigurationState>,
             state: DebugConfigurationState,
         ) {
-            return super.pickDebugConfiguration(input, state);
+            return PythonDebugConfigurationService.pickDebugConfiguration(input, state);
         }
     }
     setup(() => {
