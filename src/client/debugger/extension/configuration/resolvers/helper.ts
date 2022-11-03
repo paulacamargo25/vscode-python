@@ -7,6 +7,8 @@ import { inject, injectable } from 'inversify';
 import { ICurrentProcess, IPathUtils } from '../../../../common/types';
 import { EnvironmentVariables, IEnvironmentVariablesService } from '../../../../common/variables/types';
 import { LaunchRequestArguments } from '../../../types';
+import { getActiveTextEditor } from '../utils/common';
+import { PYTHON_LANGUAGE } from '../../../../common/constants';
 
 export const IDebugEnvironmentVariablesService = Symbol('IDebugEnvironmentVariablesService');
 export interface IDebugEnvironmentVariablesService {
@@ -79,4 +81,12 @@ export class DebugEnvironmentVariablesHelper implements IDebugEnvironmentVariabl
 
         return env;
     }
+}
+
+export function getProgram(): string | undefined {
+    const activeTextEditor = getActiveTextEditor();
+    if (activeTextEditor && activeTextEditor.document.languageId === PYTHON_LANGUAGE) {
+        return activeTextEditor.document.fileName;
+    }
+    return undefined;
 }

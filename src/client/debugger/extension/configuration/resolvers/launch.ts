@@ -13,7 +13,7 @@ import { IInterpreterService } from '../../../../interpreter/contracts';
 import { DebuggerTypeName } from '../../../constants';
 import { DebugOptions, DebugPurpose, LaunchRequestArguments } from '../../../types';
 import { BaseConfigurationResolver } from './base';
-import { IDebugEnvironmentVariablesService } from './helper';
+import { getProgram, IDebugEnvironmentVariablesService } from './helper';
 
 @injectable()
 export class LaunchConfigurationResolver extends BaseConfigurationResolver<LaunchRequestArguments> {
@@ -40,7 +40,7 @@ export class LaunchConfigurationResolver extends BaseConfigurationResolver<Launc
             debugConfiguration.program === undefined &&
             debugConfiguration.env === undefined
         ) {
-            const defaultProgram = LaunchConfigurationResolver.getProgram();
+            const defaultProgram = getProgram();
             debugConfiguration.name = 'Launch';
             debugConfiguration.type = DebuggerTypeName;
             debugConfiguration.request = 'launch';

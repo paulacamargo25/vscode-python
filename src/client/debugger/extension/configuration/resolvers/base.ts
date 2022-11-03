@@ -6,7 +6,6 @@
 import { injectable } from 'inversify';
 import * as path from 'path';
 import { CancellationToken, DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
-import { PYTHON_LANGUAGE } from '../../../../common/constants';
 import { IConfigurationService } from '../../../../common/types';
 import { getOSType, OSType } from '../../../../common/utils/platform';
 import { IInterpreterService } from '../../../../interpreter/contracts';
@@ -16,8 +15,9 @@ import { DebuggerTelemetry } from '../../../../telemetry/types';
 import { AttachRequestArguments, DebugOptions, LaunchRequestArguments, PathMapping } from '../../../types';
 import { PythonPathSource } from '../../types';
 import { IDebugConfigurationResolver } from '../types';
-import { getActiveTextEditor, resolveVariables } from '../utils/common';
+import { resolveVariables } from '../utils/common';
 import { getWorkspaceFolder as getVSCodeWorkspaceFolder, getWorkspaceFolders } from '../utils/workspaceFolder';
+import { getProgram } from './helper';
 
 @injectable()
 export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
@@ -56,7 +56,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
         if (folder) {
             return folder.uri;
         }
-        const program = BaseConfigurationResolver.getProgram();
+        const program = getProgram();
         const workspaceFolders = getWorkspaceFolders();
 
         if (!Array.isArray(workspaceFolders) || workspaceFolders.length === 0) {
@@ -70,14 +70,6 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
             if (workspaceFolder) {
                 return workspaceFolder.uri;
             }
-        }
-        return undefined;
-    }
-
-    static getProgram(): string | undefined {
-        const activeTextEditor = getActiveTextEditor();
-        if (activeTextEditor && activeTextEditor.document.languageId === PYTHON_LANGUAGE) {
-            return activeTextEditor.document.fileName;
         }
         return undefined;
     }
