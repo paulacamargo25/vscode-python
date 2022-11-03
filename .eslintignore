@@ -272,25 +272,10 @@ src/client/common/process/pythonProcess.ts
 src/client/common/process/pythonEnvironment.ts
 src/client/common/process/decoder.ts
 
-src/client/debugger/extension/configuration/providers/moduleLaunch.ts
-src/client/debugger/extension/configuration/providers/fastapiLaunch.ts
-src/client/debugger/extension/configuration/providers/flaskLaunch.ts
-src/client/debugger/extension/configuration/providers/fileLaunch.ts
-src/client/debugger/extension/configuration/providers/remoteAttach.ts
-src/client/debugger/extension/configuration/providers/djangoLaunch.ts
-src/client/debugger/extension/configuration/providers/providerFactory.ts
-src/client/debugger/extension/configuration/providers/pyramidLaunch.ts
-src/client/debugger/extension/configuration/providers/pidAttach.ts
-src/client/debugger/extension/configuration/resolvers/base.ts
-src/client/debugger/extension/configuration/resolvers/helper.ts
-src/client/debugger/extension/configuration/resolvers/launch.ts
-src/client/debugger/extension/configuration/resolvers/attach.ts
-src/client/debugger/extension/configuration/debugConfigurationService.ts
 src/client/debugger/extension/configuration/launch.json/updaterService.ts
 src/client/debugger/extension/configuration/launch.json/interpreterPathCommand.ts
 src/client/debugger/extension/configuration/launch.json/completionProvider.ts
 src/client/debugger/extension/banner.ts
-src/client/debugger/extension/serviceRegistry.ts
 src/client/debugger/extension/adapter/remoteLaunchers.ts
 src/client/debugger/extension/adapter/outdatedDebuggerPrompt.ts
 src/client/debugger/extension/adapter/factory.ts
