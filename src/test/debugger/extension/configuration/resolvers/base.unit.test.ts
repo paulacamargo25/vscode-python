@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -16,6 +17,7 @@ import { AttachRequestArguments, DebugOptions, LaunchRequestArguments } from '..
 import { IInterpreterService } from '../../../../../client/interpreter/contracts';
 import * as workspaceFolder from '../../../../../client/debugger/extension/configuration/utils/workspaceFolder';
 import * as helper from '../../../../../client/debugger/extension/configuration/resolvers/helper';
+import { PythonEnvironment } from '../../../../../client/pythonEnvironments/info';
 
 suite('Debugging - Config Resolver', () => {
     class BaseResolver extends BaseConfigurationResolver<AttachRequestArguments | LaunchRequestArguments> {
@@ -40,10 +42,10 @@ suite('Debugging - Config Resolver', () => {
         }
 
         public resolveAndUpdatePythonPath(
-            workspaceFolder: Uri | undefined,
+            workspaceFolderUri: Uri | undefined,
             debugConfiguration: LaunchRequestArguments,
         ) {
-            return super.resolveAndUpdatePythonPath(workspaceFolder, debugConfiguration);
+            return super.resolveAndUpdatePythonPath(workspaceFolderUri, debugConfiguration);
         }
 
         public debugOption(debugOptions: DebugOptions[], debugOption: DebugOptions) {
@@ -154,15 +156,17 @@ suite('Debugging - Config Resolver', () => {
         expect(uri).to.be.deep.equal(undefined, 'not undefined');
     });
     test('Do nothing if debug configuration is undefined', async () => {
-        await resolver.resolveAndUpdatePythonPath(undefined, undefined as any);
+        await resolver.resolveAndUpdatePythonPath(undefined, (undefined as unknown) as LaunchRequestArguments);
     });
     test('pythonPath in debug config must point to pythonPath in settings if pythonPath in config is not set', async () => {
         const config = {};
         const pythonPath = path.join('1', '2', '3');
 
-        when(interpreterService.getActiveInterpreter(anything())).thenResolve({ path: pythonPath } as any);
+        when(interpreterService.getActiveInterpreter(anything())).thenResolve({
+            path: pythonPath,
+        } as PythonEnvironment);
 
-        await resolver.resolveAndUpdatePythonPath(undefined, config as any);
+        await resolver.resolveAndUpdatePythonPath(undefined, config as LaunchRequestArguments);
 
         expect(config).to.have.property('pythonPath', pythonPath);
     });
@@ -172,9 +176,11 @@ suite('Debugging - Config Resolver', () => {
         };
         const pythonPath = path.join('1', '2', '3');
 
-        when(interpreterService.getActiveInterpreter(anything())).thenResolve({ path: pythonPath } as any);
+        when(interpreterService.getActiveInterpreter(anything())).thenResolve({
+            path: pythonPath,
+        } as PythonEnvironment);
 
-        await resolver.resolveAndUpdatePythonPath(undefined, config as any);
+        await resolver.resolveAndUpdatePythonPath(undefined, config as LaunchRequestArguments);
 
         expect(config.pythonPath).to.equal(pythonPath);
     });
@@ -195,32 +201,32 @@ suite('Debugging - Config Resolver', () => {
     });
     test('Is debugging fastapi=true', () => {
         const config = { module: 'fastapi' };
-        const isFastAPI = resolver.isDebuggingFastAPI(config as any);
+        const isFastAPI = resolver.isDebuggingFastAPI(config as LaunchRequestArguments);
         expect(isFastAPI).to.equal(true, 'not fastapi');
     });
     test('Is debugging fastapi=false', () => {
         const config = { module: 'fastapi2' };
-        const isFastAPI = resolver.isDebuggingFastAPI(config as any);
+        const isFastAPI = resolver.isDebuggingFastAPI(config as LaunchRequestArguments);
         expect(isFastAPI).to.equal(false, 'fastapi');
     });
     test('Is debugging fastapi=false when not defined', () => {
         const config = {};
-        const isFastAPI = resolver.isDebuggingFastAPI(config as any);
+        const isFastAPI = resolver.isDebuggingFastAPI(config as LaunchRequestArguments);
         expect(isFastAPI).to.equal(false, 'fastapi');
     });
     test('Is debugging flask=true', () => {
         const config = { module: 'flask' };
-        const isFlask = resolver.isDebuggingFlask(config as any);
+        const isFlask = resolver.isDebuggingFlask(config as LaunchRequestArguments);
         expect(isFlask).to.equal(true, 'not flask');
     });
     test('Is debugging flask=false', () => {
         const config = { module: 'flask2' };
-        const isFlask = resolver.isDebuggingFlask(config as any);
+        const isFlask = resolver.isDebuggingFlask(config as LaunchRequestArguments);
         expect(isFlask).to.equal(false, 'flask');
     });
     test('Is debugging flask=false when not defined', () => {
         const config = {};
-        const isFlask = resolver.isDebuggingFlask(config as any);
+        const isFlask = resolver.isDebuggingFlask(config as LaunchRequestArguments);
         expect(isFlask).to.equal(false, 'flask');
     });
 });
