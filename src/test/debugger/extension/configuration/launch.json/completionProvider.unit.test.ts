@@ -41,18 +41,18 @@ suite('Debugging - launch.json Completion Provider', () => {
         const document = typemoq.Mock.ofType<TextDocument>();
         const position = new Position(0, 0);
         document.setup((doc) => doc.uri).returns(() => Uri.file(__filename));
-        assert.strictEqual(completionProvider.canProvideCompletions(document.object, position), false);
+        assert.strictEqual(LaunchJsonCompletionProvider.canProvideCompletions(document.object, position), false);
 
         document.reset();
         document.setup((doc) => doc.uri).returns(() => Uri.file('settings.json'));
-        assert.strictEqual(completionProvider.canProvideCompletions(document.object, position), false);
+        assert.strictEqual(LaunchJsonCompletionProvider.canProvideCompletions(document.object, position), false);
     });
     function testCanProvideCompletions(position: Position, offset: number, json: string, expectedValue: boolean) {
         const document = typemoq.Mock.ofType<TextDocument>();
         document.setup((doc) => doc.getText(typemoq.It.isAny())).returns(() => json);
         document.setup((doc) => doc.uri).returns(() => Uri.file('launch.json'));
         document.setup((doc) => doc.offsetAt(typemoq.It.isAny())).returns(() => offset);
-        const canProvideCompletions = completionProvider.canProvideCompletions(document.object, position);
+        const canProvideCompletions = LaunchJsonCompletionProvider.canProvideCompletions(document.object, position);
         assert.strictEqual(canProvideCompletions, expectedValue);
     }
     test('Cannot provide completions when there is no configurations section in json', () => {

@@ -261,23 +261,18 @@ src/client/common/process/pythonProcess.ts
 src/client/common/process/pythonEnvironment.ts
 src/client/common/process/decoder.ts
 
-src/client/debugger/extension/configuration/launch.json/updaterService.ts
-src/client/debugger/extension/configuration/launch.json/interpreterPathCommand.ts
-src/client/debugger/extension/configuration/launch.json/completionProvider.ts
-src/client/debugger/extension/banner.ts
+
 src/client/debugger/extension/adapter/remoteLaunchers.ts
 src/client/debugger/extension/adapter/outdatedDebuggerPrompt.ts
 src/client/debugger/extension/adapter/factory.ts
 src/client/debugger/extension/adapter/activator.ts
 src/client/debugger/extension/adapter/logging.ts
-src/client/debugger/extension/types.ts
 src/client/debugger/extension/hooks/eventHandlerDispatcher.ts
 src/client/debugger/extension/hooks/childProcessAttachService.ts
 src/client/debugger/extension/attachQuickPick/wmicProcessParser.ts
 src/client/debugger/extension/attachQuickPick/factory.ts
 src/client/debugger/extension/attachQuickPick/psProcessParser.ts
 src/client/debugger/extension/attachQuickPick/picker.ts
-src/client/debugger/extension/helpers/protocolParser.ts
 
 src/client/application/serviceRegistry.ts
 src/client/application/diagnostics/surceMapSupportService.ts
