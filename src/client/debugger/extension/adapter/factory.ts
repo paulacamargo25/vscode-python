@@ -21,7 +21,7 @@ import { EventName } from '../../../telemetry/constants';
 import { AttachRequestArguments, LaunchRequestArguments } from '../../types';
 import { IDebugAdapterDescriptorFactory } from '../types';
 import * as nls from 'vscode-nls';
-import { showErrorMessage } from '../configuration/utils/common';
+import { showErrorMessage } from '../../../common/vscodeApis/windowApis';
 
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 

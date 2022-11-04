@@ -23,7 +23,7 @@ import { InterpreterService } from '../../../../client/interpreter/interpreterSe
 import { EnvironmentType } from '../../../../client/pythonEnvironments/info';
 import { clearTelemetryReporter } from '../../../../client/telemetry';
 import { EventName } from '../../../../client/telemetry/constants';
-import * as common from '../../../../client/debugger/extension/configuration/utils/common';
+import * as windowApis from '../../../../client/common/vscodeApis/windowApis';
 
 use(chaiAsPromised);
 
@@ -62,7 +62,7 @@ suite('Debugging - Adapter Factory', () => {
         process.env.VSC_PYTHON_CI_TEST = undefined;
         rewiremock.enable();
         rewiremock('@vscode/extension-telemetry').with({ default: Reporter });
-        showErrorMessageStub = sinon.stub(common, 'showErrorMessage');
+        showErrorMessageStub = sinon.stub(windowApis, 'showErrorMessage');
 
         const configurationService = mock(ConfigurationService);
         when(configurationService.getSettings(undefined)).thenReturn(({
