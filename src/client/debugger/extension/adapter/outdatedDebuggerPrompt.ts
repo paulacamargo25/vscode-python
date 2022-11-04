@@ -6,7 +6,7 @@ import { injectable } from 'inversify';
 import { DebugAdapterTracker, DebugAdapterTrackerFactory, DebugSession, ProviderResult } from 'vscode';
 import { DebugProtocol } from 'vscode-debugprotocol';
 import { Common, OutdatedDebugger } from '../../../common/utils/localize';
-import { launch } from '../../../common/vscodeApis/browserAPIS';
+import { launch } from '../../../common/vscodeApis/browserApis';
 import { showInformationMessage } from '../../../common/vscodeApis/windowApis';
 import { IPromptShowState } from './types';
 
