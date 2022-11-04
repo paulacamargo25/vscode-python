@@ -13,7 +13,7 @@ import { createDeferred, sleep } from '../../../../client/common/utils/async';
 import { Common } from '../../../../client/common/utils/localize';
 import { OutdatedDebuggerPromptFactory } from '../../../../client/debugger/extension/adapter/outdatedDebuggerPrompt';
 import { clearTelemetryReporter } from '../../../../client/telemetry';
-import * as browser from '../../../../client/debugger/extension/adapter/browser';
+import * as browserApis from '../../../../client/common/vscodeApis/browserApis';
 import * as windowApis from '../../../../client/common/vscodeApis/windowApis';
 import { IPythonSettings } from '../../../../client/common/types';
 
@@ -43,7 +43,7 @@ suite('Debugging - Outdated Debugger Prompt tests.', () => {
         } as any) as IPythonSettings);
 
         showInformationMessageStub = sinon.stub(windowApis, 'showInformationMessage');
-        browserLaunchStub = sinon.stub(browser, 'launch');
+        browserLaunchStub = sinon.stub(browserApis, 'launch');
 
         promptFactory = new OutdatedDebuggerPromptFactory();
     });

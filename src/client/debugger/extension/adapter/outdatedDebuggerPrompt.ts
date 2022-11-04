@@ -6,8 +6,8 @@ import { injectable } from 'inversify';
 import { DebugAdapterTracker, DebugAdapterTrackerFactory, DebugSession, ProviderResult } from 'vscode';
 import { DebugProtocol } from 'vscode-debugprotocol';
 import { Common, OutdatedDebugger } from '../../../common/utils/localize';
+import { launch } from '../../../common/vscodeApis/browserAPIS';
 import { showInformationMessage } from '../../../common/vscodeApis/windowApis';
-import { launch } from './browser';
 import { IPromptShowState } from './types';
 
 // This situation occurs when user connects to old containers or server where
