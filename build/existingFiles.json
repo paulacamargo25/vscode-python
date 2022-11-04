@@ -382,6 +382,7 @@
     "src/test/common/terminals/activation.conda.unit.test.ts",
     "src/test/common/terminals/activation.unit.test.ts",
     "src/test/common/terminals/activator/base.unit.test.ts",
+    "src/test/common/terminals/activator/helper.unit.test.ts",
     "src/test/common/terminals/activator/index.unit.test.ts",
     "src/test/common/terminals/activator/powerShellFailedHandler.unit.test.ts",
     "src/test/common/terminals/commandPrompt.unit.test.ts",
