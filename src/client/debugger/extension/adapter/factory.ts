@@ -21,13 +21,23 @@ import { EventName } from '../../../telemetry/constants';
 import { AttachRequestArguments, LaunchRequestArguments } from '../../types';
 import { IDebugAdapterDescriptorFactory } from '../types';
 import * as nls from 'vscode-nls';
-import { showErrorMessage } from '../../../common/vscodeApis/windowApis';
+import { showErrorMessage, showInformationMessage } from '../../../common/vscodeApis/windowApis';
+import { Common } from '../../../common/utils/localize';
+import { IPersistentStateFactory } from '../../../common/types';
 
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
+// persistent state names, exported to make use of in testing
+export enum debugStateKeys {
+    doNotShowAgain = 'doNotShowPython36DebugDeprecatedAgain',
+}
+
 @injectable()
 export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFactory {
-    constructor(@inject(IInterpreterService) private readonly interpreterService: IInterpreterService) {}
+    constructor(
+        @inject(IInterpreterService) private readonly interpreterService: IInterpreterService,
+        @inject(IPersistentStateFactory) private persistentState: IPersistentStateFactory,
+    ) {}
 
     public async createDebugAdapterDescriptor(
         session: DebugSession,
@@ -142,8 +152,35 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
         return this.getExecutableCommand(interpreters[0]);
     }
 
+    private async showDeprecatedPythonMessage() {
+        const notificationPromptEnabled = this.persistentState.createGlobalPersistentState(
+            debugStateKeys.doNotShowAgain,
+            false,
+        );
+        if (notificationPromptEnabled.value) {
+            return;
+        }
+        const prompts = [Common.doNotShowAgain];
+        const selection = await showInformationMessage(
+            'The debugger in the python extension no longer supports python versions minor than 3.7.',
+            ...prompts,
+        );
+        if (!selection) {
+            return;
+        }
+        if (selection == Common.doNotShowAgain) {
+            // Never show the message again
+            await this.persistentState
+                .createGlobalPersistentState(debugStateKeys.doNotShowAgain, false)
+                .updateValue(true);
+        }
+    }
+
     private async getExecutableCommand(interpreter: PythonEnvironment | undefined): Promise<string[]> {
         if (interpreter) {
+            if ((interpreter.version?.major ?? 0) < 3 || (interpreter.version?.minor ?? 0) <= 6) {
+                this.showDeprecatedPythonMessage();
+            }
             return interpreter.path.length > 0 ? [interpreter.path] : [];
         }
         return [];
