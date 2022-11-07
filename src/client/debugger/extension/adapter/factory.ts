@@ -21,7 +21,7 @@ import { EventName } from '../../../telemetry/constants';
 import { AttachRequestArguments, LaunchRequestArguments } from '../../types';
 import { IDebugAdapterDescriptorFactory } from '../types';
 import * as nls from 'vscode-nls';
-import { showErrorMessage, showInformationMessage } from '../../../common/vscodeApis/windowApis';
+import { showErrorMessage } from '../../../common/vscodeApis/windowApis';
 import { Common } from '../../../common/utils/localize';
 import { IPersistentStateFactory } from '../../../common/types';
 
@@ -161,7 +161,7 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
             return;
         }
         const prompts = [Common.doNotShowAgain];
-        const selection = await showInformationMessage(
+        const selection = await showErrorMessage(
             'The debugger in the python extension no longer supports python versions minor than 3.7.',
             { modal: true },
             ...prompts,

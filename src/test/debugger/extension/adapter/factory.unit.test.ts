@@ -34,7 +34,6 @@ suite('Debugging - Adapter Factory', () => {
     let stateFactory: IPersistentStateFactory;
     let state: PersistentState<boolean | undefined>;
     let showErrorMessageStub: sinon.SinonStub;
-    let showInformationMessageStub: sinon.SinonStub;
 
     const nodeExecutable = undefined;
     const debugAdapterPath = path.join(EXTENSION_ROOT_DIR, 'pythonFiles', 'lib', 'python', 'debugpy', 'adapter');
@@ -70,7 +69,6 @@ suite('Debugging - Adapter Factory', () => {
         state = mock(PersistentState) as PersistentState<boolean | undefined>;
 
         showErrorMessageStub = sinon.stub(windowApis, 'showErrorMessage');
-        showInformationMessageStub = sinon.stub(windowApis, 'showInformationMessage');
 
         when(
             stateFactory.createGlobalPersistentState<boolean | undefined>(debugStateKeys.doNotShowAgain, false),
@@ -162,12 +160,11 @@ suite('Debugging - Adapter Factory', () => {
             version: new SemVer('3.6.12-test'),
         };
         when(state.value).thenReturn(false);
-
         when(interpreterService.getActiveInterpreter(anything())).thenResolve(deprecatedInterpreter);
 
         await factory.createDebugAdapterDescriptor(session, nodeExecutable);
 
-        sinon.assert.calledOnce(showInformationMessageStub);
+        sinon.assert.calledOnce(showErrorMessageStub);
     });
     test('Return Debug Adapter server if request is "attach", and port is specified directly', async () => {
         const session = createSession({ request: 'attach', port: 5678, host: 'localhost' });
