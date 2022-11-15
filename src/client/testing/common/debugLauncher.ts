@@ -1,7 +1,6 @@
 import { inject, injectable, named } from 'inversify';
 
 import * as path from 'path';
-import * as vscode from 'vscode';
 import { DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
 import { IApplicationShell, IDebugService } from '../../common/application/types';
 import { EXTENSION_ROOT_DIR } from '../../common/constants';
@@ -16,7 +15,7 @@ import { TestProvider } from '../types';
 import { ITestDebugLauncher, LaunchOptions } from './types';
 import * as nls from 'vscode-nls';
 import { getConfigurationsForWorkspace } from '../../debugger/extension/configuration/launch.json/launchJsonReader';
-import { getWorkspaceFolder } from '../../common/vscodeApis/workspaceApis';
+import { getWorkspaceFolder, getWorkspaceFolders } from '../../common/vscodeApis/workspaceApis';
 
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
@@ -70,7 +69,7 @@ export class DebugLauncher implements ITestDebugLauncher {
         }
     }
     private resolveWorkspaceFolder(cwd: string): WorkspaceFolder {
-        const hasWorkspaceFolders = (vscode.workspace.workspaceFolders?.length || 0) > 0;
+        const hasWorkspaceFolders = (getWorkspaceFolders()?.length || 0) > 0;
         if (!hasWorkspaceFolders) {
             throw new Error('Please open a workspace');
         }
@@ -78,7 +77,7 @@ export class DebugLauncher implements ITestDebugLauncher {
         const cwdUri = cwd ? Uri.file(cwd) : undefined;
         let workspaceFolder = getWorkspaceFolder(cwdUri);
         if (!workspaceFolder) {
-            workspaceFolder = vscode.workspace.workspaceFolders![0];
+            workspaceFolder = getWorkspaceFolders()![0];
         }
         return workspaceFolder;
     }
