@@ -59,14 +59,6 @@ suite('Unit Tests - Debug Launcher', () => {
         pathExistsStub = sinon.stub(fs, 'pathExists');
         readFileStub = sinon.stub(fs, 'readFile');
 
-        // platformService = TypeMoq.Mock.ofType<IPlatformService>(undefined, TypeMoq.MockBehavior.Strict);
-        // serviceContainer
-        //     .setup((c) => c.get(TypeMoq.It.isValue(IPlatformService)))
-        //     .returns(() => platformService.object);
-
-        // filesystem = TypeMoq.Mock.ofType<IFileSystem>(undefined, TypeMoq.MockBehavior.Strict);
-        // serviceContainer.setup((c) => c.get(TypeMoq.It.isValue(IFileSystem))).returns(() => filesystem.object);
-
         const appShell = TypeMoq.Mock.ofType<IApplicationShell>(undefined, TypeMoq.MockBehavior.Strict);
         appShell.setup((a) => a.showErrorMessage(TypeMoq.It.isAny())).returns(() => Promise.resolve(undefined));
         serviceContainer.setup((c) => c.get(TypeMoq.It.isValue(IApplicationShell))).returns(() => appShell.object);
@@ -109,7 +101,6 @@ suite('Unit Tests - Debug Launcher', () => {
         expected: DebugConfiguration,
         testProvider: TestProvider,
     ) {
-        // platformService.setup((p) => p.isWindows).returns(() => /^win/.test(process.platform));
         interpreterService
             .setup((i) => i.getActiveInterpreter(TypeMoq.It.isAny()))
             .returns(() => Promise.resolve(({ path: 'python' } as unknown) as PythonEnvironment));
@@ -182,16 +173,12 @@ suite('Unit Tests - Debug Launcher', () => {
         const testLaunchScript = getTestLauncherScript(testProvider);
 
         const workspaceFolders = [createWorkspaceFolder(options.cwd), createWorkspaceFolder('five/six/seven')];
-        // workspaceService.setup((u) => u.workspaceFolders).returns(() => workspaceFolders);
         getWorkspaceFoldersStub.returns(workspaceFolders);
-        // workspaceService.setup((u) => u.getWorkspaceFolder(TypeMoq.It.isAny())).returns(() => workspaceFolders[0]);
         getWorkspaceFolderStub.returns(workspaceFolders[0]);
 
         if (!debugConfigs) {
-            // filesystem.setup((fs) => fs.fileExists(TypeMoq.It.isAny())).returns(() => Promise.resolve(false));
             pathExistsStub.resolves(false);
         } else {
-            // filesystem.setup((fs) => fs.fileExists(TypeMoq.It.isAny())).returns(() => Promise.resolve(true));
             pathExistsStub.resolves(true);
 
             if (typeof debugConfigs !== 'string') {
@@ -200,9 +187,6 @@ suite('Unit Tests - Debug Launcher', () => {
                     configurations: debugConfigs,
                 });
             }
-            // filesystem
-            //     .setup((fs) => fs.readFile(TypeMoq.It.isAny()))
-            //     .returns(() => Promise.resolve(debugConfigs as string));
             readFileStub.resolves(debugConfigs as string);
         }
 
@@ -302,7 +286,6 @@ suite('Unit Tests - Debug Launcher', () => {
             debugService.verifyAll();
         });
         test(`Must throw an exception if there are no workspaces ${testTitleSuffix}`, async () => {
-            // workspaceService.setup((u) => u.workspaceFolders).returns(() => undefined);
             getWorkspaceFoldersStub.returns(undefined);
             debugService
                 .setup((d) => d.startDebugging(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
@@ -594,9 +577,7 @@ suite('Unit Tests - Debug Launcher', () => {
         const filename = path.join(workspaceFolder.uri.fsPath, '.vscode', 'launch.json');
         const jsonc = '{"version":"1234", "configurations":[1,2,],}';
         pathExistsStub.resolves(true);
-        // filesystem.setup((fs) => fs.fileExists(TypeMoq.It.isValue(filename))).returns(() => Promise.resolve(true));
         readFileStub.withArgs(filename).resolves(jsonc);
-        // filesystem.setup((fs) => fs.readFile(TypeMoq.It.isValue(filename))).returns(() => Promise.resolve(jsonc));
 
         const configs = await debugLauncher.readAllDebugConfigs(workspaceFolder);
 
@@ -608,9 +589,7 @@ suite('Unit Tests - Debug Launcher', () => {
         const jsonc = '{"version":"1234"';
 
         pathExistsStub.resolves(true);
-        // filesystem.setup((fs) => fs.fileExists(TypeMoq.It.isValue(filename))).returns(() => Promise.resolve(true));
         readFileStub.withArgs(filename).resolves(jsonc);
-        // filesystem.setup((fs) => fs.readFile(TypeMoq.It.isValue(filename))).returns(() => Promise.resolve(jsonc));
 
         const configs = await debugLauncher.readAllDebugConfigs(workspaceFolder);
 
