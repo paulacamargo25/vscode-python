@@ -22,7 +22,7 @@ import { AttachRequestArguments, LaunchRequestArguments } from '../../types';
 import { IDebugAdapterDescriptorFactory } from '../types';
 import * as nls from 'vscode-nls';
 import { showErrorMessage } from '../../../common/vscodeApis/windowApis';
-import { Common } from '../../../common/utils/localize';
+import { Common, Interpreters } from '../../../common/utils/localize';
 import { IPersistentStateFactory } from '../../../common/types';
 import { Commands } from '../../../common/constants';
 import { ICommandManager } from '../../../common/application/types';
@@ -163,10 +163,10 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
         if (notificationPromptEnabled.value) {
             return;
         }
-        const prompts = [Common.changePythonInterpreter, Common.doNotShowAgain];
+        const prompts = [Interpreters.changePythonInterpreter, Common.doNotShowAgain];
         const selection = await showErrorMessage(
             localize(
-                'deprecatedDebuggerError',
+                'Debug.deprecatedDebuggerError',
                 'The debugger in the python extension no longer supports python versions minor than 3.7.',
             ),
             { modal: true },
@@ -175,7 +175,7 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
         if (!selection) {
             return;
         }
-        if (selection == Common.changePythonInterpreter) {
+        if (selection == Interpreters.changePythonInterpreter) {
             await this.commandManager.executeCommand(Commands.Set_Interpreter);
         }
         if (selection == Common.doNotShowAgain) {
