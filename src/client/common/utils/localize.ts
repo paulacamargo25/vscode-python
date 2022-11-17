@@ -93,6 +93,7 @@ export namespace Common {
     export const alwaysIgnore = localize('Common.alwaysIgnore', 'Always Ignore');
     export const ignore = localize('Common.ignore', 'Ignore');
     export const selectPythonInterpreter = localize('Common.selectPythonInterpreter', 'Select Python Interpreter');
+    export const changePythonInterpreter = localize('Common.changePythonInterpreter', 'Change Python Interpreter');
     export const openLaunch = localize('Common.openLaunch', 'Open launch.json');
     export const useCommandPrompt = localize('Common.useCommandPrompt', 'Use Command Prompt');
     export const download = localize('Common.download', 'Download');

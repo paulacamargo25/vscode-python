@@ -24,6 +24,8 @@ import * as nls from 'vscode-nls';
 import { showErrorMessage } from '../../../common/vscodeApis/windowApis';
 import { Common } from '../../../common/utils/localize';
 import { IPersistentStateFactory } from '../../../common/types';
+import { Commands } from '../../../common/constants';
+import { ICommandManager } from '../../../common/application/types';
 
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 
@@ -35,6 +37,7 @@ export enum debugStateKeys {
 @injectable()
 export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFactory {
     constructor(
+        @inject(ICommandManager) private readonly commandManager: ICommandManager,
         @inject(IInterpreterService) private readonly interpreterService: IInterpreterService,
         @inject(IPersistentStateFactory) private persistentState: IPersistentStateFactory,
     ) {}
@@ -160,7 +163,7 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
         if (notificationPromptEnabled.value) {
             return;
         }
-        const prompts = [Common.doNotShowAgain];
+        const prompts = [Common.changePythonInterpreter, Common.doNotShowAgain];
         const selection = await showErrorMessage(
             localize(
                 'deprecatedDebuggerError',
@@ -171,6 +174,9 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
         );
         if (!selection) {
             return;
+        }
+        if (selection == Common.changePythonInterpreter) {
+            await this.commandManager.executeCommand(Commands.Set_Interpreter);
         }
         if (selection == Common.doNotShowAgain) {
             // Never show the message again
