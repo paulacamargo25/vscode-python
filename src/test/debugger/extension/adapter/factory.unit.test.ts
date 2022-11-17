@@ -25,6 +25,8 @@ import { clearTelemetryReporter } from '../../../../client/telemetry';
 import { EventName } from '../../../../client/telemetry/constants';
 import * as windowApis from '../../../../client/common/vscodeApis/windowApis';
 import { PersistentState, PersistentStateFactory } from '../../../../client/common/persistentState';
+import { ICommandManager } from '../../../../client/common/application/types';
+import { CommandManager } from '../../../../client/common/application/commandManager';
 
 use(chaiAsPromised);
 
@@ -34,6 +36,7 @@ suite('Debugging - Adapter Factory', () => {
     let stateFactory: IPersistentStateFactory;
     let state: PersistentState<boolean | undefined>;
     let showErrorMessageStub: sinon.SinonStub;
+    let commandManager: ICommandManager;
 
     const nodeExecutable = undefined;
     const debugAdapterPath = path.join(EXTENSION_ROOT_DIR, 'pythonFiles', 'lib', 'python', 'debugpy', 'adapter');
@@ -67,6 +70,7 @@ suite('Debugging - Adapter Factory', () => {
         rewiremock('@vscode/extension-telemetry').with({ default: Reporter });
         stateFactory = mock(PersistentStateFactory);
         state = mock(PersistentState) as PersistentState<boolean | undefined>;
+        commandManager = mock(CommandManager);
 
         showErrorMessageStub = sinon.stub(windowApis, 'showErrorMessage');
 
@@ -84,7 +88,11 @@ suite('Debugging - Adapter Factory', () => {
         when(interpreterService.getInterpreterDetails(pythonPath)).thenResolve(interpreter);
         when(interpreterService.getInterpreters(anything())).thenReturn([interpreter]);
 
-        factory = new DebugAdapterDescriptorFactory(instance(interpreterService), instance(stateFactory));
+        factory = new DebugAdapterDescriptorFactory(
+            instance(commandManager),
+            instance(interpreterService),
+            instance(stateFactory),
+        );
     });
 
     teardown(() => {
