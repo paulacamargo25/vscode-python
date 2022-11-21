@@ -7,11 +7,11 @@ import { createScanner, parse, SyntaxKind } from 'jsonc-parser';
 import { CancellationToken, DebugConfiguration, Position, Range, TextDocument, WorkspaceEdit } from 'vscode';
 import { ICommandManager } from '../../../../common/application/types';
 import { noop } from '../../../../common/utils/misc';
+import { getActiveTextEditor } from '../../../../common/vscodeApis/windowApis';
+import { applyEdit, getWorkspaceFolder } from '../../../../common/vscodeApis/workspaceApis';
 import { captureTelemetry } from '../../../../telemetry';
 import { EventName } from '../../../../telemetry/constants';
 import { IDebugConfigurationService } from '../../types';
-import { applyEdit, getActiveTextEditor } from '../utils/common';
-import { getWorkspaceFolder } from '../utils/workspaceFolder';
 
 type PositionOfCursor = 'InsideEmptyArray' | 'BeforeItem' | 'AfterItem';
 type PositionOfComma = 'BeforeCursor';

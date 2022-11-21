@@ -18,12 +18,12 @@ import {
     Uri,
 } from 'vscode';
 import { CommandManager } from '../../../../../client/common/application/commandManager';
-import * as common from '../../../../../client/debugger/extension/configuration/utils/common';
 import { ICommandManager } from '../../../../../client/common/application/types';
-import * as workspaceFolder from '../../../../../client/debugger/extension/configuration/utils/workspaceFolder';
 import { PythonDebugConfigurationService } from '../../../../../client/debugger/extension/configuration/debugConfigurationService';
 import { LaunchJsonUpdaterServiceHelper } from '../../../../../client/debugger/extension/configuration/launch.json/updaterServiceHelper';
 import { IDebugConfigurationService } from '../../../../../client/debugger/extension/types';
+import * as windowApis from '../../../../../client/common/vscodeApis/windowApis';
+import * as workspaceApis from '../../../../../client/common/vscodeApis/workspaceApis';
 
 type LaunchJsonSchema = {
     version: string;
@@ -41,9 +41,9 @@ suite('Debugging - launch.json Updater Service', () => {
     const sandbox = sinon.createSandbox();
     setup(() => {
         commandManager = mock(CommandManager);
-        getWorkspaceFolderStub = sinon.stub(workspaceFolder, 'getWorkspaceFolder');
-        getActiveTextEditorStub = sinon.stub(common, 'getActiveTextEditor');
-        applyEditStub = sinon.stub(common, 'applyEdit');
+        getWorkspaceFolderStub = sinon.stub(workspaceApis, 'getWorkspaceFolder');
+        getActiveTextEditorStub = sinon.stub(windowApis, 'getActiveTextEditor');
+        applyEditStub = sinon.stub(workspaceApis, 'applyEdit');
         debugConfigService = mock(PythonDebugConfigurationService);
         sandbox.stub(LaunchJsonUpdaterServiceHelper, 'isCommaImmediatelyBeforeCursor').returns(false);
         helper = new LaunchJsonUpdaterServiceHelper(instance(commandManager), instance(debugConfigService));
