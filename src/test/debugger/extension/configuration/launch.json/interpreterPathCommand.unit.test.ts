@@ -23,7 +23,7 @@ suite('Interpreter Path Command', () => {
     setup(() => {
         cmdManager = mock(CommandManager);
         interpreterService = mock<IInterpreterService>();
-        interpreterPathCommand = new InterpreterPathCommand(instance(cmdManager), instance(interpreterService), []);
+        interpreterPathCommand = new InterpreterPathCommand(instance(interpreterService), []);
     });
 
     teardown(() => {
