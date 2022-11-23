@@ -7,7 +7,6 @@
 import * as assert from 'assert';
 import * as fs from 'fs-extra';
 import * as glob from 'glob';
-import { version } from 'os';
 import * as path from 'path';
 import { coerce, SemVer } from 'semver';
 import { ConfigurationTarget, Event, TextDocument, Uri } from 'vscode';
