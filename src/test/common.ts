@@ -7,6 +7,7 @@
 import * as assert from 'assert';
 import * as fs from 'fs-extra';
 import * as glob from 'glob';
+import { version } from 'os';
 import * as path from 'path';
 import { coerce, SemVer } from 'semver';
 import { ConfigurationTarget, Event, TextDocument, Uri } from 'vscode';
@@ -197,6 +198,8 @@ async function setPythonPathInWorkspace(
     pythonPath?: string,
 ) {
     const vscode = require('vscode') as typeof import('vscode');
+    console.log(vscode);
+    console.log(vscode.version);
     if (config === vscode.ConfigurationTarget.WorkspaceFolder && !IS_MULTI_ROOT_TEST) {
         return;
     }
