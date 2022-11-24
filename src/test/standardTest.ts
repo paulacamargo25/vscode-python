@@ -76,7 +76,7 @@ async function installPylanceExtension(vscodeExecutablePath: string) {
 async function start() {
     console.log('*'.repeat(100));
     console.log('Start Standard tests');
-    const channel = getChannel();
+    const channel = await getChannel();
     console.log(`Using ${channel} build of VS Code.`);
     const vscodeExecutablePath = await downloadAndUnzipVSCode(channel);
     const baseLaunchArgs =
