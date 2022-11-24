@@ -3,9 +3,8 @@ import * as fs from 'fs-extra';
 import * as os from 'os';
 import * as path from 'path';
 import { downloadAndUnzipVSCode, resolveCliPathFromVSCodeExecutablePath, runTests } from '@vscode/test-electron';
-import { JUPYTER_EXTENSION_ID, PYLANCE_EXTENSION_ID } from '../client/common/constants';
+import { EXTENSION_ROOT_DIR, JUPYTER_EXTENSION_ID, PYLANCE_EXTENSION_ID } from '../client/common/constants';
 import { EXTENSION_ROOT_DIR_FOR_TESTS } from './constants';
-import { getChannel } from './common';
 
 // If running smoke tests, we don't have access to this.
 if (process.env.TEST_FILES_SUFFIX !== 'smoke.test') {
@@ -73,10 +72,23 @@ async function installPylanceExtension(vscodeExecutablePath: string) {
     }
 }
 
+function getChannel(): string {
+    if (process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL) {
+        return process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL;
+    }
+    const packageJsonPath = path.join(EXTENSION_ROOT_DIR, 'package.json');
+    if (fs.pathExistsSync(packageJsonPath)) {
+        const packageJson = fs.readJSONSync(packageJsonPath);
+        console.log(packageJson.engines);
+        return packageJson.engines.vscode;
+    }
+    return 'stable';
+}
+
 async function start() {
     console.log('*'.repeat(100));
     console.log('Start Standard tests');
-    const channel = await getChannel();
+    const channel = getChannel();
     console.log(`Using ${channel} build of VS Code.`);
     const vscodeExecutablePath = await downloadAndUnzipVSCode(channel);
     const baseLaunchArgs =
