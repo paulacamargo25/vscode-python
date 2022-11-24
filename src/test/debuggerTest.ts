@@ -24,7 +24,7 @@ function getChannel(): string {
     return 'stable';
 }
 
-async function start() {
+function start() {
     console.log('*'.repeat(100));
     console.log('Start Debugger tests');
     runTests({

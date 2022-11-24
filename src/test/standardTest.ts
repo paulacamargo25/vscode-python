@@ -27,6 +27,19 @@ const extensionDevelopmentPath = process.env.CODE_EXTENSIONS_PATH
     ? process.env.CODE_EXTENSIONS_PATH
     : EXTENSION_ROOT_DIR_FOR_TESTS;
 
+function getChannel(): string {
+    if (process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL) {
+        return process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL;
+    }
+    const packageJsonPath = path.join(EXTENSION_ROOT_DIR, 'package.json');
+    if (fs.pathExistsSync(packageJsonPath)) {
+        const packageJson = fs.readJSONSync(packageJsonPath);
+        console.log(packageJson.engines);
+        return packageJson.engines.vscode;
+    }
+    return 'stable';
+}
+
 /**
  * Smoke tests & tests running in VSCode require Jupyter extension to be installed.
  */
@@ -70,19 +83,6 @@ async function installPylanceExtension(vscodeExecutablePath: string) {
         const settings = `{ "python.languageServer": "Pylance" }`;
         await fs.writeFile(settingsPath, settings);
     }
-}
-
-function getChannel(): string {
-    if (process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL) {
-        return process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL;
-    }
-    const packageJsonPath = path.join(EXTENSION_ROOT_DIR, 'package.json');
-    if (fs.pathExistsSync(packageJsonPath)) {
-        const packageJson = fs.readJSONSync(packageJsonPath);
-        console.log(packageJson.engines);
-        return packageJson.engines.vscode;
-    }
-    return 'stable';
 }
 
 async function start() {
