@@ -197,8 +197,6 @@ async function setPythonPathInWorkspace(
     pythonPath?: string,
 ) {
     const vscode = require('vscode') as typeof import('vscode');
-    console.log(vscode);
-    console.log(vscode.version);
     if (config === vscode.ConfigurationTarget.WorkspaceFolder && !IS_MULTI_ROOT_TEST) {
         return;
     }
