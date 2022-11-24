@@ -11,6 +11,7 @@ import * as path from 'path';
 import { coerce, SemVer } from 'semver';
 import { ConfigurationTarget, Event, TextDocument, Uri } from 'vscode';
 import type { IExtensionApi } from '../client/apiTypes';
+import { EXTENSION_ROOT_DIR } from '../client/common/constants';
 import { IProcessService } from '../client/common/process/types';
 import { IDisposable } from '../client/common/types';
 import { IServiceContainer, IServiceManager } from '../client/ioc/types';
@@ -601,4 +602,17 @@ export function createEventHandler<T, K extends keyof T>(
     dispoables: IDisposable[] = [],
 ): T[K] extends Event<infer TArgs> ? TestEventHandler<TArgs> : TestEventHandler<void> {
     return new TestEventHandler(obj[eventName] as any, eventName as string, dispoables) as any;
+}
+
+export function getChannel(): string {
+    if (process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL) {
+        return process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL;
+    }
+
+    const packageJsonPath = path.join(EXTENSION_ROOT_DIR, 'package.json');
+    if (fs.pathExistsSync(packageJsonPath)) {
+        const packageJson = fs.readJSONSync(packageJsonPath);
+        return packageJson.engines.vscode;
+    }
+    return 'stable';
 }
