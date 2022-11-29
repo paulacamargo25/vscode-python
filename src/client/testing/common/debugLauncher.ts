@@ -34,7 +34,7 @@ export class DebugLauncher implements ITestDebugLauncher {
 
     public async launchDebugger(options: LaunchOptions): Promise<void> {
         if (options.token && options.token.isCancellationRequested) {
-            return;
+            return undefined;
         }
 
         const workspaceFolder = DebugLauncher.resolveWorkspaceFolder(options.cwd);
