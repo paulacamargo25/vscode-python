@@ -28,7 +28,7 @@ suite('Interpreter Path Command', () => {
         sinon.restore();
     });
 
-    test.only('Ensure command is registered with the correct callback handler', async () => {
+    test('Ensure command is registered with the correct callback handler', async () => {
         let getInterpreterPathHandler = (_param: unknown) => undefined;
         registerCommandStub.callsFake((_, cb) => {
             getInterpreterPathHandler = cb;
