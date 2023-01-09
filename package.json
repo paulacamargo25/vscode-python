@@ -19,8 +19,7 @@
     "publisher": "ms-python",
     "enabledApiProposals": [
         "quickPickSortByLabel",
-        "testObserver",
-        "localization"
+        "testObserver"
     ],
     "author": {
         "name": "Microsoft Corporation"

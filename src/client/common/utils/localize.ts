@@ -9,15 +9,17 @@ import { l10n } from 'vscode';
 
 // External callers of localize use these tables to retrieve localized values.
 export namespace Diagnostics {
+    export const warnSourceMaps = l10n.t(
+        'Source map support is enabled in the Python Extension, this will adversely impact performance of the extension.',
+    );
+    export const disableSourceMaps = l10n.t('Disable Source Map Support');
+
     export const warnBeforeEnablingSourceMaps = l10n.t(
         'Enabling source map support in the Python Extension will adversely impact performance of the extension.',
     );
     export const enableSourceMapsAndReloadVSC = l10n.t('Enable and reload Window.');
     export const lsNotSupported = l10n.t(
         'Your operating system does not meet the minimum requirements of the Python Language Server. Reverting to the alternative autocompletion provider, Jedi.',
-    );
-    export const removedPythonPathFromSettings = l10n.t(
-        'The "python.pythonPath" setting in your settings.json is no longer used by the Python extension. If you want, you can use a new setting called "python.defaultInterpreterPath" instead. Keep in mind that you need to change the value of this setting manually as the Python extension doesn\'t modify it when you change interpreters. [Learn more](https://aka.ms/AA7jfor).',
     );
     export const invalidPythonPathInDebuggerSettings = l10n.t(
         'You need to select a Python interpreter before you start debugging.\n\nTip: click on "Select Interpreter" in the status bar.',
@@ -46,7 +48,6 @@ export namespace Diagnostics {
 }
 
 export namespace Common {
-    export const openFolder = l10n.t('Common.openFolder', 'Open Folder...');
     export const bannerLabelYes = l10n.t('Yes');
     export const bannerLabelNo = l10n.t('No');
     export const yesPlease = l10n.t('Yes, please');
@@ -75,6 +76,7 @@ export namespace Common {
     export const useCommandPrompt = l10n.t('Use Command Prompt');
     export const download = l10n.t('Download');
     export const showLogs = l10n.t('Show logs');
+    export const openFolder = l10n.t('Common.openFolder', 'Open Folder...');
 }
 
 export namespace CommonSurvey {
@@ -200,6 +202,8 @@ export namespace Interpreters {
     export const installPythonTerminalMessage = l10n.t(
         '💡 Please try installing the python package using your package manager. Alternatively you can also download it from https://www.python.org/downloads',
     );
+    export const changePythonInterpreter = l10n.t('Change Python Interpreter');
+    export const selectedPythonInterpreter = l10n.t('Selected Python Interpreter');
 }
 
 export namespace InterpreterQuickPickList {
@@ -449,14 +453,14 @@ export namespace CreateEnv {
 }
 
 export namespace ToolsExtensions {
-    export const flake8PromptMessage = localize(
+    export const flake8PromptMessage = l10n.t(
         'toolsExt.flake8.message',
         'Use the Flake8 extension to enable easier configuration and new features such as quick fixes.',
     );
-    export const pylintPromptMessage = localize(
+    export const pylintPromptMessage = l10n.t(
         'toolsExt.pylint.message',
         'Use the Pylint extension to enable easier configuration and new features such as quick fixes.',
     );
-    export const installPylintExtension = localize('toolsExt.install.pylint', 'Install Pylint extension');
-    export const installFlake8Extension = localize('toolsExt.install.flake8', 'Install Flake8 extension');
+    export const installPylintExtension = l10n.t('toolsExt.install.pylint', 'Install Pylint extension');
+    export const installFlake8Extension = l10n.t('toolsExt.install.flake8', 'Install Flake8 extension');
 }
