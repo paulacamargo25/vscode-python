@@ -163,10 +163,7 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
         }
         const prompts = [Interpreters.changePythonInterpreter, Common.doNotShowAgain];
         const selection = await showErrorMessage(
-            localize(
-                'Debug.deprecatedDebuggerError',
-                'The debugger in the python extension no longer supports python versions minor than 3.7.',
-            ),
+            l10n.t('The debugger in the python extension no longer supports python versions minor than 3.7.'),
             { modal: true },
             ...prompts,
         );
