@@ -76,7 +76,7 @@ export namespace Common {
     export const useCommandPrompt = l10n.t('Use Command Prompt');
     export const download = l10n.t('Download');
     export const showLogs = l10n.t('Show logs');
-    export const openFolder = l10n.t('Common.openFolder', 'Open Folder...');
+    export const openFolder = l10n.t('Open Folder...');
 }
 
 export namespace CommonSurvey {
