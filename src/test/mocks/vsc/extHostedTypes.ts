@@ -819,7 +819,7 @@ export class WorkspaceEdit implements vscode.WorkspaceEdit {
         return this._textEdits.has(uri.toString());
     }
 
-    set(uri: vscUri.URI, edits: unknown[]): void {
+    set(uri: vscUri.URI, edits: readonly unknown[]): void {
         let data = this._textEdits.get(uri.toString());
         if (!data) {
             data = { seq: this._seqPool += 1, uri, edits: [] };
@@ -1067,20 +1067,17 @@ export class Diagnostic {
     }
 }
 
-export class Hover {
-    public contents: vscode.MarkdownString[] | vscode.MarkedString[];
+export class Hover implements vscode.Hover {
+    public contents: vscode.MarkdownString[];
 
     public range: Range;
 
-    constructor(
-        contents: vscode.MarkdownString | vscode.MarkedString | vscode.MarkdownString[] | vscode.MarkedString[],
-        range?: Range,
-    ) {
+    constructor(contents: vscode.MarkdownString | vscode.MarkdownString[], range?: Range) {
         if (!contents) {
             throw new Error('Illegal argument, contents must be defined');
         }
         if (Array.isArray(contents)) {
-            this.contents = <vscode.MarkdownString[] | vscode.MarkedString[]>contents;
+            this.contents = <vscode.MarkdownString[]>contents;
         } else if (vscMockHtmlContent.isMarkdownString(contents)) {
             this.contents = [contents];
         } else {
