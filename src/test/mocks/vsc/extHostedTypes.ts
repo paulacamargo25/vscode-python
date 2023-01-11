@@ -6,15 +6,16 @@
 
 'use strict';
 
+import { isNumber } from 'lodash';
 import { relative } from 'path';
-import type * as vscode from 'vscode';
+import * as vscode from 'vscode';
 import * as vscMockHtmlContent from './htmlContent';
 import * as vscMockStrings from './strings';
 import * as vscUri from './uri';
 import { generateUuid } from './uuid';
 
 export enum NotebookCellKind {
-    Markdown = 1,
+    Markup = 1,
     Code = 2,
 }
 
@@ -234,6 +235,121 @@ export class Position {
 
     toJSON(): { line: number; character: number } {
         return { line: this.line, character: this.character };
+    }
+}
+
+export class NotebookCellOutputItem {
+    static text(value: any, mime?: string): NotebookCellOutputItem {
+        return mime ? new NotebookCellOutputItem(value, mime) : new NotebookCellOutputItem(value, '');
+    }
+
+    static json(value: any, mime?: string): NotebookCellOutputItem {
+        return mime ? new NotebookCellOutputItem(value, mime) : new NotebookCellOutputItem(value, '');
+    }
+
+    static stdout(value: any): NotebookCellOutputItem {
+        return new NotebookCellOutputItem(value, '');
+    }
+
+    static stderr(value: any): NotebookCellOutputItem {
+        return new NotebookCellOutputItem(value, '');
+    }
+
+    static error(value: any): NotebookCellOutputItem {
+        return new NotebookCellOutputItem(value, '');
+    }
+
+    mime: string;
+
+    data: Uint8Array;
+
+    constructor(data: Uint8Array, mime: string) {
+        this.data = data;
+        this.mime = mime;
+    }
+}
+
+export class NotebookCellOutput implements vscode.NotebookCellOutput {
+    items: NotebookCellOutputItem[];
+
+    metadata?: { [key: string]: any };
+
+    constructor(items: NotebookCellOutputItem[], metadata?: { [key: string]: any }) {
+        this.items = items;
+        this.metadata = metadata;
+    }
+}
+
+export interface NotebookCellExecutionSummary {
+    readonly executionOrder?: number;
+    readonly success?: boolean;
+    readonly timing?: { readonly startTime: number; readonly endTime: number };
+}
+
+export class NotebookCellData implements vscode.NotebookCellData {
+    kind: NotebookCellKind;
+
+    value: string;
+
+    languageId: string;
+
+    outputs?: NotebookCellOutput[];
+
+    metadata?: { [key: string]: any };
+
+    executionSummary?: NotebookCellExecutionSummary;
+
+    constructor(kind: NotebookCellKind, value: string, languageId: string) {
+        this.kind = kind;
+        this.value = value;
+        this.languageId = languageId;
+    }
+}
+
+export class NotebookRange implements vscode.NotebookRange {
+    readonly start: number;
+
+    readonly end: number;
+
+    readonly isEmpty: boolean = false;
+
+    constructor(start: number, end: number) {
+        this.start = start;
+        this.end = end;
+        if (end === start) {
+            this.isEmpty = true;
+        }
+    }
+
+    with(change: { start?: number; end?: number }) {
+        if (change.start === null || change.end === null) {
+            throw illegalArgument();
+        }
+
+        let start: number;
+
+        if (!change.start) {
+            start = this.start;
+        } else if (isNumber(change.start)) {
+            start = change.start;
+        } else {
+            start = change.start || this.start;
+        }
+
+        let end: number;
+        if (!change.end) {
+            end = this.end;
+        } else if (isNumber(change.end)) {
+            end = change.end;
+        } else {
+            end = change.end || this.end;
+        }
+
+        if (start === this.start && end === this.end) {
+            return this;
+        }
+
+        return new NotebookRange(start, end);
     }
 }
 
@@ -464,6 +580,45 @@ export enum EndOfLine {
     CRLF = 2,
 }
 
+// export class NotebookEdit implements vscode.NotebookEdit {
+//     static replaceCells(range: NotebookRange, newCells: NotebookCellData[]) {
+//         return new NotebookEdit(range, newCells);
+//     }
+
+//     static insertCells(index: number, newCells: NotebookCellData[]) {
+//         return NotebookEdit.replaceCells(new NotebookRange(index, index), newCells);
+//     }
+
+//     static deleteCells(range: NotebookRange) {
+//         return NotebookEdit.replaceCells(range, [new NotebookCellData(NotebookCellKind.Code, '', '')]);
+//     }
+
+//     static updateCellMetadata(index: number, newCellMetadata: { [key: string]: any }) {
+//         const notebookEdit = NotebookEdit.replaceCells(new NotebookRange(index, index), []);
+//         notebookEdit.newCellMetadata = newCellMetadata;
+//         return notebookEdit;
+//     }
+
+//     static updateNotebookMetadata(newNotebookMetadata: { [key: string]: any }) {
+//         const notebookEdit = NotebookEdit.replaceCells(new NotebookRange(0, 0), []);
+//         notebookEdit.newCellMetadata = newNotebookMetadata;
+//         return notebookEdit;
+//     }
+
+//     range: NotebookRange;
+
+//     newCells: NotebookCellData[];
+
+//     newCellMetadata?: { [key: string]: any };
+
+//     newNotebookMetadata?: { [key: string]: any };
+
+//     constructor(range: NotebookRange, newCells: NotebookCellData[]) {
+//         this.range = range;
+//         this.newCells = newCells;
+//     }
+// }
+
 export class TextEdit {
     static isTextEdit(thing: unknown): thing is TextEdit {
         if (thing instanceof TextEdit) {
@@ -493,11 +648,11 @@ export class TextEdit {
         return ret;
     }
 
-    protected _range: Range = new Range(new Position(0, 0), new Position(0, 0));
+    _range: Range = new Range(new Position(0, 0), new Position(0, 0));
 
-    protected _newText = '';
+    newText = '';
 
-    protected _newEol: EndOfLine = EndOfLine.LF;
+    _newEol: EndOfLine = EndOfLine.LF;
 
     get range(): Range {
         return this._range;
@@ -510,16 +665,16 @@ export class TextEdit {
         this._range = value;
     }
 
-    get newText(): string {
-        return this._newText || '';
-    }
+    // get newText(): string {
+    //     return this._newText || '';
+    // }
 
-    set newText(value: string) {
-        if (value && typeof value !== 'string') {
-            throw illegalArgument('newText');
-        }
-        this._newText = value;
-    }
+    // set newText(value: string) {
+    //     if (value && typeof value !== 'string') {
+    //         throw illegalArgument('newText');
+    //     }
+    //     this._newText = value;
+    // }
 
     get newEol(): EndOfLine {
         return this._newEol;
@@ -537,13 +692,13 @@ export class TextEdit {
         this.newText = newText;
     }
 
-    toJSON(): { range: Range; newText: string; newEol: EndOfLine } {
-        return {
-            range: this.range,
-            newText: this.newText,
-            newEol: this._newEol,
-        };
-    }
+    // toJSON(): { range: Range; newText: string; newEol: EndOfLine } {
+    //     return {
+    //         range: this.range,
+    //         newText: this.newText,
+    //         newEol: this.newEol,
+    //     };
+    // }
 }
 
 export class WorkspaceEdit implements vscode.WorkspaceEdit {
@@ -664,7 +819,7 @@ export class WorkspaceEdit implements vscode.WorkspaceEdit {
         return this._textEdits.has(uri.toString());
     }
 
-    set(uri: vscUri.URI, edits: TextEdit[]): void {
+    set(uri: vscUri.URI, edits: unknown[]): void {
         let data = this._textEdits.get(uri.toString());
         if (!data) {
             data = { seq: this._seqPool += 1, uri, edits: [] };
@@ -673,7 +828,7 @@ export class WorkspaceEdit implements vscode.WorkspaceEdit {
         if (!edits) {
             data.edits = [];
         } else {
-            data.edits = edits.slice(0);
+            data.edits = edits.slice(0) as TextEdit[];
         }
     }
 

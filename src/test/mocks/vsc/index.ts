@@ -302,6 +302,8 @@ export class CodeActionKind {
 
     public static readonly RefactorInline: CodeActionKind = new CodeActionKind('refactor.inline');
 
+    public static readonly RefactorMove: CodeActionKind = new CodeActionKind('refactor.move');
+
     public static readonly RefactorRewrite: CodeActionKind = new CodeActionKind('refactor.rewrite');
 
     public static readonly Source: CodeActionKind = new CodeActionKind('source');
