@@ -67,7 +67,7 @@ export namespace l10n {
     export function t(message: string, ...args: unknown[]): string;
     export function t(options: {
         message: string;
-        args?: Array<string | number | boolean> | Record<string, any>;
+        args?: Array<string | number | boolean> | Record<string, unknown>;
         comment: string | string[];
     }): string;
 
@@ -76,7 +76,7 @@ export namespace l10n {
             | string
             | {
                   message: string;
-                  args?: Array<string | number | boolean> | Record<string, any>;
+                  args?: Array<string | number | boolean> | Record<string, unknown>;
                   comment: string | string[];
               },
         ...args: unknown[]
