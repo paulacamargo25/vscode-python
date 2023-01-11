@@ -38,6 +38,7 @@ export function initialize() {
     generateMock('env');
     generateMock('debug');
     generateMock('scm');
+    generateMock('l10n');
     generateNotebookMocks();
 
     // Use mock clipboard fo testing purposes.
