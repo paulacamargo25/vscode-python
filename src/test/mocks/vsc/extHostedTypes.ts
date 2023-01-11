@@ -893,7 +893,7 @@ export class Diagnostic {
     }
 }
 
-export class Hover implements vscode.Hover {
+export class Hover {
     public contents: vscode.MarkdownString[];
 
     public range: Range;

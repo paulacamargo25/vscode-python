@@ -62,6 +62,34 @@ export class Disposable {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace l10n {
+    export function t(message: string, ...args: unknown[]): string;
+    export function t(options: {
+        message: string;
+        args?: Array<string | number | boolean> | Record<string, any>;
+        comment: string | string[];
+    }): string;
+
+    export function t(
+        message:
+            | string
+            | {
+                  message: string;
+                  args?: Array<string | number | boolean> | Record<string, any>;
+                  comment: string | string[];
+              },
+        ...args: unknown[]
+    ): string {
+        if (args) {
+            return (message as string).format(...(args as Array<string>)) as string;
+        }
+        return message as string;
+    }
+    export const bundle: { [key: string]: string } | undefined = undefined;
+    export const uri: vscode.Uri | undefined = undefined;
+}
+
 export class EventEmitter<T> implements vscode.EventEmitter<T> {
     public event: vscode.Event<T>;
 
