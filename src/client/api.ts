@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -13,10 +14,11 @@ import { getDebugpyLauncherArgs, getDebugpyPackagePath } from './debugger/extens
 import { IInterpreterService } from './interpreter/contracts';
 import { IServiceContainer, IServiceManager } from './ioc/types';
 import { JupyterExtensionIntegration } from './jupyter/jupyterIntegration';
+import { IDataViewerDataProvider, IJupyterUriProvider } from './jupyter/types';
 import { traceError } from './logging';
 
 export function buildApi(
-    ready: Promise<any>,
+    ready: Promise<void>,
     serviceManager: IServiceManager,
     serviceContainer: IServiceContainer,
 ): IExtensionApi {
@@ -47,7 +49,7 @@ export function buildApi(
             async getRemoteLauncherCommand(
                 host: string,
                 port: number,
-                waitUntilDebuggerAttaches: boolean = true,
+                waitUntilDebuggerAttaches = true,
             ): Promise<string[]> {
                 return getDebugpyLauncherArgs({
                     host,
@@ -62,20 +64,23 @@ export function buildApi(
         settings: {
             onDidChangeExecutionDetails: interpreterService.onDidChangeInterpreterConfiguration,
             getExecutionDetails(resource?: Resource) {
-                const pythonPath = configurationService.getSettings(resource).pythonPath;
+                const {pythonPath} = configurationService.getSettings(resource);
                 // If pythonPath equals an empty string, no interpreter is set.
                 return { execCommand: pythonPath === '' ? undefined : [pythonPath] };
             },
+            getEnvFile(workspaceFolder?: Uri) : string {
+                return configurationService.getSettings(workspaceFolder).envFile
+            }
         },
         // These are for backwards compatibility. Other extensions are using these APIs and we don't want
         // to force them to move to the jupyter extension ... yet.
         datascience: {
             registerRemoteServerProvider: jupyterIntegration
                 ? jupyterIntegration.registerRemoteServerProvider.bind(jupyterIntegration)
-                : (noop as any),
+                : (noop as unknown as (serverProvider: IJupyterUriProvider) => void),
             showDataViewer: jupyterIntegration
                 ? jupyterIntegration.showDataViewer.bind(jupyterIntegration)
-                : (noop as any),
+                : (noop as unknown as (dataProvider: IDataViewerDataProvider, title: string) => Promise<void>),
         },
         pylance: {
             getPythonPathVar: async (resource?: Uri) => {
