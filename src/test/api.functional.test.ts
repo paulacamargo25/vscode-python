@@ -72,19 +72,6 @@ suite('Extension API', () => {
         assert.deepEqual(execDetails, { execCommand: undefined });
     });
 
-    test('getEnvFile API returns expected object if interpreter is set', async () => {
-        const resource = Uri.parse('a');
-        when(configurationService.getSettings(resource)).thenReturn({ envFile: 'envFile' } as any);
-
-        const envFile = buildApi(
-            Promise.resolve(),
-            instance(serviceManager),
-            instance(serviceContainer),
-        ).settings.getEnvFile(resource);
-
-        assert.equal(envFile, 'envFile');
-    });
-
     test('Provide a callback which is called when interpreter setting changes', async () => {
         const expectedEvent = Typemoq.Mock.ofType<Event<Uri | undefined>>().object;
         when(interpreterService.onDidChangeInterpreterConfiguration).thenReturn(expectedEvent);
