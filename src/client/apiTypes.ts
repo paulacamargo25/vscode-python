@@ -70,6 +70,7 @@ export interface IExtensionApi {
              */
             execCommand: string[] | undefined;
         };
+        getEnvFile(workspaceFolder?:Uri) : string;
     };
 
     datascience: {
