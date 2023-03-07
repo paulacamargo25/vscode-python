@@ -26,8 +26,8 @@ export class AttachConfigurationResolver extends BaseConfigurationResolver<Attac
                 (item, pos) => dbgConfig.debugOptions!.indexOf(item) === pos,
             );
         }
-        if (debugConfiguration.clienOS === undefined){
-            debugConfiguration.clientOS =  getOSType() === OSType.Windows ? 'windows' : 'unix'
+        if (debugConfiguration.clienOS === undefined) {
+            debugConfiguration.clientOS = getOSType() === OSType.Windows ? 'windows' : 'unix';
         }
         return debugConfiguration;
     }
@@ -80,8 +80,8 @@ export class AttachConfigurationResolver extends BaseConfigurationResolver<Attac
         if (getOSType() === OSType.Windows && isLocalHost) {
             AttachConfigurationResolver.debugOption(debugOptions, DebugOptions.FixFilePathCase);
         }
-        if (debugConfiguration.clienOS === undefined){
-            debugConfiguration.clientOS =  getOSType() === OSType.Windows ? 'windows' : 'unix'
+        if (debugConfiguration.clienOS === undefined) {
+            debugConfiguration.clientOS = getOSType() === OSType.Windows ? 'windows' : 'unix';
         }
         if (debugConfiguration.showReturnValue) {
             AttachConfigurationResolver.debugOption(debugOptions, DebugOptions.ShowReturnValue);

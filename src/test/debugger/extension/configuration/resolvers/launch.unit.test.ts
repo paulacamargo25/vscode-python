@@ -58,8 +58,8 @@ getInfoPerOS().forEach(([osName, osType, path]) => {
             return folder.object;
         }
 
-        function getClientOS(){
-            return osType === platform.OSType.Windows ? 'windows' : 'unix'
+        function getClientOS() {
+            return osType === platform.OSType.Windows ? 'windows' : 'unix';
         }
 
         function setupIoc(pythonPath: string, workspaceFolder?: WorkspaceFolder) {

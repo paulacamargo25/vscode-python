@@ -46,8 +46,8 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
         debugConfiguration: DebugConfiguration,
         _token?: CancellationToken,
     ): Promise<T | undefined> {
-        if (debugConfiguration.clienOS === undefined){
-            debugConfiguration.clientOS =  getOSType() === OSType.Windows ? 'windows' : 'unix'
+        if (debugConfiguration.clienOS === undefined) {
+            debugConfiguration.clientOS = getOSType() === OSType.Windows ? 'windows' : 'unix';
         }
         return debugConfiguration as T;
     }

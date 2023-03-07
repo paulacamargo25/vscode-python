@@ -74,8 +74,8 @@ getInfoPerOS().forEach(([osName, osType, path]) => {
             }
         }
 
-        function getClientOS(){
-            return osType === platform.OSType.Windows ? 'windows' : 'unix'
+        function getClientOS() {
+            return osType === platform.OSType.Windows ? 'windows' : 'unix';
         }
 
         function setupWorkspaces(folders: string[]) {
