@@ -9,7 +9,7 @@ export function getChannel(): string {
     const packageJsonPath = path.join(EXTENSION_ROOT_DIR, 'package.json');
     if (fs.pathExistsSync(packageJsonPath)) {
         const packageJson = fs.readJSONSync(packageJsonPath);
-        return packageJson.engines.vscode;
+        return packageJson.engines.vscode.replace('^', '');
     }
     return 'stable';
 }
