@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { EXTENSION_ROOT_DIR } from '../../client/common/constants';
 
-export function getChannel(): string {
+export function getVersion(): string {
     if (process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL) {
         return process.env.VSC_PYTHON_CI_TEST_VSC_CHANNEL;
     }
