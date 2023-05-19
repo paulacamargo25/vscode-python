@@ -22,7 +22,7 @@ suite('Debug - Child Process', () => {
         const attachService = mock(ChildProcessAttachService);
         const handler = new ChildProcessAttachEventHandler(instance(attachService));
         const body: any = {};
-        const session: any = {configuration: { type: DebuggerTypeName }};
+        const session: any = { configuration: { type: DebuggerTypeName } };
         await handler.handleCustomEvent({ event: 'abc', body, session });
         verify(attachService.attach(body, session)).never();
     });
@@ -30,7 +30,7 @@ suite('Debug - Child Process', () => {
         const attachService = mock(ChildProcessAttachService);
         const handler = new ChildProcessAttachEventHandler(instance(attachService));
         const body: any = {};
-        const session: any = {configuration: { type: 'other-type' }};
+        const session: any = { configuration: { type: 'other-type' } };
         await handler.handleCustomEvent({ event: 'abc', body, session });
         verify(attachService.attach(body, session)).never();
     });
@@ -38,7 +38,7 @@ suite('Debug - Child Process', () => {
         const attachService = mock(ChildProcessAttachService);
         const handler = new ChildProcessAttachEventHandler(instance(attachService));
         const body: any = {};
-        const session: any = {configuration: { type: DebuggerTypeName }};
+        const session: any = { configuration: { type: DebuggerTypeName } };
         await handler.handleCustomEvent({ event: DebuggerEvents.PtvsdAttachToSubprocess, body, session });
         verify(attachService.attach(body, session)).never();
     });
@@ -46,7 +46,7 @@ suite('Debug - Child Process', () => {
         const attachService = mock(ChildProcessAttachService);
         const handler = new ChildProcessAttachEventHandler(instance(attachService));
         const body: any = {};
-        const session: any = {configuration: { type: DebuggerTypeName }};
+        const session: any = { configuration: { type: DebuggerTypeName } };
         await handler.handleCustomEvent({ event: DebuggerEvents.DebugpyAttachToSubprocess, body, session });
         verify(attachService.attach(body, session)).never();
     });
@@ -61,7 +61,7 @@ suite('Debug - Child Process', () => {
             subProcessId: 2,
         };
         const session: any = {
-            configuration: { type: DebuggerTypeName }
+            configuration: { type: DebuggerTypeName },
         };
         when(attachService.attach(body, session)).thenThrow(new Error('Kaboom'));
         await handler.handleCustomEvent({ event: DebuggerEvents.DebugpyAttachToSubprocess, body, session });
