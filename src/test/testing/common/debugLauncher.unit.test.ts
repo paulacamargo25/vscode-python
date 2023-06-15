@@ -346,7 +346,7 @@ suite('Unit Tests - Debug Launcher', () => {
         await debugLauncher.launchDebugger(options);
 
         debugService.verifyAll();
-    })
+    });
 
     test('Full debug config', async () => {
         const options: LaunchOptions = {
