@@ -348,7 +348,6 @@ suite('Unit Tests - Debug Launcher', () => {
         debugService.verifyAll();
     })
 
-
     test('Full debug config', async () => {
         const options: LaunchOptions = {
             cwd: 'one/two/three',
