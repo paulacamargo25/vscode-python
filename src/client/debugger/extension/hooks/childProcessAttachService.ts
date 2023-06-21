@@ -29,10 +29,16 @@ export class ChildProcessAttachService implements IChildProcessAttachService {
     public async attach(data: AttachRequestArguments & DebugConfiguration, parentSession: DebugSession): Promise<void> {
         const debugConfig: AttachRequestArguments & DebugConfiguration = data;
         const folder = this.getRelatedWorkspaceFolder(debugConfig);
-        const debugSessionOption: DebugSessionOptions = {parentSession: parentSession, lifecycleManagedByParent: true};
+        const debugSessionOption: DebugSessionOptions = {
+            parentSession: parentSession,
+            lifecycleManagedByParent: true,
+        };
         const launched = await this.debugService.startDebugging(folder, debugConfig, debugSessionOption);
         if (!launched) {
-            showErrorMessage(l10n.t('Failed to launch debugger for child process {0}', debugConfig.subProcessId!)).then(noop, noop);
+            showErrorMessage(l10n.t('Failed to launch debugger for child process {0}', debugConfig.subProcessId!)).then(
+                noop,
+                noop,
+            );
         }
     }
 
