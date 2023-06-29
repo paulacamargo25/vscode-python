@@ -14,15 +14,10 @@ script_dir = pathlib.Path(__file__).parent.parent
 sys.path.append(os.fspath(script_dir))
 sys.path.insert(0, os.fspath(script_dir / "lib" / "python"))
 
-
-# Add the path to pythonFiles to sys.path to find testing_tools.socket_manager.
-
 from testing_tools import socket_manager
 
 # If I use from utils then there will be an import error in test_discovery.py.
 from unittestadapter.utils import TestNode, build_test_tree, parse_unittest_args
-
-# Add the lib path to sys.path to find the typing_extensions module.
 
 from typing_extensions import NotRequired, TypedDict, Literal
 
