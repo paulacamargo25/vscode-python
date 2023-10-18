@@ -16,7 +16,7 @@ import { IInterpreterService } from '../../../../interpreter/contracts';
 import { sendTelemetryEvent } from '../../../../telemetry';
 import { EventName } from '../../../../telemetry/constants';
 import { DebuggerTelemetry } from '../../../../telemetry/types';
-import { AttachRequestArguments, DebugOptions, LaunchRequestArguments, PathMapping } from '../../../types';
+import { DebugOptions, LaunchRequestArguments, PathMapping } from '../../../types';
 import { PythonPathSource } from '../../types';
 import { IDebugConfigurationResolver } from '../types';
 import { resolveVariables } from '../utils/common';
@@ -217,21 +217,17 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
         return pathMappings;
     }
 
-    protected static isDebuggingFastAPI(
-        debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>,
-    ): boolean {
+    protected static isDebuggingFastAPI(debugConfiguration: Partial<LaunchRequestArguments>): boolean {
         return !!(debugConfiguration.module && debugConfiguration.module.toUpperCase() === 'FASTAPI');
     }
 
-    protected static isDebuggingFlask(
-        debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>,
-    ): boolean {
+    protected static isDebuggingFlask(debugConfiguration: Partial<LaunchRequestArguments>): boolean {
         return !!(debugConfiguration.module && debugConfiguration.module.toUpperCase() === 'FLASK');
     }
 
     protected static sendTelemetry(
         trigger: 'launch' | 'attach' | 'test',
-        debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>,
+        debugConfiguration: Partial<LaunchRequestArguments>,
     ): void {
         const name = debugConfiguration.name || '';
         const moduleName = debugConfiguration.module || '';

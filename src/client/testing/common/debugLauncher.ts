@@ -78,7 +78,7 @@ export class DebugLauncher implements ITestDebugLauncher {
         if (!debugConfig) {
             debugConfig = {
                 name: 'Debug Unit Test',
-                type: 'python',
+                type: 'debugpy',
                 request: 'test',
                 subProcess: true,
             };

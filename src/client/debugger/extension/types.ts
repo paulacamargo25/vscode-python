@@ -4,28 +4,13 @@
 'use strict';
 
 import { Readable } from 'stream';
-import {
-    CancellationToken,
-    DebugAdapterDescriptorFactory,
-    DebugAdapterTrackerFactory,
-    DebugConfigurationProvider,
-    Disposable,
-    WorkspaceFolder,
-} from 'vscode';
-
-import { DebugConfigurationArguments } from '../types';
+import { DebugAdapterTrackerFactory, DebugConfigurationProvider, Disposable } from 'vscode';
 
 export const IDebugConfigurationService = Symbol('IDebugConfigurationService');
 export interface IDebugConfigurationService extends DebugConfigurationProvider {}
 
 export const IDynamicDebugConfigurationService = Symbol('IDynamicDebugConfigurationService');
 export interface IDynamicDebugConfigurationService extends DebugConfigurationProvider {}
-
-export type DebugConfigurationState = {
-    config: Partial<DebugConfigurationArguments>;
-    folder?: WorkspaceFolder;
-    token?: CancellationToken;
-};
 
 export enum DebugConfigurationType {
     launchFile = 'launchFile',
@@ -42,13 +27,6 @@ export enum PythonPathSource {
     launchJson = 'launch.json',
     settingsJson = 'settings.json',
 }
-
-export const IDebugAdapterDescriptorFactory = Symbol('IDebugAdapterDescriptorFactory');
-export interface IDebugAdapterDescriptorFactory extends DebugAdapterDescriptorFactory {}
-
-export const IDebugSessionLoggingFactory = Symbol('IDebugSessionLoggingFactory');
-
-export interface IDebugSessionLoggingFactory extends DebugAdapterTrackerFactory {}
 
 export const IOutdatedDebuggerPromptFactory = Symbol('IOutdatedDebuggerPromptFactory');
 

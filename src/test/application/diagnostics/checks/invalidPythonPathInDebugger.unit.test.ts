@@ -8,7 +8,6 @@ import * as path from 'path';
 import * as typemoq from 'typemoq';
 import { Uri } from 'vscode';
 import { BaseDiagnosticsService } from '../../../../client/application/diagnostics/base';
-import { InvalidPythonPathInDebuggerService } from '../../../../client/application/diagnostics/checks/invalidPythonPathInDebugger';
 import { CommandOption, IDiagnosticsCommandFactory } from '../../../../client/application/diagnostics/commands/types';
 import { DiagnosticCodes } from '../../../../client/application/diagnostics/constants';
 import {

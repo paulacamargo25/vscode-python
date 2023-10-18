@@ -31,10 +31,6 @@ export type PathMapping = {
     localRoot: string;
     remoteRoot: string;
 };
-type Connection = {
-    host?: string;
-    port?: number;
-};
 
 export interface IAutomaticCodeReload {
     enable?: boolean;
@@ -60,20 +56,6 @@ interface ICommonDebugArguments {
     // An absolute path to local directory with source.
     pathMappings?: PathMapping[];
     clientOS?: 'windows' | 'unix';
-}
-interface IKnownAttachDebugArguments extends ICommonDebugArguments {
-    workspaceFolder?: string;
-    customDebugger?: boolean;
-    // localRoot and remoteRoot are deprecated (replaced by pathMappings).
-    localRoot?: string;
-    remoteRoot?: string;
-
-    // Internal field used to attach to subprocess using python debug adapter
-    subProcessId?: number;
-
-    processId?: number | string;
-    connect?: Connection;
-    listen?: Connection;
 }
 
 interface IKnownLaunchRequestArguments extends ICommonDebugArguments {
@@ -124,15 +106,6 @@ export interface LaunchRequestArguments
         DebugConfiguration {
     type: typeof DebuggerTypeName;
 }
-
-export interface AttachRequestArguments
-    extends DebugProtocol.AttachRequestArguments,
-        IKnownAttachDebugArguments,
-        DebugConfiguration {
-    type: typeof DebuggerTypeName;
-}
-
-export interface DebugConfigurationArguments extends LaunchRequestArguments, AttachRequestArguments {}
 
 export type ConsoleType = 'internalConsole' | 'integratedTerminal' | 'externalTerminal';
 
