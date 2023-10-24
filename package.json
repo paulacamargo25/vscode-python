@@ -66,7 +66,6 @@
     "activationEvents": [
         "onDebugInitialConfigurations",
         "onLanguage:python",
-        "onDebugDynamicConfigurations:python",
         "onDebugResolve:python",
         "workspaceContains:mspythonconfig.json",
         "workspaceContains:pyproject.toml",
