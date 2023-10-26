@@ -4,7 +4,6 @@
 'use strict';
 
 import { debug, DebugConfigurationProvider, DebugConfigurationProviderTriggerKind, languages, window } from 'vscode';
-
 import { registerTypes as activationRegisterTypes } from './activation/serviceRegistry';
 import { IExtensionActivationManager } from './activation/types';
 import { registerTypes as appRegisterTypes } from './application/serviceRegistry';

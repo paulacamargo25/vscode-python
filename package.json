@@ -24,7 +24,8 @@
         "quickPickItemTooltip",
         "saveEditor",
         "terminalDataWriteEvent",
-        "terminalExecuteCommandEvent"
+        "terminalExecuteCommandEvent",
+        "handleIssueUri"
     ],
     "author": {
         "name": "Microsoft Corporation"
