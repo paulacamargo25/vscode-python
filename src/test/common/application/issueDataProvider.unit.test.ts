@@ -12,11 +12,7 @@ import { expect } from 'chai';
 import { WorkspaceFolder } from 'vscode-languageserver-protocol';
 import { CommandManager } from '../../../client/common/application/commandManager';
 import { PythonIssueDataProvider } from '../../../client/common/application/issueDataProvider';
-import {
-    IApplicationEnvironment,
-    ICommandManager,
-    IWorkspaceService,
-} from '../../../client/common/application/types';
+import { IApplicationEnvironment, ICommandManager, IWorkspaceService } from '../../../client/common/application/types';
 import { WorkspaceService } from '../../../client/common/application/workspace';
 import { IInterpreterService } from '../../../client/interpreter/contracts';
 import { MockWorkspaceConfiguration } from '../../mocks/mockWorkspaceConfig';
@@ -71,7 +67,7 @@ suite('Report Issue Command', () => {
             instance(interpreterService),
             instance(configurationService),
             instance(appEnvironment),
-            []
+            [],
         );
     });
 
@@ -89,7 +85,7 @@ suite('Report Issue Command', () => {
             'issueTemplateVenv1.md',
         );
         const expectedIssueBody = fs.readFileSync(templatePath, 'utf8');
-        let info = await pythonIssueDataProvider.getIssueDataInfo()
+        let info = await pythonIssueDataProvider.getIssueDataInfo();
 
         expect(info).to.be.equal(expectedIssueBody);
     });
@@ -107,7 +103,7 @@ suite('Report Issue Command', () => {
             instance(interpreterService),
             instance(configurationService),
             instance(appEnvironment),
-            []
+            [],
         );
         const templatePath = path.join(
             EXTENSION_ROOT_DIR_FOR_TESTS,
@@ -118,7 +114,7 @@ suite('Report Issue Command', () => {
             'issueTemplateVenv2.md',
         );
         const expectedIssueBody = fs.readFileSync(templatePath, 'utf8');
-        let info = await pythonIssueDataProvider.getIssueDataInfo()
+        let info = await pythonIssueDataProvider.getIssueDataInfo();
 
         expect(info).to.be.equal(expectedIssueBody);
     });
