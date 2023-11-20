@@ -11,9 +11,9 @@ import {
     EnvironmentPathVariableDiagnosticsServiceId,
 } from '../../../client/application/diagnostics/checks/envPathVariable';
 import {
-    InvalidLaunchJsonDebuggerService,
-    InvalidLaunchJsonDebuggerServiceId,
-} from '../../../client/application/diagnostics/checks/invalidLaunchJsonDebugger';
+    InvalidPythonPathInDebuggerService,
+    InvalidPythonPathInDebuggerServiceId,
+} from '../../../client/application/diagnostics/checks/invalidPythonPathInDebugger';
 import {
     JediPython27NotSupportedDiagnosticService,
     JediPython27NotSupportedDiagnosticServiceId,
@@ -80,8 +80,8 @@ suite('Application Diagnostics - Register classes in IOC Container', () => {
         verify(
             serviceManager.addSingleton<IDiagnosticsService>(
                 IDiagnosticsService,
-                InvalidLaunchJsonDebuggerService,
-                InvalidLaunchJsonDebuggerServiceId,
+                InvalidPythonPathInDebuggerService,
+                InvalidPythonPathInDebuggerServiceId,
             ),
         );
         verify(
