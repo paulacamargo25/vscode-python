@@ -1,6 +1,6 @@
 import { inject, injectable, named } from 'inversify';
 import * as path from 'path';
-import { DebugConfiguration, l10n, Uri, workspace, WorkspaceFolder } from 'vscode';
+import { DebugConfiguration, l10n, Uri, WorkspaceFolder } from 'vscode';
 import { IApplicationShell, IDebugService } from '../../common/application/types';
 import { EXTENSION_ROOT_DIR } from '../../common/constants';
 import * as internalScripts from '../../common/process/internal/scripts';
