@@ -22,9 +22,7 @@ import {
     IPathUtils,
 } from './common/types';
 import { noop } from './common/utils/misc';
-// import { DebuggerTypeName } from './debugger/constants';
 import { registerTypes as debugConfigurationRegisterTypes } from './debugger/extension/serviceRegistry';
-// import { IDebugConfigurationService } from './debugger/extension/types';
 import { IInterpreterService } from './interpreter/contracts';
 import { getLanguageConfiguration } from './language/languageConfiguration';
 import { ReplProvider } from './providers/replProvider';
@@ -159,12 +157,6 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
             const terminalProvider = new TerminalProvider(serviceContainer);
             terminalProvider.initialize(window.activeTerminal).ignoreErrors();
             disposables.push(terminalProvider);
-
-            // serviceContainer
-            //     .getAll<DebugConfigurationProvider>(IDebugConfigurationService)
-            //     .forEach((debugConfigProvider) => {
-            //         disposables.push(debug.registerDebugConfigurationProvider(DebuggerTypeName, debugConfigProvider));
-            //     });
 
             logAndNotifyOnLegacySettings();
             registerCreateEnvironmentTriggers(disposables);

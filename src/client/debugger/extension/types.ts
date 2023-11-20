@@ -4,13 +4,7 @@
 'use strict';
 
 import { Readable } from 'stream';
-import { DebugAdapterTrackerFactory, DebugConfigurationProvider, Disposable } from 'vscode';
-
-export const IDebugConfigurationService = Symbol('IDebugConfigurationService');
-export interface IDebugConfigurationService extends DebugConfigurationProvider {}
-
-export const IDynamicDebugConfigurationService = Symbol('IDynamicDebugConfigurationService');
-export interface IDynamicDebugConfigurationService extends DebugConfigurationProvider {}
+import { DebugAdapterTrackerFactory, Disposable } from 'vscode';
 
 export enum DebugConfigurationType {
     launchFile = 'launchFile',

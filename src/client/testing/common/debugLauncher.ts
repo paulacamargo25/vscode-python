@@ -1,6 +1,6 @@
 import { inject, injectable, named } from 'inversify';
 import * as path from 'path';
-import { DebugConfiguration, l10n, Uri, WorkspaceFolder } from 'vscode';
+import { DebugConfiguration, l10n, Uri, workspace, WorkspaceFolder } from 'vscode';
 import { IApplicationShell, IDebugService } from '../../common/application/types';
 import { EXTENSION_ROOT_DIR } from '../../common/constants';
 import * as internalScripts from '../../common/process/internal/scripts';
@@ -186,7 +186,6 @@ export class DebugLauncher implements ITestDebugLauncher {
 
         configArgs.args = args.slice(1);
         // We leave configArgs.request as "test" so it will be sent in telemetry.
-
         let launchArgs = await this.launchResolver.resolveDebugConfiguration(
             workspaceFolder,
             configArgs,
