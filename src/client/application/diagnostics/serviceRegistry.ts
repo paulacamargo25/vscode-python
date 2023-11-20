@@ -12,6 +12,10 @@ import {
     EnvironmentPathVariableDiagnosticsServiceId,
 } from './checks/envPathVariable';
 import {
+    InvalidPythonPathInDebuggerService,
+    InvalidPythonPathInDebuggerServiceId,
+} from './checks/invalidPythonPathInDebugger';
+import {
     JediPython27NotSupportedDiagnosticService,
     JediPython27NotSupportedDiagnosticServiceId,
 } from './checks/jediPython27NotSupported';
@@ -59,6 +63,11 @@ export function registerTypes(serviceManager: IServiceManager): void {
     serviceManager.addSingleton<IExtensionSingleActivationService>(
         IExtensionSingleActivationService,
         InvalidPythonInterpreterService,
+    );
+    serviceManager.addSingleton<IDiagnosticsService>(
+        IDiagnosticsService,
+        InvalidPythonPathInDebuggerService,
+        InvalidPythonPathInDebuggerServiceId,
     );
     serviceManager.addSingleton<IDiagnosticsService>(
         IDiagnosticsService,
