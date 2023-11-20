@@ -11,7 +11,6 @@ import { ApplicationShell } from '../../client/common/application/applicationShe
 import { ClipboardService } from '../../client/common/application/clipboard';
 import { CommandManager } from '../../client/common/application/commandManager';
 import { ReloadVSCodeCommandHandler } from '../../client/common/application/commands/reloadCommand';
-import { ReportIssueCommandHandler } from '../../client/common/application/commands/reportIssueCommand';
 import { DebugService } from '../../client/common/application/debugService';
 import { DebugSessionTelemetry } from '../../client/common/application/debugSessionTelemetry';
 import { DocumentManager } from '../../client/common/application/documentManager';
@@ -101,6 +100,7 @@ import { MockModuleInstaller } from '../mocks/moduleInstaller';
 import { MockProcessService } from '../mocks/proc';
 import { UnitTestIocContainer } from '../testing/serviceRegistry';
 import { closeActiveWindows, initializeTest } from '../initialize';
+import { PythonIssueDataProvider } from '../../client/common/application/issueDataProvider';
 
 chaiUse(chaiAsPromised);
 
@@ -254,7 +254,7 @@ suite('Module Installer', () => {
             );
             ioc.serviceManager.addSingleton<IExtensionSingleActivationService>(
                 IExtensionSingleActivationService,
-                ReportIssueCommandHandler,
+                PythonIssueDataProvider,
             );
             ioc.serviceManager.addSingleton<IExtensionSingleActivationService>(
                 IExtensionSingleActivationService,
