@@ -47,7 +47,7 @@ export function initialize() {
     when(mockedVSCodeNamespaces.env!.appName).thenReturn('Insider');
 
     //Mock issueDataProvider API
-    when(mockedVSCodeNamespaces.env!.registerIssueDataProvider).thenReturn((mock<any>()));
+    when(mockedVSCodeNamespaces.env!.registerIssueDataProvider).thenReturn(mock<any>());
 
     // This API is used in src/client/telemetry/telemetry.ts
     const extension = mock<vscode.Extension<any>>();
@@ -127,6 +127,8 @@ mockedVSCode.UIKind = vscodeMocks.UIKind;
 mockedVSCode.FileSystemError = vscodeMocks.vscMockExtHostedTypes.FileSystemError;
 mockedVSCode.LanguageStatusSeverity = vscodeMocks.LanguageStatusSeverity;
 mockedVSCode.QuickPickItemKind = vscodeMocks.QuickPickItemKind;
+
+mockedVSCode.env!.registerIssueDataProvider = vscodeMocks.registerIssueDataProvider;
 mockedVSCode.InlayHint = vscodeMocks.InlayHint;
 mockedVSCode.LogLevel = vscodeMocks.LogLevel;
 (mockedVSCode as any).NotebookCellKind = vscodeMocks.vscMockExtHostedTypes.NotebookCellKind;
