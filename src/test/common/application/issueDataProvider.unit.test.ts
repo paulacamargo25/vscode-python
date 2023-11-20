@@ -85,7 +85,7 @@ suite('Report Issue Command', () => {
             'issueTemplateVenv1.md',
         );
         const expectedIssueBody = fs.readFileSync(templatePath, 'utf8');
-        let info = await pythonIssueDataProvider.getIssueDataInfo();
+        const info = await pythonIssueDataProvider.getIssueDataInfo();
 
         expect(info).to.be.equal(expectedIssueBody);
     });
@@ -114,7 +114,7 @@ suite('Report Issue Command', () => {
             'issueTemplateVenv2.md',
         );
         const expectedIssueBody = fs.readFileSync(templatePath, 'utf8');
-        let info = await pythonIssueDataProvider.getIssueDataInfo();
+        const info = await pythonIssueDataProvider.getIssueDataInfo();
 
         expect(info).to.be.equal(expectedIssueBody);
     });
