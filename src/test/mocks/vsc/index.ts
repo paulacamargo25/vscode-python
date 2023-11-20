@@ -53,10 +53,6 @@ export enum QuickPickItemKind {
     Default = 0,
 }
 
-export function registerIssueDataProvider(_handler: vscode.IssueDataProvider) {
-    return new Disposable(() => {});
-}
-
 export class Disposable {
     constructor(private callOnDispose: () => void) {}
 
