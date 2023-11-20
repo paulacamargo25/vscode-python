@@ -46,6 +46,9 @@ export function initialize() {
     when(mockedVSCodeNamespaces.env!.clipboard).thenReturn(clipboard);
     when(mockedVSCodeNamespaces.env!.appName).thenReturn('Insider');
 
+    //Mock issueDataProvider API
+    when(mockedVSCodeNamespaces.env!.registerIssueDataProvider).thenReturn((mock<any>()));
+
     // This API is used in src/client/telemetry/telemetry.ts
     const extension = mock<vscode.Extension<any>>();
     const packageJson = mock<any>();
