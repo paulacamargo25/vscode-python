@@ -186,6 +186,7 @@ export class DebugLauncher implements ITestDebugLauncher {
 
         configArgs.args = args.slice(1);
         // We leave configArgs.request as "test" so it will be sent in telemetry.
+
         let launchArgs = await this.launchResolver.resolveDebugConfiguration(
             workspaceFolder,
             configArgs,

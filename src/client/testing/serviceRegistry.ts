@@ -22,13 +22,6 @@ import { TestingService, UnitTestManagementService } from './main';
 import { ITestingService } from './types';
 import { UnitTestSocketServer } from './common/socketServer';
 import { registerTestControllerTypes } from './testController/serviceRegistry';
-import {
-    DebugEnvironmentVariablesHelper,
-    IDebugEnvironmentVariablesService,
-} from '../debugger/extension/configuration/resolvers/helper';
-import { IDebugConfigurationResolver } from '../debugger/extension/configuration/types';
-import { LaunchConfigurationResolver } from '../debugger/extension/configuration/resolvers/launch';
-import { LaunchRequestArguments } from '../debugger/types';
 
 export function registerTypes(serviceManager: IServiceManager) {
     serviceManager.addSingleton<ITestDebugLauncher>(ITestDebugLauncher, DebugLauncher);
@@ -47,16 +40,6 @@ export function registerTypes(serviceManager: IServiceManager) {
         TestConfigurationManagerFactory,
     );
     serviceManager.addSingleton<IExtensionActivationService>(IExtensionActivationService, UnitTestManagementService);
-
-    serviceManager.addSingleton<IDebugEnvironmentVariablesService>(
-        IDebugEnvironmentVariablesService,
-        DebugEnvironmentVariablesHelper,
-    );
-    serviceManager.addSingleton<IDebugConfigurationResolver<LaunchRequestArguments>>(
-        IDebugConfigurationResolver,
-        LaunchConfigurationResolver,
-        'launch',
-    );
 
     registerTestControllerTypes(serviceManager);
 }
