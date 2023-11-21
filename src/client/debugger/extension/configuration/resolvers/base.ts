@@ -18,7 +18,7 @@ import { EventName } from '../../../../telemetry/constants';
 import { DebuggerTelemetry } from '../../../../telemetry/types';
 import { DebugOptions, LaunchRequestArguments, PathMapping } from '../../../../debugger/types';
 import { PythonPathSource } from '../../../../debugger/extension/types';
-import { IDebugConfigurationResolver } from './types';
+import { IDebugConfigurationResolver } from '../types';
 import { resolveVariables } from '../utils/common';
 import { getProgram } from './helper';
 

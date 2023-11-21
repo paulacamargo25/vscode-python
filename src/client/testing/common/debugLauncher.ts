@@ -6,7 +6,7 @@ import { EXTENSION_ROOT_DIR } from '../../common/constants';
 import * as internalScripts from '../../common/process/internal/scripts';
 import { IConfigurationService, IPythonSettings } from '../../common/types';
 import { DebuggerTypeName } from '../../debugger/constants';
-import { IDebugConfigurationResolver } from '../../debugger/extension/configuration/resolvers/types';
+import { IDebugConfigurationResolver } from '../../debugger/extension/configuration/types';
 import { DebugPurpose, LaunchRequestArguments } from '../../debugger/types';
 import { IServiceContainer } from '../../ioc/types';
 import { traceError } from '../../logging';

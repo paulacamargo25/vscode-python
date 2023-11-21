@@ -23,7 +23,7 @@ import { ITestingService } from './types';
 import { UnitTestSocketServer } from './common/socketServer';
 import { registerTestControllerTypes } from './testController/serviceRegistry';
 import { DebugEnvironmentVariablesHelper, IDebugEnvironmentVariablesService } from '../debugger/extension/configuration/resolvers/helper';
-import { IDebugConfigurationResolver } from '../debugger/extension/configuration/resolvers/types';
+import { IDebugConfigurationResolver } from '../debugger/extension/configuration/types';
 import { LaunchConfigurationResolver } from '../debugger/extension/configuration/resolvers/launch';
 import { LaunchRequestArguments } from '../debugger/types';
 

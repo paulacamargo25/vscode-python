@@ -4,7 +4,7 @@
 import { IServiceManager } from '../../ioc/types';
 import { LaunchRequestArguments } from '../types';
 import { DebugEnvironmentVariablesHelper, IDebugEnvironmentVariablesService } from './configuration/resolvers/helper';
-import { IDebugConfigurationResolver } from './configuration/resolvers/types';
+import { IDebugConfigurationResolver } from './configuration/types';
 import { LaunchConfigurationResolver } from './configuration/resolvers/launch';
 
 export function registerTypes(serviceManager: IServiceManager): void {

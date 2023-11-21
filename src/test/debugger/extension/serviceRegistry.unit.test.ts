@@ -9,7 +9,7 @@ import { registerTypes } from '../../../client/debugger/extension/serviceRegistr
 import { LaunchRequestArguments } from '../../../client/debugger/types';
 import { ServiceManager } from '../../../client/ioc/serviceManager';
 import { IServiceManager } from '../../../client/ioc/types';
-import { IDebugConfigurationResolver } from '../../../client/debugger/extension/configuration/resolvers/types';
+import { IDebugConfigurationResolver } from '../../../client/debugger/extension/configuration/types';
 
 suite('Debugging - Service Registry', () => {
     let serviceManager: IServiceManager;
