@@ -5,17 +5,17 @@ import { expect, use } from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import * as path from 'path';
 import * as shortid from 'shortid';
-import { ICurrentProcess, IPathUtils } from '../../../../client/common/types';
-import { IEnvironmentVariablesService } from '../../../../client/common/variables/types';
+import { ICurrentProcess, IPathUtils } from '../../client/common/types';
+import { IEnvironmentVariablesService } from '../../client/common/variables/types';
 import {
     DebugEnvironmentVariablesHelper,
     IDebugEnvironmentVariablesService,
-} from '../../../../client/testing/common/debugger/resolvers/helper';
-import { ConsoleType, LaunchRequestArguments } from '../../../../client/debugger/types';
-import { isOs, OSType } from '../../../common';
-import { closeActiveWindows, initialize, initializeTest, IS_MULTI_ROOT_TEST, TEST_DEBUGGER } from '../../../initialize';
-import { UnitTestIocContainer } from '../../serviceRegistry';
-import { normCase } from '../../../../client/common/platform/fs-paths';
+} from '../../client/debugger/extension/configuration/resolvers/helper';
+import { ConsoleType, LaunchRequestArguments } from '../../client/debugger/types';
+import { isOs, OSType } from '../common';
+import { closeActiveWindows, initialize, initializeTest, IS_MULTI_ROOT_TEST, TEST_DEBUGGER } from '../initialize';
+import { UnitTestIocContainer } from '../testing/serviceRegistry';
+import { normCase } from '../../client/common/platform/fs-paths';
 
 use(chaiAsPromised);
 

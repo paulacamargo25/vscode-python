@@ -47,9 +47,9 @@ src/test/api.functional.test.ts
 src/test/testing/mocks.ts
 src/test/testing/common/debugLauncher.unit.test.ts
 src/test/testing/common/services/configSettingService.unit.test.ts
-src/test/testing/common/debugger/envVars.test.ts
 
 src/test/common/exitCIAfterTestReporter.ts
+
 
 src/test/common/terminals/activator/index.unit.test.ts
 src/test/common/terminals/activator/base.unit.test.ts
@@ -116,6 +116,7 @@ src/test/debugger/extension/hooks/childProcessAttachHandler.unit.test.ts
 src/test/debugger/extension/hooks/childProcessAttachService.unit.test.ts
 src/test/debugger/utils.ts
 src/test/debugger/common/protocolparser.test.ts
+src/test/debugger/envVars.test.ts
 
 src/test/telemetry/index.unit.test.ts
 src/test/telemetry/envFileTelemetry.unit.test.ts

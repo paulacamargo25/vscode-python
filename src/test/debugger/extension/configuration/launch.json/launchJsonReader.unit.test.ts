@@ -8,7 +8,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import { Uri } from 'vscode';
 import { assert } from 'chai';
-import { getConfigurationsForWorkspace } from '../../../../../client/testing/common/debugger/launchJsonReader';
+import { getConfigurationsForWorkspace } from '../../../../../client/debugger/extension/configuration/launch.json/launchJsonReader';
 import * as vscodeApis from '../../../../../client/common/vscodeApis/workspaceApis';
 
 suite('Launch Json Reader', () => {

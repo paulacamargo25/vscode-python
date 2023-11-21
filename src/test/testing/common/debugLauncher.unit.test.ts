@@ -16,14 +16,14 @@ import { IApplicationShell, IDebugService } from '../../../client/common/applica
 import { EXTENSION_ROOT_DIR } from '../../../client/common/constants';
 import '../../../client/common/extensions';
 import { IConfigurationService, IPythonSettings } from '../../../client/common/types';
-import { DebuggerTypeName } from '../../../client/testing/common/debugger/constants';
-import { IDebugEnvironmentVariablesService } from '../../../client/testing/common/debugger/resolvers/helper';
-import { LaunchConfigurationResolver } from '../../../client/testing/common/debugger/resolvers/launch';
+import { DebuggerTypeName } from '../../../client/debugger/constants';
+import { IDebugEnvironmentVariablesService } from '../../../client/debugger/extension/configuration/resolvers/helper';
+import { LaunchConfigurationResolver } from '../../../client/debugger/extension/configuration/resolvers/launch';
 import { DebugOptions } from '../../../client/debugger/types';
 import { IInterpreterService } from '../../../client/interpreter/contracts';
 import { IServiceContainer } from '../../../client/ioc/types';
 import { PythonEnvironment } from '../../../client/pythonEnvironments/info';
-import { DebugLauncher } from '../../../client/testing/common/debugger/debugLauncher';
+import { DebugLauncher } from '../../../client/testing/common/debugLauncher';
 import { LaunchOptions } from '../../../client/testing/common/types';
 import { ITestingSettings } from '../../../client/testing/configuration/types';
 import { TestProvider } from '../../../client/testing/types';

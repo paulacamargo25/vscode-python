@@ -5,8 +5,8 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { parse } from 'jsonc-parser';
 import { DebugConfiguration, Uri, WorkspaceFolder } from 'vscode';
-import { getConfiguration, getWorkspaceFolder } from '../../../common/vscodeApis/workspaceApis';
-import { traceLog } from '../../../logging';
+import { getConfiguration, getWorkspaceFolder } from '../../../../common/vscodeApis/workspaceApis';
+import { traceLog } from '../../../../logging';
 
 export async function getConfigurationsForWorkspace(workspace: WorkspaceFolder): Promise<DebugConfiguration[]> {
     const filename = path.join(workspace.uri.fsPath, '.vscode', 'launch.json');

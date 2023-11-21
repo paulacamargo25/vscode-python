@@ -3,7 +3,7 @@
 
 import { IExtensionActivationService } from '../activation/types';
 import { IServiceManager } from '../ioc/types';
-import { DebugLauncher } from './common/debugger/debugLauncher';
+import { DebugLauncher } from './common/debugLauncher';
 import { TestRunner } from './common/runner';
 import { TestConfigSettingsService } from './common/configSettingService';
 import { TestsHelper } from './common/testUtils';
@@ -22,9 +22,9 @@ import { TestingService, UnitTestManagementService } from './main';
 import { ITestingService } from './types';
 import { UnitTestSocketServer } from './common/socketServer';
 import { registerTestControllerTypes } from './testController/serviceRegistry';
-import { DebugEnvironmentVariablesHelper, IDebugEnvironmentVariablesService } from './common/debugger/resolvers/helper';
-import { IDebugConfigurationResolver } from './common/debugger/resolvers/types';
-import { LaunchConfigurationResolver } from './common/debugger/resolvers/launch';
+import { DebugEnvironmentVariablesHelper, IDebugEnvironmentVariablesService } from '../debugger/extension/configuration/resolvers/helper';
+import { IDebugConfigurationResolver } from '../debugger/extension/configuration/resolvers/types';
+import { LaunchConfigurationResolver } from '../debugger/extension/configuration/resolvers/launch';
 import { LaunchRequestArguments } from '../debugger/types';
 
 export function registerTypes(serviceManager: IServiceManager) {
