@@ -5,11 +5,11 @@
 
 import { inject, injectable } from 'inversify';
 import { Uri } from 'vscode';
-import { IExtensionSingleActivationService } from '../../../../activation/types';
-import { Commands } from '../../../../common/constants';
-import { IDisposable, IDisposableRegistry } from '../../../../common/types';
-import { registerCommand } from '../../../../common/vscodeApis/commandApis';
-import { IInterpreterService } from '../../../../interpreter/contracts';
+import { IExtensionSingleActivationService } from '../activation/types';
+import { Commands } from '../common/constants';
+import { IDisposable, IDisposableRegistry } from '../common/types';
+import { registerCommand } from '../common/vscodeApis/commandApis';
+import { IInterpreterService } from './contracts';
 
 @injectable()
 export class InterpreterPathCommand implements IExtensionSingleActivationService {
