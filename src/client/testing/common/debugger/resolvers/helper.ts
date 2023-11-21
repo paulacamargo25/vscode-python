@@ -6,7 +6,7 @@
 import { inject, injectable } from 'inversify';
 import { ICurrentProcess } from '../../../../common/types';
 import { EnvironmentVariables, IEnvironmentVariablesService } from '../../../../common/variables/types';
-import { LaunchRequestArguments } from '../../../types';
+import { LaunchRequestArguments } from '../../../../debugger/types';
 import { PYTHON_LANGUAGE } from '../../../../common/constants';
 import { getActiveTextEditor } from '../../../../common/vscodeApis/windowApis';
 import { getSearchPathEnvVarNames } from '../../../../common/utils/exec';

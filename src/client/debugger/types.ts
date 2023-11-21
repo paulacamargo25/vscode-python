@@ -5,7 +5,7 @@
 
 import { DebugConfiguration } from 'vscode';
 import { DebugProtocol } from 'vscode-debugprotocol/lib/debugProtocol';
-import { DebuggerTypeName } from './constants';
+import { DebuggerTypeName } from '../testing/common/debugger/constants';
 
 export enum DebugOptions {
     RedirectOutput = 'RedirectOutput',

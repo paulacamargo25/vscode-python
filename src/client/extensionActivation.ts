@@ -22,7 +22,6 @@ import {
     IPathUtils,
 } from './common/types';
 import { noop } from './common/utils/misc';
-import { registerTypes as debugConfigurationRegisterTypes } from './debugger/extension/serviceRegistry';
 import { IInterpreterService } from './interpreter/contracts';
 import { getLanguageConfiguration } from './language/languageConfiguration';
 import { ReplProvider } from './providers/replProvider';
@@ -117,7 +116,6 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
     unitTestsRegisterTypes(serviceManager);
     installerRegisterTypes(serviceManager);
     commonRegisterTerminalTypes(serviceManager);
-    debugConfigurationRegisterTypes(serviceManager);
     tensorBoardRegisterTypes(serviceManager);
 
     const extensions = serviceContainer.get<IExtensions>(IExtensions);

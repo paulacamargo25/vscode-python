@@ -12,8 +12,8 @@ import { getOSType, OSType } from '../../../../common/utils/platform';
 import { EnvironmentVariables } from '../../../../common/variables/types';
 import { IEnvironmentActivationService } from '../../../../interpreter/activation/types';
 import { IInterpreterService } from '../../../../interpreter/contracts';
-import { DebuggerTypeName } from '../../../constants';
-import { DebugOptions, DebugPurpose, LaunchRequestArguments } from '../../../types';
+import { DebuggerTypeName } from '../constants';
+import { DebugOptions, DebugPurpose, LaunchRequestArguments } from '../../../../debugger/types';
 import { BaseConfigurationResolver } from './base';
 import { getProgram, IDebugEnvironmentVariablesService } from './helper';
 import {
