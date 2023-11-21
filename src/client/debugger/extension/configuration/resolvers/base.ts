@@ -169,7 +169,7 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
         const LocalHosts = ['localhost', '127.0.0.1', '::1'];
         return !!(hostName && LocalHosts.indexOf(hostName.toLowerCase()) >= 0);
     }
-    
+
     protected static fixUpPathMappings(
         pathMappings: PathMapping[],
         defaultLocalRoot?: string,

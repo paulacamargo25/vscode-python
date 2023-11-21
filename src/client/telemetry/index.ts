@@ -310,7 +310,7 @@ export interface IEventNamePropertyMapping {
         "debug_in_terminal_button" : { "owner": "paulacamargo25" }
     */
     [EventName.DEBUG_IN_TERMINAL_BUTTON]: never | undefined;
-        /**
+    /**
      * Telemetry captured when starting the debugger.
      */
     /* __GDPR__
@@ -336,7 +336,7 @@ export interface IEventNamePropertyMapping {
           "scrapy": { "classification": "SystemMetaData", "purpose": "FeatureInsight", "owner": "paulacamargo25" }
        }
      */
-       [EventName.DEBUGGER]: {
+    [EventName.DEBUGGER]: {
         /**
          * Trigger for starting the debugger.
          * - `launch`: Launch/start new code and debug it.
