@@ -124,6 +124,8 @@ suite('Unit Tests - Debug Launcher', () => {
         debugEnvHelper
             .setup((x) => x.getEnvironmentVariables(TypeMoq.It.isAny(), TypeMoq.It.isAny()))
             .returns(() => Promise.resolve(expected.env));
+        console.log(workspaceFolder)
+        console.log(expected)
 
         debugService
             .setup((d) => d.startDebugging(TypeMoq.It.isValue(workspaceFolder), TypeMoq.It.isValue(expected)))
@@ -578,7 +580,7 @@ suite('Unit Tests - Debug Launcher', () => {
         debugService.verifyAll();
     });
 
-    test('Handles comments', async () => {
+    test.only('Handles comments', async () => {
         const options: LaunchOptions = {
             cwd: 'one/two/three',
             args: ['/one/two/three/testfile.py'],
@@ -599,7 +601,7 @@ suite('Unit Tests - Debug Launcher', () => {
             { \n\
                 // "test" debug config \n\
                 "name": "spam",  /* non-empty */ \n\
-                "type": "python",  /* must be "python" */ \n\
+                "type": "debugpy",  /* must be "debugpy" */ \n\
                 "request": "test",  /* must be "test" */ \n\
                 // extra stuff here: \n\
                 "stopOnEntry": true \n\
@@ -608,6 +610,7 @@ suite('Unit Tests - Debug Launcher', () => {
     } \n\
             ',
         );
+        console.log("options: ", options)
 
         await debugLauncher.launchDebugger(options);
 
