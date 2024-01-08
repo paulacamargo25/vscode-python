@@ -8,6 +8,7 @@ import {
     Breakpoint,
     BreakpointsChangeEvent,
     debug,
+    DebugAdapterDescriptorFactory,
     DebugConfiguration,
     DebugConsole,
     DebugSession,
@@ -65,5 +66,11 @@ export class DebugService implements IDebugService {
     }
     public removeBreakpoints(breakpoints: Breakpoint[]): void {
         debug.removeBreakpoints(breakpoints);
+    }
+    public registerDebugAdapterDescriptorFactory(
+        debugType: string,
+        factory: DebugAdapterDescriptorFactory,
+    ): Disposable {
+        return debug.registerDebugAdapterDescriptorFactory(debugType, factory);
     }
 }

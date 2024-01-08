@@ -311,6 +311,143 @@ export interface IEventNamePropertyMapping {
     */
     [EventName.DEBUG_IN_TERMINAL_BUTTON]: never | undefined;
     /**
+     * Telemetry event captured when debug adapter executable is created
+     */
+    /* __GDPR__
+       "debug_adapter.using_wheels_path" : {
+          "usingwheels" : { "classification": "SystemMetaData", "purpose": "FeatureInsight", "owner": "paulacamargo25" }
+       }
+     */
+
+       [EventName.DEBUG_ADAPTER_USING_WHEELS_PATH]: {
+        /**
+         * Carries boolean
+         * - `true` if path used for the adapter is the debugger with wheels.
+         * - `false` if path used for the adapter is the source only version of the debugger.
+         */
+        usingWheels: boolean;
+    };
+    /**
+     * Telemetry captured before starting debug session.
+     */
+    /* __GDPR__
+       "debug_session.start" : {
+          "duration" : { "classification": "SystemMetaData", "purpose": "FeatureInsight", "owner": "paulacamargo25" },
+          "trigger" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" },
+          "console" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" }
+       }
+     */
+       [EventName.DEBUG_SESSION_START]: {
+        /**
+         * Trigger for starting the debugger.
+         * - `launch`: Launch/start new code and debug it.
+         * - `attach`: Attach to an exiting python process (remote debugging).
+         * - `test`: Debugging python tests.
+         *
+         * @type {TriggerType}
+         */
+        trigger: TriggerType;
+        /**
+         * Type of console used.
+         *  -`internalConsole`: Use VS Code debug console (no shells/terminals).
+         * - `integratedTerminal`: Use VS Code terminal.
+         * - `externalTerminal`: Use an External terminal.
+         *
+         * @type {ConsoleType}
+         */
+        console?: ConsoleType;
+    };
+    /**
+     * Telemetry captured when debug session runs into an error.
+     */
+    /* __GDPR__
+       "debug_session.error" : {
+          "duration" : { "classification": "SystemMetaData", "purpose": "FeatureInsight", "owner": "paulacamargo25" },
+          "trigger" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" },
+          "console" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" }
+       }
+     */
+    [EventName.DEBUG_SESSION_ERROR]: {
+        /**
+         * Trigger for starting the debugger.
+         * - `launch`: Launch/start new code and debug it.
+         * - `attach`: Attach to an exiting python process (remote debugging).
+         * - `test`: Debugging python tests.
+         *
+         * @type {TriggerType}
+         */
+        trigger: TriggerType;
+        /**
+         * Type of console used.
+         *  -`internalConsole`: Use VS Code debug console (no shells/terminals).
+         * - `integratedTerminal`: Use VS Code terminal.
+         * - `externalTerminal`: Use an External terminal.
+         *
+         * @type {ConsoleType}
+         */
+        console?: ConsoleType;
+    };
+    /**
+     * Telemetry captured after stopping debug session.
+     */
+    /* __GDPR__
+       "debug_session.stop" : {
+          "duration" : { "classification": "SystemMetaData", "purpose": "FeatureInsight", "owner": "paulacamargo25" },
+          "trigger" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" },
+          "console" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" }
+       }
+     */
+    [EventName.DEBUG_SESSION_STOP]: {
+        /**
+         * Trigger for starting the debugger.
+         * - `launch`: Launch/start new code and debug it.
+         * - `attach`: Attach to an exiting python process (remote debugging).
+         * - `test`: Debugging python tests.
+         *
+         * @type {TriggerType}
+         */
+        trigger: TriggerType;
+        /**
+         * Type of console used.
+         *  -`internalConsole`: Use VS Code debug console (no shells/terminals).
+         * - `integratedTerminal`: Use VS Code terminal.
+         * - `externalTerminal`: Use an External terminal.
+         *
+         * @type {ConsoleType}
+         */
+        console?: ConsoleType;
+    };
+    /**
+     * Telemetry captured when user code starts running after loading the debugger.
+     */
+    /* __GDPR__
+       "debug_session.user_code_running" : {
+          "duration" : { "classification": "SystemMetaData", "purpose": "FeatureInsight", "owner": "paulacamargo25" },
+          "trigger" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" },
+          "console" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" }
+       }
+     */
+       [EventName.DEBUG_SESSION_USER_CODE_RUNNING]: {
+        /**
+         * Trigger for starting the debugger.
+         * - `launch`: Launch/start new code and debug it.
+         * - `attach`: Attach to an exiting python process (remote debugging).
+         * - `test`: Debugging python tests.
+         *
+         * @type {TriggerType}
+         */
+        trigger: TriggerType;
+        /**
+         * Type of console used.
+         *  -`internalConsole`: Use VS Code debug console (no shells/terminals).
+         * - `integratedTerminal`: Use VS Code terminal.
+         * - `externalTerminal`: Use an External terminal.
+         *
+         * @type {ConsoleType}
+         */
+        console?: ConsoleType;
+    };
+    /**
      * Telemetry captured when starting the debugger.
      */
     /* __GDPR__
@@ -460,6 +597,22 @@ export interface IEventNamePropertyMapping {
          */
         scrapy: boolean;
     };
+    /**
+     * Telemetry event sent when attaching to child process
+     */
+    /* __GDPR__
+       "debugger.attach_to_child_process" : {
+           "duration" : { "classification": "SystemMetaData", "purpose": "FeatureInsight", "isMeasurement": true, "owner": "paulacamargo25" }
+       }
+     */
+       [EventName.DEBUGGER_ATTACH_TO_CHILD_PROCESS]: never | undefined;
+     /**
+     * Telemetry event sent when attaching to a local process.
+     */
+    /* __GDPR__
+       "debugger.attach_to_local_process" : { "owner": "paulacamargo25" }
+     */
+       [EventName.DEBUGGER_ATTACH_TO_LOCAL_PROCESS]: never | undefined;
     /**
      * Telemetry event sent with details of actions when invoking a diagnostic command
      */

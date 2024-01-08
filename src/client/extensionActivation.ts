@@ -4,7 +4,6 @@
 'use strict';
 
 import { languages, window } from 'vscode';
-
 import { registerTypes as activationRegisterTypes } from './activation/serviceRegistry';
 import { IExtensionActivationManager } from './activation/types';
 import { registerTypes as appRegisterTypes } from './application/serviceRegistry';
@@ -46,6 +45,9 @@ import { registerAllCreateEnvironmentFeatures } from './pythonEnvironments/creat
 import { registerCreateEnvironmentTriggers } from './pythonEnvironments/creation/createEnvironmentTrigger';
 import { initializePersistentStateForTriggers } from './common/persistentState';
 import { logAndNotifyOnLegacySettings } from './logging/settingLogs';
+import { DebugService } from './common/application/debugService';
+import { IDebugSessionEventHandlers } from './debugger/extension/hooks/types';
+import { DebugSessionEventDispatcher } from './debugger/extension/hooks/eventHandlerDispatcher';
 
 export async function activateComponents(
     // `ext` is passed to any extra activation funcs.
@@ -142,6 +144,9 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
         const interpreterManager = serviceContainer.get<IInterpreterService>(IInterpreterService);
         interpreterManager.initialize();
         if (!workspaceService.isVirtualWorkspace) {
+            const handlers = serviceManager.getAll<IDebugSessionEventHandlers>(IDebugSessionEventHandlers);
+            const dispatcher = new DebugSessionEventDispatcher(handlers, DebugService.instance, disposables);
+            dispatcher.registerEventHandlers();
             const outputChannel = serviceManager.get<ILogOutputChannel>(ILogOutputChannel);
             disposables.push(cmdManager.registerCommand(Commands.ViewOutput, () => outputChannel.show()));
             cmdManager.executeCommand('setContext', 'python.vscode.channel', applicationEnv.channel).then(noop, noop);

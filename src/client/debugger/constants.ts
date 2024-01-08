@@ -3,4 +3,4 @@
 
 'use strict';
 
-export const DebuggerTypeName = 'debugpy';
+export const DebuggerTypeName = 'python';

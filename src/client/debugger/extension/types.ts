@@ -3,6 +3,19 @@
 
 'use strict';
 
+import { DebugAdapterDescriptorFactory, DebugAdapterTrackerFactory, DebugConfigurationProvider } from 'vscode';
+
+export const IDebugAdapterDescriptorFactory = Symbol('IDebugAdapterDescriptorFactory');
+export interface IDebugAdapterDescriptorFactory extends DebugAdapterDescriptorFactory {}
+
+export const IDebugSessionLoggingFactory = Symbol('IDebugSessionLoggingFactory');
+
+export interface IDebugSessionLoggingFactory extends DebugAdapterTrackerFactory {}
+
+export const IOutdatedDebuggerPromptFactory = Symbol('IOutdatedDebuggerPromptFactory');
+
+export interface IOutdatedDebuggerPromptFactory extends DebugAdapterTrackerFactory {}
+
 export enum PythonPathSource {
     launchJson = 'launch.json',
     settingsJson = 'settings.json',
