@@ -217,13 +217,15 @@ export abstract class BaseConfigurationResolver<T extends DebugConfiguration>
         return pathMappings;
     }
 
-    protected static isDebuggingFastAPI(debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>,
-        ): boolean {
+    protected static isDebuggingFastAPI(
+        debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>,
+    ): boolean {
         return !!(debugConfiguration.module && debugConfiguration.module.toUpperCase() === 'FASTAPI');
     }
 
-    protected static isDebuggingFlask(debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>,
-        ): boolean {
+    protected static isDebuggingFlask(
+        debugConfiguration: Partial<LaunchRequestArguments & AttachRequestArguments>,
+    ): boolean {
         return !!(debugConfiguration.module && debugConfiguration.module.toUpperCase() === 'FLASK');
     }
 

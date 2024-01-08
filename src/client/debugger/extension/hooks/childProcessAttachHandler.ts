@@ -45,4 +45,3 @@ export class ChildProcessAttachEventHandler implements IDebugSessionEventHandler
         }
     }
 }
-	

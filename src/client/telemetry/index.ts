@@ -319,7 +319,7 @@ export interface IEventNamePropertyMapping {
        }
      */
 
-       [EventName.DEBUG_ADAPTER_USING_WHEELS_PATH]: {
+    [EventName.DEBUG_ADAPTER_USING_WHEELS_PATH]: {
         /**
          * Carries boolean
          * - `true` if path used for the adapter is the debugger with wheels.
@@ -337,7 +337,7 @@ export interface IEventNamePropertyMapping {
           "console" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" }
        }
      */
-       [EventName.DEBUG_SESSION_START]: {
+    [EventName.DEBUG_SESSION_START]: {
         /**
          * Trigger for starting the debugger.
          * - `launch`: Launch/start new code and debug it.
@@ -427,7 +427,7 @@ export interface IEventNamePropertyMapping {
           "console" : { "classification": "SystemMetaData", "purpose": "PerformanceAndHealth", "owner": "paulacamargo25" }
        }
      */
-       [EventName.DEBUG_SESSION_USER_CODE_RUNNING]: {
+    [EventName.DEBUG_SESSION_USER_CODE_RUNNING]: {
         /**
          * Trigger for starting the debugger.
          * - `launch`: Launch/start new code and debug it.
@@ -605,14 +605,14 @@ export interface IEventNamePropertyMapping {
            "duration" : { "classification": "SystemMetaData", "purpose": "FeatureInsight", "isMeasurement": true, "owner": "paulacamargo25" }
        }
      */
-       [EventName.DEBUGGER_ATTACH_TO_CHILD_PROCESS]: never | undefined;
-     /**
+    [EventName.DEBUGGER_ATTACH_TO_CHILD_PROCESS]: never | undefined;
+    /**
      * Telemetry event sent when attaching to a local process.
      */
     /* __GDPR__
        "debugger.attach_to_local_process" : { "owner": "paulacamargo25" }
      */
-       [EventName.DEBUGGER_ATTACH_TO_LOCAL_PROCESS]: never | undefined;
+    [EventName.DEBUGGER_ATTACH_TO_LOCAL_PROCESS]: never | undefined;
     /**
      * Telemetry event sent with details of actions when invoking a diagnostic command
      */
