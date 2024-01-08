@@ -11,6 +11,7 @@ import { AppinsightsKey, EXTENSION_ROOT_DIR, isTestExecution, isUnitTestExecutio
 import type { TerminalShellType } from '../common/terminal/types';
 import { StopWatch } from '../common/utils/stopWatch';
 import { isPromise } from '../common/utils/async';
+import { ConsoleType, TriggerType } from '../debugger/types';
 import { EnvironmentType, PythonEnvironment } from '../pythonEnvironments/info';
 import {
     TensorBoardPromptSelection,
@@ -20,7 +21,6 @@ import {
 } from '../tensorBoard/constants';
 import { EventName } from './constants';
 import type { TestTool } from './types';
-import { ConsoleType, TriggerType } from '../debugger/types';
 
 /**
  * Checks whether telemetry is supported.

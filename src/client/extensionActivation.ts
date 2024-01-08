@@ -4,6 +4,7 @@
 'use strict';
 
 import { languages, window } from 'vscode';
+
 import { registerTypes as activationRegisterTypes } from './activation/serviceRegistry';
 import { IExtensionActivationManager } from './activation/types';
 import { registerTypes as appRegisterTypes } from './application/serviceRegistry';
@@ -39,15 +40,15 @@ import * as pythonEnvironments from './pythonEnvironments';
 import { ActivationResult, ExtensionState } from './components';
 import { Components } from './extensionInit';
 import { setDefaultLanguageServer } from './activation/common/defaultlanguageServer';
+import { DebugService } from './common/application/debugService';
+import { DebugSessionEventDispatcher } from './debugger/extension/hooks/eventHandlerDispatcher';
+import { IDebugSessionEventHandlers } from './debugger/extension/hooks/types';
 import { WorkspaceService } from './common/application/workspace';
 import { IInterpreterQuickPick } from './interpreter/configuration/types';
 import { registerAllCreateEnvironmentFeatures } from './pythonEnvironments/creation/registrations';
 import { registerCreateEnvironmentTriggers } from './pythonEnvironments/creation/createEnvironmentTrigger';
 import { initializePersistentStateForTriggers } from './common/persistentState';
 import { logAndNotifyOnLegacySettings } from './logging/settingLogs';
-import { DebugService } from './common/application/debugService';
-import { IDebugSessionEventHandlers } from './debugger/extension/hooks/types';
-import { DebugSessionEventDispatcher } from './debugger/extension/hooks/eventHandlerDispatcher';
 
 export async function activateComponents(
     // `ext` is passed to any extra activation funcs.
