@@ -567,4 +567,3 @@ getInfoPerOS().forEach(([osName, osType, path]) => {
         });
     });
 });
-	
