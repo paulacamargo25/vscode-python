@@ -1,23 +1,30 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { IServiceManager } from '../../ioc/types';
-import { LaunchRequestArguments } from '../types';
-import { DebugEnvironmentVariablesHelper, IDebugEnvironmentVariablesService } from './configuration/resolvers/helper';
-import { IDebugConfigurationResolver } from './configuration/types';
-import { LaunchConfigurationResolver } from './configuration/resolvers/launch';
-import { IChildProcessAttachService, IDebugSessionEventHandlers } from './hooks/types';
-import { ChildProcessAttachService } from './hooks/childProcessAttachService';
-import { ChildProcessAttachEventHandler } from './hooks/childProcessAttachHandler';
+'use strict';
+
 import { IExtensionSingleActivationService } from '../../activation/types';
+import { IServiceManager } from '../../ioc/types';
+import { AttachRequestArguments, LaunchRequestArguments } from '../types';
 import { DebugAdapterActivator } from './adapter/activator';
-import { IDebugAdapterDescriptorFactory, IDebugSessionLoggingFactory, IOutdatedDebuggerPromptFactory } from './types';
 import { DebugAdapterDescriptorFactory } from './adapter/factory';
-import { OutdatedDebuggerPromptFactory } from './adapter/outdatedDebuggerPrompt';
-import { IAttachProcessProviderFactory } from './attachQuickPick/types';
-import { AttachProcessProviderFactory } from './attachQuickPick/factory';
-import { DebugCommands } from './debugCommands';
 import { DebugSessionLoggingFactory } from './adapter/logging';
+import { OutdatedDebuggerPromptFactory } from './adapter/outdatedDebuggerPrompt';
+import { AttachProcessProviderFactory } from './attachQuickPick/factory';
+import { IAttachProcessProviderFactory } from './attachQuickPick/types';
+import { AttachConfigurationResolver } from './configuration/resolvers/attach';
+import { DebugEnvironmentVariablesHelper, IDebugEnvironmentVariablesService } from './configuration/resolvers/helper';
+import { LaunchConfigurationResolver } from './configuration/resolvers/launch';
+import { IDebugConfigurationResolver } from './configuration/types';
+import { DebugCommands } from './debugCommands';
+import { ChildProcessAttachEventHandler } from './hooks/childProcessAttachHandler';
+import { ChildProcessAttachService } from './hooks/childProcessAttachService';
+import { IChildProcessAttachService, IDebugSessionEventHandlers } from './hooks/types';
+import {
+    IDebugAdapterDescriptorFactory,
+    IDebugSessionLoggingFactory,
+    IOutdatedDebuggerPromptFactory,
+} from './types';
 
 export function registerTypes(serviceManager: IServiceManager): void {
     serviceManager.addSingleton<IChildProcessAttachService>(IChildProcessAttachService, ChildProcessAttachService);
@@ -26,6 +33,11 @@ export function registerTypes(serviceManager: IServiceManager): void {
         IDebugConfigurationResolver,
         LaunchConfigurationResolver,
         'launch',
+    );
+    serviceManager.addSingleton<IDebugConfigurationResolver<AttachRequestArguments>>(
+        IDebugConfigurationResolver,
+        AttachConfigurationResolver,
+        'attach',
     );
     serviceManager.addSingleton<IDebugEnvironmentVariablesService>(
         IDebugEnvironmentVariablesService,
