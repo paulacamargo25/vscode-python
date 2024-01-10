@@ -11,7 +11,6 @@ import { IDebugConfigurationResolver } from './types';
 
 @injectable()
 export class PythonDebugConfigurationService implements IDebugConfigurationService {
-
     constructor(
         @inject(IDebugConfigurationResolver)
         @named('attach')

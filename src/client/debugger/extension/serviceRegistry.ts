@@ -21,7 +21,12 @@ import { DebugCommands } from './debugCommands';
 import { ChildProcessAttachEventHandler } from './hooks/childProcessAttachHandler';
 import { ChildProcessAttachService } from './hooks/childProcessAttachService';
 import { IChildProcessAttachService, IDebugSessionEventHandlers } from './hooks/types';
-import { IDebugAdapterDescriptorFactory, IDebugConfigurationService, IDebugSessionLoggingFactory, IOutdatedDebuggerPromptFactory } from './types';
+import {
+    IDebugAdapterDescriptorFactory,
+    IDebugConfigurationService,
+    IDebugSessionLoggingFactory,
+    IOutdatedDebuggerPromptFactory,
+} from './types';
 
 export function registerTypes(serviceManager: IServiceManager): void {
     serviceManager.addSingleton<IDebugConfigurationService>(

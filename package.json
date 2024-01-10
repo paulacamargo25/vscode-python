@@ -1141,7 +1141,7 @@
                         }
                     }
                 },
-                "deprecated": "This configuration is deprecated use Python Debugger configuration",
+                "deprecated": "%python.debugger.deprecatedMessage%",
                 "configurationSnippets": [],
                 "label": "Python",
                 "languages": [

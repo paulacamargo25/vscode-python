@@ -164,12 +164,12 @@ async function activateLegacy(ext: ExtensionState): Promise<ActivationResult> {
 
             const terminalProvider = new TerminalProvider(serviceContainer);
             terminalProvider.initialize(window.activeTerminal).ignoreErrors();
-            
+
             serviceContainer
-            .getAll<DebugConfigurationProvider>(IDebugConfigurationService)
-            .forEach((debugConfigProvider) => {
-                disposables.push(debug.registerDebugConfigurationProvider(DebuggerTypeName, debugConfigProvider));
-            });
+                .getAll<DebugConfigurationProvider>(IDebugConfigurationService)
+                .forEach((debugConfigProvider) => {
+                    disposables.push(debug.registerDebugConfigurationProvider(DebuggerTypeName, debugConfigProvider));
+                });
             disposables.push(terminalProvider);
 
             logAndNotifyOnLegacySettings();
