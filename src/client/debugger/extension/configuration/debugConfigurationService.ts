@@ -39,13 +39,14 @@ export class PythonDebugConfigurationService implements IDebugConfigurationServi
                 'This configuration can only be used by the test debugging commands. `"request": "test"` is deprecated, please keep as `"request": "launch"` and add `"purpose": ["debug-test"]` instead.',
             );
         } else {
-            if (Object.keys(debugConfiguration).length !== 0) {
-                return this.launchResolver.resolveDebugConfiguration(
-                    folder,
-                    debugConfiguration as LaunchRequestArguments,
-                    token,
-                );
+            if (Object.keys(debugConfiguration).length === 0) {
+                return undefined;
             }
+            return this.launchResolver.resolveDebugConfiguration(
+                folder,
+                debugConfiguration as LaunchRequestArguments,
+                token,
+            );
         }
     }
 
