@@ -7,6 +7,7 @@ import { DebugConfiguration } from 'vscode';
 import { DebugProtocol } from 'vscode-debugprotocol/lib/debugProtocol';
 import { DebuggerTypeName } from './constants';
 
+
 export enum DebugOptions {
     RedirectOutput = 'RedirectOutput',
     Django = 'Django',
