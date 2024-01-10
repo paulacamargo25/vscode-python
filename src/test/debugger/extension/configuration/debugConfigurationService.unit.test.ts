@@ -6,7 +6,6 @@
 import { expect } from 'chai';
 import * as typemoq from 'typemoq';
 import { DebugConfiguration, Uri } from 'vscode';
-import { IMultiStepInputFactory, MultiStepInput } from '../../../../client/common/utils/multiStepInput';
 import { PythonDebugConfigurationService } from '../../../../client/debugger/extension/configuration/debugConfigurationService';
 import { IDebugConfigurationResolver } from '../../../../client/debugger/extension/configuration/types';
 import { AttachRequestArguments, LaunchRequestArguments } from '../../../../client/debugger/types';
@@ -15,14 +14,11 @@ suite('Debugging - Configuration Service', () => {
     let attachResolver: typemoq.IMock<IDebugConfigurationResolver<AttachRequestArguments>>;
     let launchResolver: typemoq.IMock<IDebugConfigurationResolver<LaunchRequestArguments>>;
     let configService: TestPythonDebugConfigurationService;
-    let multiStepFactory: typemoq.IMock<IMultiStepInputFactory>;
 
     class TestPythonDebugConfigurationService extends PythonDebugConfigurationService {}
     setup(() => {
         attachResolver = typemoq.Mock.ofType<IDebugConfigurationResolver<AttachRequestArguments>>();
         launchResolver = typemoq.Mock.ofType<IDebugConfigurationResolver<LaunchRequestArguments>>();
-        multiStepFactory = typemoq.Mock.ofType<IMultiStepInputFactory>();
-
         configService = new TestPythonDebugConfigurationService(attachResolver.object, launchResolver.object);
     });
     test('Should use attach resolver when passing attach config', async () => {
