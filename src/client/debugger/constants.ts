@@ -5,4 +5,3 @@
 
 export const DebuggerTypeName = 'python';
 export const PythonDebuggerTypeName = 'debugpy';
-
