@@ -45,7 +45,9 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
     }
 
     private argSettingsPath = path.join(EXTENSION_ROOT_DIR, 'resources', 'report_issue_user_settings.json');
+
     private templatePath = path.join(EXTENSION_ROOT_DIR, 'resources', 'report_issue_template.md');
+
     private userDataTemplatePath = path.join(EXTENSION_ROOT_DIR, 'resources', 'report_issue_user_data_template.md');
 
     public async openReportIssue(): Promise<void> {
