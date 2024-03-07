@@ -45,8 +45,8 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
     }
 
     private argSettingsPath = path.join(EXTENSION_ROOT_DIR, 'resources', 'report_issue_user_settings.json');
-
     private templatePath = path.join(EXTENSION_ROOT_DIR, 'resources', 'report_issue_template.md');
+    private userDataTemplatePath = path.join(EXTENSION_ROOT_DIR, 'resources', 'report_issue_user_data_template.md');
 
     public async openReportIssue(): Promise<void> {
         const settings: IPythonSettings = this.configurationService.getSettings();
@@ -86,6 +86,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
             }
         });
         const template = await fs.readFile(this.templatePath, 'utf8');
+        const userTemplate = await fs.readFile(this.userDataTemplatePath, 'utf8');
         const interpreter = await this.interpreterService.getActiveInterpreter();
         const pythonVersion = interpreter?.version?.raw ?? '';
         const languageServer =
@@ -99,19 +100,14 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
                 : '';
         await this.commandManager.executeCommand('workbench.action.openIssueReporter', {
             extensionId: 'ms-python.python',
-            issueBody: template.format(
+            issueBody: template,
+            data: userTemplate.format(
                 pythonVersion,
                 virtualEnvKind,
                 languageServer,
                 hasMultipleFoldersText,
                 userSettings,
             ),
-            data: `<!-- **NOTE**: Everything below except Python output panel is auto-generated; no editing required. Please do provide Python output panel. -->
-            # Diagnostic data
-
-            -   Python version (& distribution if applicable, e.g. Anaconda): 3.10.13
-            -   Type of virtual environment used (e.g. conda, venv, virtualenv, etc.): Venv
-            -   Value of the python.languageServer setting: Default`,
         });
         sendTelemetryEvent(EventName.USE_REPORT_ISSUE_COMMAND, undefined, {});
     }
