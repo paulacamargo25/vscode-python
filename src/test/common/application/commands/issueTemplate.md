@@ -12,7 +12,7 @@ XXX
 **After** creating the issue on GitHub, you can add screenshots and GIFs of what is happening. Consider tools like https://www.cockos.com/licecap/, https://github.com/phw/peek or https://www.screentogif.com/ for GIF creation.
 -->
 
-<!-- **NOTE**: Please do provide Python output panel. -->
+<!-- **NOTE**: Please do provide logs from Python Output panel. -->
 # Diagnostic data
 
 <details>
