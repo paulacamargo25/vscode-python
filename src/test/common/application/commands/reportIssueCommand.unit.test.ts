@@ -111,9 +111,9 @@ suite('Report Issue Command', () => {
         );
         const expectedData = fs.readFileSync(userDataTemplatePath, 'utf8');
 
-        const args: [string, { extensionId: string; issueBody: string, data: string }] = capture<
+        const args: [string, { extensionId: string; issueBody: string; data: string }] = capture<
             AllCommands,
-            { extensionId: string; issueBody: string, data: string }
+            { extensionId: string; issueBody: string; data: string }
         >(cmdManager.executeCommand).last();
 
         verify(cmdManager.registerCommand(Commands.ReportIssue, anything(), anything())).once();
@@ -123,7 +123,6 @@ suite('Report Issue Command', () => {
         const data = args[1].data;
         expect(issueBody).to.be.equal(expectedIssueBody);
         expect(data).to.be.equal(expectedData);
-
     });
 
     test.only('Test if issue body is filled when only including settings which are explicitly set', async () => {
@@ -154,9 +153,9 @@ suite('Report Issue Command', () => {
         );
         const expectedData = fs.readFileSync(userDataTemplatePath, 'utf8');
 
-        const args: [string, { extensionId: string; issueBody: string, data: string  }] = capture<
+        const args: [string, { extensionId: string; issueBody: string; data: string }] = capture<
             AllCommands,
-            { extensionId: string; issueBody: string, data: string  }
+            { extensionId: string; issueBody: string; data: string }
         >(cmdManager.executeCommand).last();
 
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
