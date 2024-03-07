@@ -38,6 +38,7 @@ suite('Report Issue Command', () => {
     let interpreterService: IInterpreterService;
     let configurationService: IConfigurationService;
     let appEnvironment: IApplicationEnvironment;
+    let expectedIssueBody: string;
 
     setup(async () => {
         workspaceService = mock(WorkspaceService);
@@ -79,6 +80,17 @@ suite('Report Issue Command', () => {
             instance(appEnvironment),
         );
         await reportIssueCommandHandler.activate();
+
+        const issueTemplatePath = path.join(
+            EXTENSION_ROOT_DIR_FOR_TESTS,
+            'src',
+            'test',
+            'common',
+            'application',
+            'commands',
+            'issueTemplate.md',
+        );
+        expectedIssueBody = fs.readFileSync(issueTemplatePath, 'utf8');
     });
 
     teardown(() => {
@@ -88,30 +100,33 @@ suite('Report Issue Command', () => {
     test('Test if issue body is filled correctly when including all the settings', async () => {
         await reportIssueCommandHandler.openReportIssue();
 
-        const templatePath = path.join(
+        const userDataTemplatePath = path.join(
             EXTENSION_ROOT_DIR_FOR_TESTS,
             'src',
             'test',
             'common',
             'application',
             'commands',
-            'issueTemplateVenv1.md',
+            'issueUserDataTemplateVenv1.md',
         );
-        const expectedIssueBody = fs.readFileSync(templatePath, 'utf8');
+        const expectedData = fs.readFileSync(userDataTemplatePath, 'utf8');
 
-        const args: [string, { extensionId: string; issueBody: string }] = capture<
+        const args: [string, { extensionId: string; issueBody: string, data: string }] = capture<
             AllCommands,
-            { extensionId: string; issueBody: string }
+            { extensionId: string; issueBody: string, data: string }
         >(cmdManager.executeCommand).last();
 
         verify(cmdManager.registerCommand(Commands.ReportIssue, anything(), anything())).once();
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
         expect(args[0]).to.be.equal('workbench.action.openIssueReporter');
-        const actual = args[1].issueBody;
-        expect(actual).to.be.equal(expectedIssueBody);
+        const issueBody = args[1].issueBody;
+        const data = args[1].data;
+        expect(issueBody).to.be.equal(expectedIssueBody);
+        expect(data).to.be.equal(expectedData);
+
     });
 
-    test('Test if issue body is filled when only including settings which are explicitly set', async () => {
+    test.only('Test if issue body is filled when only including settings which are explicitly set', async () => {
         // eslint-disable-next-line import/no-dynamic-require
         when(appEnvironment.packageJson).thenReturn(require(path.join(EXTENSION_ROOT_DIR, 'package.json')));
         when(workspaceService.workspaceFolders).thenReturn([
@@ -128,26 +143,28 @@ suite('Report Issue Command', () => {
         await reportIssueCommandHandler.activate();
         await reportIssueCommandHandler.openReportIssue();
 
-        const templatePath = path.join(
+        const userDataTemplatePath = path.join(
             EXTENSION_ROOT_DIR_FOR_TESTS,
             'src',
             'test',
             'common',
             'application',
             'commands',
-            'issueTemplateVenv2.md',
+            'issueUserDataTemplateVenv2.md',
         );
-        const expectedIssueBody = fs.readFileSync(templatePath, 'utf8');
+        const expectedData = fs.readFileSync(userDataTemplatePath, 'utf8');
 
-        const args: [string, { extensionId: string; issueBody: string }] = capture<
+        const args: [string, { extensionId: string; issueBody: string, data: string  }] = capture<
             AllCommands,
-            { extensionId: string; issueBody: string }
+            { extensionId: string; issueBody: string, data: string  }
         >(cmdManager.executeCommand).last();
 
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
         expect(args[0]).to.be.equal('workbench.action.openIssueReporter');
-        const actual = args[1].issueBody;
-        expect(actual).to.be.equal(expectedIssueBody);
+        const issueBody = args[1].issueBody;
+        const data = args[1].data;
+        expect(issueBody).to.be.equal(expectedIssueBody);
+        expect(data).to.be.equal(expectedData);
     });
     test('Should send telemetry event when run Report Issue Command', async () => {
         const sendTelemetryStub = sinon.stub(Telemetry, 'sendTelemetryEvent');
