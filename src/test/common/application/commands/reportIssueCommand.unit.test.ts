@@ -119,7 +119,7 @@ suite('Report Issue Command', () => {
         verify(cmdManager.registerCommand(Commands.ReportIssue, anything(), anything())).once();
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
         expect(args[0]).to.be.equal('workbench.action.openIssueReporter');
-        const {issueBody, data} = args[1];
+        const { issueBody, data } = args[1];
         expect(issueBody).to.be.equal(expectedIssueBody);
         expect(data).to.be.equal(expectedData);
     });
@@ -159,7 +159,7 @@ suite('Report Issue Command', () => {
 
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
         expect(args[0]).to.be.equal('workbench.action.openIssueReporter');
-        const {issueBody, data} = args[1];
+        const { issueBody, data } = args[1];
         expect(issueBody).to.be.equal(expectedIssueBody);
         expect(data).to.be.equal(expectedData);
     });
