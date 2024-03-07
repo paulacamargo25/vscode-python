@@ -106,6 +106,12 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
                 hasMultipleFoldersText,
                 userSettings,
             ),
+            data: `<!-- **NOTE**: Everything below except Python output panel is auto-generated; no editing required. Please do provide Python output panel. -->
+            # Diagnostic data
+
+            -   Python version (& distribution if applicable, e.g. Anaconda): 3.10.13
+            -   Type of virtual environment used (e.g. conda, venv, virtualenv, etc.): Venv
+            -   Value of the python.languageServer setting: Default`,
         });
         sendTelemetryEvent(EventName.USE_REPORT_ISSUE_COMMAND, undefined, {});
     }
