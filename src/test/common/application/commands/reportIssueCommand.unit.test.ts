@@ -119,13 +119,12 @@ suite('Report Issue Command', () => {
         verify(cmdManager.registerCommand(Commands.ReportIssue, anything(), anything())).once();
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
         expect(args[0]).to.be.equal('workbench.action.openIssueReporter');
-        const issueBody = args[1].issueBody;
-        const data = args[1].data;
+        const {issueBody, data} = args[1];
         expect(issueBody).to.be.equal(expectedIssueBody);
         expect(data).to.be.equal(expectedData);
     });
 
-    test.only('Test if issue body is filled when only including settings which are explicitly set', async () => {
+    test('Test if issue body is filled when only including settings which are explicitly set', async () => {
         // eslint-disable-next-line import/no-dynamic-require
         when(appEnvironment.packageJson).thenReturn(require(path.join(EXTENSION_ROOT_DIR, 'package.json')));
         when(workspaceService.workspaceFolders).thenReturn([
@@ -160,8 +159,7 @@ suite('Report Issue Command', () => {
 
         verify(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).once();
         expect(args[0]).to.be.equal('workbench.action.openIssueReporter');
-        const issueBody = args[1].issueBody;
-        const data = args[1].data;
+        const {issueBody, data} = args[1];
         expect(issueBody).to.be.equal(expectedIssueBody);
         expect(data).to.be.equal(expectedData);
     });
