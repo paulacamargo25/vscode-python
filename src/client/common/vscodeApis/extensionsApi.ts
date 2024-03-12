@@ -34,6 +34,6 @@ export function isInsider(): boolean {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getExtensions(): readonly vscode.Extension<Object>[] {
+export function getExtensions(): readonly vscode.Extension<any>[] {
     return vscode.extensions.all;
 }

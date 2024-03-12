@@ -21,7 +21,7 @@ venvPath: "<placeholder>"
 <details>
 <summary>Installed Extensions</summary>
 
-|Extension Name |Extension Id| Version|
+|Extension Name|Extension Id|Version|
 |---|---|---|
 |Python|ms-python.python|2020.2|
 </details>
