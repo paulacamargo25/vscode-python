@@ -1,6 +1,5 @@
 <!-- Please fill in all XXX markers -->
 # Behaviour
-## Expected vs. Actual
 
 XXX
 

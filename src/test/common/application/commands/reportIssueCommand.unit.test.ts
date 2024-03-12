@@ -30,6 +30,7 @@ import { IConfigurationService } from '../../../../client/common/types';
 import { EventName } from '../../../../client/telemetry/constants';
 import { EnvironmentType, PythonEnvironment } from '../../../../client/pythonEnvironments/info';
 import { EXTENSION_ROOT_DIR_FOR_TESTS } from '../../../constants';
+import * as extensionsApi from '../../../../client/common/vscodeApis/extensionsApi';
 
 suite('Report Issue Command', () => {
     let reportIssueCommandHandler: ReportIssueCommandHandler;
@@ -39,6 +40,7 @@ suite('Report Issue Command', () => {
     let configurationService: IConfigurationService;
     let appEnvironment: IApplicationEnvironment;
     let expectedIssueBody: string;
+    let getExtensionsStub: sinon.SinonStub;
 
     setup(async () => {
         workspaceService = mock(WorkspaceService);
@@ -46,6 +48,7 @@ suite('Report Issue Command', () => {
         interpreterService = mock(InterpreterService);
         configurationService = mock(ConfigurationService);
         appEnvironment = mock<IApplicationEnvironment>();
+        getExtensionsStub = sinon.stub(extensionsApi, 'getExtensions');
 
         when(cmdManager.executeCommand('workbench.action.openIssueReporter', anything())).thenResolve();
         when(workspaceService.getConfiguration('python')).thenReturn(
@@ -91,6 +94,16 @@ suite('Report Issue Command', () => {
             'issueTemplate.md',
         );
         expectedIssueBody = fs.readFileSync(issueTemplatePath, 'utf8');
+
+        getExtensionsStub.returns([
+            {
+                id: 'ms-python.python',
+                packageJSON: {
+                    displayName: 'Python',
+                    version: '2020.2',
+                },
+            },
+        ]);
     });
 
     teardown(() => {

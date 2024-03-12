@@ -3,9 +3,7 @@
 -   Value of the `python.languageServer` setting: Pylance
 
 <details>
-
 <summary>User Settings</summary>
-
 <p>
 
 ```
@@ -17,6 +15,13 @@ experiments
 venvPath: "<placeholder>"
 
 ```
-
 </p>
+</details>
+
+<details>
+<summary>Installed Extensions</summary>
+
+|Extension Name |Extension Id| Version|
+|---|---|---|
+|Python|ms-python.python|2020.2|
 </details>
