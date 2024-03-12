@@ -32,3 +32,7 @@ export function isExtensionDisabled(extensionId: string): boolean {
 export function isInsider(): boolean {
     return vscode.env.appName.includes('Insider');
 }
+
+export function getExtensions(): readonly vscode.Extension<any>[] {
+    return vscode.extensions.all;
+}
