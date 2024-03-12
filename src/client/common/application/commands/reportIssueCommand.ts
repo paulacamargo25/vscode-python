@@ -102,7 +102,7 @@ export class ReportIssueCommandHandler implements IExtensionSingleActivationServ
                 ? `Multiroot scenario, following user settings may not apply:${os.EOL}`
                 : '';
 
-        let installedExtensions = getExtensions()
+        const installedExtensions = getExtensions()
             .filter((extension) => !extension.id.startsWith('vscode.'))
             .sort((a, b) => a.packageJSON.displayName.localeCompare(b.packageJSON.displayName))
             .map(

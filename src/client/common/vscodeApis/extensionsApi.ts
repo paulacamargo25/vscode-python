@@ -33,6 +33,7 @@ export function isInsider(): boolean {
     return vscode.env.appName.includes('Insider');
 }
 
-export function getExtensions(): readonly vscode.Extension<any>[] {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getExtensions(): readonly vscode.Extension<Object>[] {
     return vscode.extensions.all;
 }
