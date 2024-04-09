@@ -13,7 +13,7 @@ type RemoteDebugOptions = {
 };
 
 export async function getDebugpyLauncherArgs(options: RemoteDebugOptions, debuggerPath?: string) {
-    if (!debuggerPath){ 
+    if (!debuggerPath) {
         debuggerPath = await getDebugpyPath();
     }
 
