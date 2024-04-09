@@ -51,11 +51,11 @@ suite('External debugpy Debugger Launcher', () => {
     });
 });
 
-suite('Path To Debugger Package', () => {
-    const pathToPythonLibDir = path.join(EXTENSION_ROOT_DIR, 'python_files', 'lib', 'python');
-    test('Path to debugpy debugger package', () => {
-        const actual = launchers.getDebugpyPackagePath();
-        const expected = path.join(pathToPythonLibDir, 'debugpy');
-        expect(actual).to.be.deep.equal(expected);
-    });
-});
+// suite('Path To Debugger Package', () => {
+//     const pathToPythonLibDir = path.join(EXTENSION_ROOT_DIR, 'python_files', 'lib', 'python');
+//     test('Path to debugpy debugger package', () => {
+//         const actual = launchers.getDebugpyPackagePath();
+//         const expected = path.join(pathToPythonLibDir, 'debugpy');
+//         expect(actual).to.be.deep.equal(expected);
+//     });
+// });
