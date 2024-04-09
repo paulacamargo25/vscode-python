@@ -8,7 +8,7 @@ import { EXTENSION_ROOT_DIR } from '../../../common/constants';
 import '../../../common/extensions';
 
 const pathToPythonLibDir = path.join(EXTENSION_ROOT_DIR, 'python_files', 'lib', 'python');
-const pathToDebugger = path.join(pathToPythonLibDir, 'debugpy');
+// const pathToDebugger = path.join(pathToPythonLibDir, 'debugpy');
 
 type RemoteDebugOptions = {
     host: string;
@@ -24,8 +24,4 @@ export function getDebugpyLauncherArgs(options: RemoteDebugOptions, debuggerPath
         `${options.host}:${options.port}`,
         ...waitArgs,
     ];
-}
-
-export function getDebugpyPackagePath(): string {
-    return pathToDebugger;
 }
