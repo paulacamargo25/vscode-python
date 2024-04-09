@@ -26,6 +26,7 @@ import { Common, Interpreters } from '../../../common/utils/localize';
 import { IPersistentStateFactory } from '../../../common/types';
 import { Commands } from '../../../common/constants';
 import { ICommandManager } from '../../../common/application/types';
+import { getDebugpyPath } from '../../pythonDebugger';
 
 // persistent state names, exported to make use of in testing
 export enum debugStateKeys {
@@ -90,13 +91,9 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
                 traceLog(`DAP Server launched with command: ${executable} ${args.join(' ')}`);
                 return new DebugAdapterExecutable(executable, args);
             }
-
+            const debugpyPath = await getDebugpyPath()
             const debuggerAdapterPathToUse = path.join(
-                EXTENSION_ROOT_DIR,
-                'python_files',
-                'lib',
-                'python',
-                'debugpy',
+                debugpyPath,
                 'adapter',
             );
 
