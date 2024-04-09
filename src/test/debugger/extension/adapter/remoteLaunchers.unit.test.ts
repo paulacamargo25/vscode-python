@@ -5,7 +5,7 @@
 
 import { expect } from 'chai';
 import * as path from 'path';
-import { EXTENSION_ROOT_DIR } from '../../../../client/common/constants';
+// import { EXTENSION_ROOT_DIR } from '../../../../client/common/constants';
 import '../../../../client/common/extensions';
 import * as launchers from '../../../../client/debugger/extension/adapter/remoteLaunchers';
 
