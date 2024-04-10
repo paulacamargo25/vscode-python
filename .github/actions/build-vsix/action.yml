@@ -46,10 +46,9 @@ runs:
       with:
         options: '-t ./python_files/lib/python --implementation py'
 
-    - name: Install debugpy and get-pip
+    - name: Get-pip
       run: |
         python -m pip --disable-pip-version-check install packaging
-        python ./python_files/install_debugpy.py
         python ./python_files/download_get_pip.py
       shell: bash
 

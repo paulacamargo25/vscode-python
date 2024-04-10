@@ -49,9 +49,8 @@ extends:
 
       - script: |
           python -m pip --disable-pip-version-check install -r build/build-install-requirements.txt
-          python ./python_files/install_debugpy.py
           python ./python_files/download_get_pip.py
-        displayName: Install debugpy and get-pip.py
+        displayName: Get-pip.py
 
       - script: |
           python -m pip install --no-deps --require-hashes --only-binary :all: -t ./python_files/lib/python --implementation py -r ./requirements.txt
