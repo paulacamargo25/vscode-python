@@ -43,7 +43,7 @@ suite('Debugging - Adapter Factory', () => {
     let getDebugpyPathStub: sinon.SinonStub;
 
     const nodeExecutable = undefined;
-    const debugpyPath = path.join(EXTENSION_ROOT_DIR, 'python_files', 'lib', 'python', 'debugpy')
+    const debugpyPath = path.join(EXTENSION_ROOT_DIR, 'python_files', 'lib', 'python', 'debugpy');
     const debugAdapterPath = path.join(debugpyPath, 'adapter');
     const pythonPath = path.join('path', 'to', 'python', 'interpreter');
     const interpreter = {
