@@ -15,7 +15,7 @@ import {
 } from 'vscode';
 import { EXTENSION_ROOT_DIR } from '../../../constants';
 import { IInterpreterService } from '../../../interpreter/contracts';
-import { traceLog, traceVerbose } from '../../../logging';
+import { traceError, traceLog, traceVerbose } from '../../../logging';
 import { PythonEnvironment } from '../../../pythonEnvironments/info';
 import { sendTelemetryEvent } from '../../../telemetry';
 import { EventName } from '../../../telemetry/constants';
@@ -92,6 +92,10 @@ export class DebugAdapterDescriptorFactory implements IDebugAdapterDescriptorFac
                 return new DebugAdapterExecutable(executable, args);
             }
             const debugpyPath = await getDebugpyPath();
+            if (!debugpyPath) {
+                traceError('Could not find debugpy path.');
+                throw new Error('Could not find debugpy path.');
+            }
             const debuggerAdapterPathToUse = path.join(debugpyPath, 'adapter');
 
             const args = command.concat([debuggerAdapterPathToUse, ...logArgs]);
