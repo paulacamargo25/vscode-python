@@ -769,7 +769,6 @@ getInfoPerOS().forEach(([osName, osType, path]) => {
             expect(debugConfig).to.have.property('justMyCode', false);
             expect(debugConfig).to.have.property('debugOptions');
             const expectedOptions = [
-                DebugOptions.DebugStdLib,
                 DebugOptions.ShowReturnValue,
                 DebugOptions.RedirectOutput,
             ];
@@ -777,69 +776,6 @@ getInfoPerOS().forEach(([osName, osType, path]) => {
                 expectedOptions.push(DebugOptions.FixFilePathCase);
             }
             expect((debugConfig as DebugConfiguration).debugOptions).to.be.deep.equal(expectedOptions);
-        });
-
-        const testsForJustMyCode = [
-            {
-                justMyCode: false,
-                debugStdLib: true,
-                expectedResult: false,
-            },
-            {
-                justMyCode: false,
-                debugStdLib: false,
-                expectedResult: false,
-            },
-            {
-                justMyCode: false,
-                debugStdLib: undefined,
-                expectedResult: false,
-            },
-            {
-                justMyCode: true,
-                debugStdLib: false,
-                expectedResult: true,
-            },
-            {
-                justMyCode: true,
-                debugStdLib: true,
-                expectedResult: true,
-            },
-            {
-                justMyCode: true,
-                debugStdLib: undefined,
-                expectedResult: true,
-            },
-            {
-                justMyCode: undefined,
-                debugStdLib: false,
-                expectedResult: true,
-            },
-            {
-                justMyCode: undefined,
-                debugStdLib: true,
-                expectedResult: false,
-            },
-            {
-                justMyCode: undefined,
-                debugStdLib: undefined,
-                expectedResult: true,
-            },
-        ];
-        test('Ensure justMyCode property is correctly derived from debugStdLib', async () => {
-            const pythonPath = `PythonPath_${new Date().toString()}`;
-            const workspaceFolder = createMoqWorkspaceFolder(__dirname);
-            const pythonFile = 'xyz.py';
-            setupIoc(pythonPath);
-            setupActiveEditor(pythonFile, PYTHON_LANGUAGE);
-            testsForJustMyCode.forEach(async (testParams) => {
-                const debugConfig = await resolveDebugConfiguration(workspaceFolder, {
-                    ...launch,
-                    debugStdLib: testParams.debugStdLib,
-                    justMyCode: testParams.justMyCode,
-                });
-                expect(debugConfig).to.have.property('justMyCode', testParams.expectedResult);
-            });
         });
 
         const testsForRedirectOutput = [
