@@ -768,10 +768,7 @@ getInfoPerOS().forEach(([osName, osType, path]) => {
             expect(debugConfig).to.have.property('redirectOutput', true);
             expect(debugConfig).to.have.property('justMyCode', false);
             expect(debugConfig).to.have.property('debugOptions');
-            const expectedOptions = [
-                DebugOptions.ShowReturnValue,
-                DebugOptions.RedirectOutput,
-            ];
+            const expectedOptions = [DebugOptions.ShowReturnValue, DebugOptions.RedirectOutput];
             if (osType === platform.OSType.Windows) {
                 expectedOptions.push(DebugOptions.FixFilePathCase);
             }
