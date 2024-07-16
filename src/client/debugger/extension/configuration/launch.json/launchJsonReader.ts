@@ -13,7 +13,6 @@ export async function getConfigurationsForWorkspace(workspace: WorkspaceFolder):
     if (!(await fs.pathExists(filename))) {
         // Check launch config in the workspace file
         const codeWorkspaceConfig = getConfiguration('launch', workspace);
-        console.log(codeWorkspaceConfig);
         if (!codeWorkspaceConfig.configurations || !Array.isArray(codeWorkspaceConfig.configurations)) {
             return [];
         }
